@@ -1,0 +1,15 @@
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\HandHistories.Parser.MoneyMaker.exe.config
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\HandHistories.Parser.MoneyMaker.exe
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\HandHistories.Parser.MoneyMaker.pdb
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\obj\Debug\HandHistories.Parser.MoneyMaker.csprojResolveAssemblyReference.cache
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\obj\Debug\HandHistories.Parser.MoneyMaker.MmForm.resources
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\obj\Debug\HandHistories.Parser.MoneyMaker.Properties.Resources.resources
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\obj\Debug\HandHistories.Parser.MoneyMaker.csproj.GenerateResource.Cache
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\obj\Debug\HandHistories.Parser.MoneyMaker.exe
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\obj\Debug\HandHistories.Parser.MoneyMaker.pdb
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\HandHistories.Objects.dll
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\HandHistories.Parser.dll
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\NLog.dll
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\HandHistories.Objects.pdb
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\HandHistories.Parser.pdb
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.Parser.MoneyMaker\bin\Debug\NLog.xml

@@ -1,0 +1,5 @@
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.SimpleObjects\bin\Debug\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.SimpleObjects\bin\Debug\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.SimpleObjects\obj\Debug\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.SimpleObjects\obj\Debug\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\PokerHandHistoryParser-master\HandHistories.SimpleObjects\obj\Debug\HandHistories.SimpleObjects.csprojResolveAssemblyReference.cache
