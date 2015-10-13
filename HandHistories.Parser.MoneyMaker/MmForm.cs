@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
@@ -44,9 +45,8 @@ namespace HandHistories.Parser.MoneyMaker
         //todo:updating statistics
         private void UpdateStatistics(string newtext)
         {
-            
             ShowFileChanging(newtext);
-            dataGrdVwHud.Update();
+            gridHud.Update();
         }
 
         private void OnChanged(object sender, FileSystemEventArgs e)
@@ -69,8 +69,8 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void ShowFileChanging(string text)
         {
-            lblInfo.Text += text;
-            lblInfo.Text += "\n";
+            textBoxWatch.Text += text;
+            textBoxWatch.Text += "\n";
         }
 
         //todo:not working...
@@ -82,6 +82,31 @@ namespace HandHistories.Parser.MoneyMaker
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _formSettings.ShowDialog();
+        }
+
+        private void loadGeneralStatisticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var opponentsName = _context.PlayerHistories.Select(p => p.PlayerName).Distinct();
+            foreach (var oponent in opponentsName)
+            {
+                nameList.Items.Add(oponent);
+            }
+        }
+
+        private void textBoxSearch_Enter(object sender, EventArgs e)
+        {
+            textBoxSearch.Text = "";
+        }
+
+        private void textBoxSearch_Leave(object sender, EventArgs e)
+        {
+            if(textBoxSearch.Text.Trim()=="")
+                textBoxSearch.Text = "Search...";
+        }
+
+        private void textBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
         }
 
         

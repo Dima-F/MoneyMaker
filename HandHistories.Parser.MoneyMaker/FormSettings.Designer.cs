@@ -30,18 +30,25 @@
         {
             this.settingsTab = new System.Windows.Forms.TabControl();
             this.commonTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.hhFolderButton = new System.Windows.Forms.Button();
+            this.hhFolderTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.advancedTabPage = new System.Windows.Forms.TabPage();
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.hhFolderTextBox = new System.Windows.Forms.TextBox();
-            this.hhFolderButton = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBoxManual = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.heroTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownComit = new System.Windows.Forms.NumericUpDown();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.advancedTabPage.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComit)).BeginInit();
             this.SuspendLayout();
             // 
             // settingsTab
@@ -57,6 +64,8 @@
             // 
             // commonTabPage
             // 
+            this.commonTabPage.Controls.Add(this.heroTextBox);
+            this.commonTabPage.Controls.Add(this.label2);
             this.commonTabPage.Controls.Add(this.groupBox1);
             this.commonTabPage.Controls.Add(this.hhFolderButton);
             this.commonTabPage.Controls.Add(this.hhFolderTextBox);
@@ -69,8 +78,47 @@
             this.commonTabPage.Text = "Common";
             this.commonTabPage.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox1.Location = new System.Drawing.Point(3, 100);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(370, 77);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Other options";
+            // 
+            // hhFolderButton
+            // 
+            this.hhFolderButton.Location = new System.Drawing.Point(335, 24);
+            this.hhFolderButton.Name = "hhFolderButton";
+            this.hhFolderButton.Size = new System.Drawing.Size(31, 23);
+            this.hhFolderButton.TabIndex = 2;
+            this.hhFolderButton.Text = "...";
+            this.hhFolderButton.UseVisualStyleBackColor = true;
+            this.hhFolderButton.Click += new System.EventHandler(this.hhFolderButton_Click);
+            // 
+            // hhFolderTextBox
+            // 
+            this.hhFolderTextBox.Location = new System.Drawing.Point(20, 26);
+            this.hhFolderTextBox.Name = "hhFolderTextBox";
+            this.hhFolderTextBox.Size = new System.Drawing.Size(309, 20);
+            this.hhFolderTextBox.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Hand histories folder:";
+            // 
             // advancedTabPage
             // 
+            this.advancedTabPage.Controls.Add(this.numericUpDownComit);
+            this.advancedTabPage.Controls.Add(this.groupBox2);
+            this.advancedTabPage.Controls.Add(this.label3);
             this.advancedTabPage.Location = new System.Drawing.Point(4, 22);
             this.advancedTabPage.Name = "advancedTabPage";
             this.advancedTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -99,52 +147,78 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Hand histories folder:";
-            // 
-            // hhFolderTextBox
-            // 
-            this.hhFolderTextBox.Location = new System.Drawing.Point(20, 26);
-            this.hhFolderTextBox.Name = "hhFolderTextBox";
-            this.hhFolderTextBox.Size = new System.Drawing.Size(309, 20);
-            this.hhFolderTextBox.TabIndex = 1;
-            // 
-            // hhFolderButton
-            // 
-            this.hhFolderButton.Location = new System.Drawing.Point(326, 24);
-            this.hhFolderButton.Name = "hhFolderButton";
-            this.hhFolderButton.Size = new System.Drawing.Size(31, 23);
-            this.hhFolderButton.TabIndex = 2;
-            this.hhFolderButton.Text = "...";
-            this.hhFolderButton.UseVisualStyleBackColor = true;
-            this.hhFolderButton.Click += new System.EventHandler(this.hhFolderButton_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.checkBoxManual);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(3, 53);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(370, 124);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Other options";
-            // 
             // checkBoxManual
             // 
             this.checkBoxManual.AutoSize = true;
-            this.checkBoxManual.Location = new System.Drawing.Point(8, 19);
+            this.checkBoxManual.Location = new System.Drawing.Point(6, 19);
             this.checkBoxManual.Name = "checkBoxManual";
             this.checkBoxManual.Size = new System.Drawing.Size(129, 17);
-            this.checkBoxManual.TabIndex = 0;
+            this.checkBoxManual.TabIndex = 1;
             this.checkBoxManual.Text = "Use manual initializing";
             this.checkBoxManual.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Hero name:";
+            // 
+            // heroTextBox
+            // 
+            this.heroTextBox.Location = new System.Drawing.Point(20, 65);
+            this.heroTextBox.Name = "heroTextBox";
+            this.heroTextBox.Size = new System.Drawing.Size(309, 20);
+            this.heroTextBox.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Commit count :";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.checkBoxManual);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox2.Location = new System.Drawing.Point(3, 99);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(370, 78);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Other options";
+            // 
+            // numericUpDownComit
+            // 
+            this.numericUpDownComit.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownComit.Location = new System.Drawing.Point(92, 13);
+            this.numericUpDownComit.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownComit.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDownComit.Name = "numericUpDownComit";
+            this.numericUpDownComit.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDownComit.TabIndex = 4;
+            this.numericUpDownComit.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             // 
             // FormSettings
             // 
@@ -164,8 +238,11 @@
             this.settingsTab.ResumeLayout(false);
             this.commonTabPage.ResumeLayout(false);
             this.commonTabPage.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.advancedTabPage.ResumeLayout(false);
+            this.advancedTabPage.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComit)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -182,6 +259,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FolderBrowserDialog folderDialog;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox heroTextBox;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBoxManual;
+        private System.Windows.Forms.NumericUpDown numericUpDownComit;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label3;
     }
 }

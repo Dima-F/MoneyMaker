@@ -33,6 +33,8 @@ namespace HandHistories.Parser.MoneyMaker
         private void FormSettings_Load(object sender, EventArgs e)
         {
             hhFolderTextBox.Text = SettingsConfig.GetConfig("HandHistoryFolder");
+            heroTextBox.Text = SettingsConfig.GetConfig("Hero");
+            numericUpDownComit.Value = Int32.Parse(SettingsConfig.GetConfig("CommitCount"));
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -47,6 +49,8 @@ namespace HandHistories.Parser.MoneyMaker
         private void saveBtn_Click(object sender, EventArgs e)
         {
             SettingsConfig.SetConfig("HandHistoryFolder", hhFolderTextBox.Text);
+            SettingsConfig.SetConfig("Hero", heroTextBox.Text);
+            SettingsConfig.SetConfig("CommitCount", numericUpDownComit.Value.ToString());
             Close();
         }
 

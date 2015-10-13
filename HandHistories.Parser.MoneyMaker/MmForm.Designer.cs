@@ -34,26 +34,28 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trackingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reinitializeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBoxInfo = new System.Windows.Forms.TextBox();
+            this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showGeneralStatisticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fbdHistory = new System.Windows.Forms.FolderBrowserDialog();
-            this.lblInfo = new System.Windows.Forms.Label();
-            this.tabCntrl = new System.Windows.Forms.TabControl();
-            this.tabPgLoad = new System.Windows.Forms.TabPage();
-            this.tabPgWatcher = new System.Windows.Forms.TabPage();
-            this.tabPgHud = new System.Windows.Forms.TabPage();
-            this.dataGrdVwHud = new System.Windows.Forms.DataGridView();
             this.bndSrdHandHistories = new System.Windows.Forms.BindingSource(this.components);
+            this.textBoxWatch = new System.Windows.Forms.TextBox();
+            this.tabPgHud = new System.Windows.Forms.TabPage();
+            this.gridHud = new System.Windows.Forms.DataGridView();
+            this.tabPgStat = new System.Windows.Forms.TabPage();
+            this.nameList = new System.Windows.Forms.ListBox();
+            this.gridStat = new System.Windows.Forms.DataGridView();
+            this.tabCntrl = new System.Windows.Forms.TabControl();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.mainMenuStrip.SuspendLayout();
-            this.tabCntrl.SuspendLayout();
-            this.tabPgLoad.SuspendLayout();
-            this.tabPgWatcher.SuspendLayout();
-            this.tabPgHud.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrdVwHud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bndSrdHandHistories)).BeginInit();
+            this.tabPgHud.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridHud)).BeginInit();
+            this.tabPgStat.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridStat)).BeginInit();
+            this.tabCntrl.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -62,12 +64,12 @@
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.trackingToolStripMenuItem,
-            this.historyToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.databaseToolStripMenuItem});
+            this.databaseToolStripMenuItem,
+            this.statisticsToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(705, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(704, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -97,12 +99,6 @@
             this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.startToolStripMenuItem.Text = "Start";
             // 
-            // historyToolStripMenuItem
-            // 
-            this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
-            this.historyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.historyToolStripMenuItem.Text = "History";
-            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
@@ -125,85 +121,114 @@
             this.reinitializeToolStripMenuItem.Text = "Reinitialize";
             this.reinitializeToolStripMenuItem.Click += new System.EventHandler(this.reinitializeToolStripMenuItem_Click);
             // 
-            // textBoxInfo
+            // statisticsToolStripMenuItem
             // 
-            this.textBoxInfo.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxInfo.Location = new System.Drawing.Point(3, 3);
-            this.textBoxInfo.Multiline = true;
-            this.textBoxInfo.Name = "textBoxInfo";
-            this.textBoxInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxInfo.Size = new System.Drawing.Size(493, 380);
-            this.textBoxInfo.TabIndex = 1;
+            this.statisticsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showGeneralStatisticToolStripMenuItem});
+            this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.statisticsToolStripMenuItem.Text = "Statistic";
             // 
-            // lblInfo
+            // showGeneralStatisticToolStripMenuItem
             // 
-            this.lblInfo.AutoSize = true;
-            this.lblInfo.Location = new System.Drawing.Point(3, 3);
-            this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(133, 13);
-            this.lblInfo.TabIndex = 2;
-            this.lblInfo.Text = "Waiting for file changing....";
+            this.showGeneralStatisticToolStripMenuItem.Name = "showGeneralStatisticToolStripMenuItem";
+            this.showGeneralStatisticToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.showGeneralStatisticToolStripMenuItem.Text = "Load general statistic";
+            this.showGeneralStatisticToolStripMenuItem.Click += new System.EventHandler(this.loadGeneralStatisticToolStripMenuItem_Click);
             // 
-            // tabCntrl
+            // textBoxWatch
             // 
-            this.tabCntrl.Controls.Add(this.tabPgLoad);
-            this.tabCntrl.Controls.Add(this.tabPgWatcher);
-            this.tabCntrl.Controls.Add(this.tabPgHud);
-            this.tabCntrl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabCntrl.Location = new System.Drawing.Point(0, 24);
-            this.tabCntrl.Name = "tabCntrl";
-            this.tabCntrl.SelectedIndex = 0;
-            this.tabCntrl.Size = new System.Drawing.Size(705, 412);
-            this.tabCntrl.TabIndex = 3;
-            // 
-            // tabPgLoad
-            // 
-            this.tabPgLoad.Controls.Add(this.textBoxInfo);
-            this.tabPgLoad.Location = new System.Drawing.Point(4, 22);
-            this.tabPgLoad.Name = "tabPgLoad";
-            this.tabPgLoad.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPgLoad.Size = new System.Drawing.Size(697, 386);
-            this.tabPgLoad.TabIndex = 0;
-            this.tabPgLoad.Text = "Load";
-            this.tabPgLoad.UseVisualStyleBackColor = true;
-            // 
-            // tabPgWatcher
-            // 
-            this.tabPgWatcher.Controls.Add(this.lblInfo);
-            this.tabPgWatcher.Location = new System.Drawing.Point(4, 22);
-            this.tabPgWatcher.Name = "tabPgWatcher";
-            this.tabPgWatcher.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPgWatcher.Size = new System.Drawing.Size(697, 386);
-            this.tabPgWatcher.TabIndex = 1;
-            this.tabPgWatcher.Text = "Watch";
-            this.tabPgWatcher.UseVisualStyleBackColor = true;
+            this.textBoxWatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxWatch.ForeColor = System.Drawing.Color.Navy;
+            this.textBoxWatch.Location = new System.Drawing.Point(0, 370);
+            this.textBoxWatch.Multiline = true;
+            this.textBoxWatch.Name = "textBoxWatch";
+            this.textBoxWatch.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxWatch.Size = new System.Drawing.Size(704, 92);
+            this.textBoxWatch.TabIndex = 4;
+            this.textBoxWatch.Text = "Waiting for file changing...";
             // 
             // tabPgHud
             // 
-            this.tabPgHud.Controls.Add(this.dataGrdVwHud);
+            this.tabPgHud.Controls.Add(this.gridHud);
             this.tabPgHud.Location = new System.Drawing.Point(4, 22);
             this.tabPgHud.Name = "tabPgHud";
             this.tabPgHud.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPgHud.Size = new System.Drawing.Size(697, 386);
+            this.tabPgHud.Size = new System.Drawing.Size(696, 320);
             this.tabPgHud.TabIndex = 2;
             this.tabPgHud.Text = "Hud";
             this.tabPgHud.UseVisualStyleBackColor = true;
             // 
-            // dataGrdVwHud
+            // gridHud
             // 
-            this.dataGrdVwHud.AutoGenerateColumns = false;
-            this.dataGrdVwHud.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrdVwHud.DataSource = this.bndSrdHandHistories;
-            this.dataGrdVwHud.Location = new System.Drawing.Point(0, 3);
-            this.dataGrdVwHud.Name = "dataGrdVwHud";
-            this.dataGrdVwHud.Size = new System.Drawing.Size(697, 315);
-            this.dataGrdVwHud.TabIndex = 0;
+            this.gridHud.AutoGenerateColumns = false;
+            this.gridHud.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridHud.DataSource = this.bndSrdHandHistories;
+            this.gridHud.Location = new System.Drawing.Point(0, 3);
+            this.gridHud.Name = "gridHud";
+            this.gridHud.Size = new System.Drawing.Size(697, 315);
+            this.gridHud.TabIndex = 0;
+            // 
+            // tabPgStat
+            // 
+            this.tabPgStat.Controls.Add(this.textBoxSearch);
+            this.tabPgStat.Controls.Add(this.nameList);
+            this.tabPgStat.Controls.Add(this.gridStat);
+            this.tabPgStat.Location = new System.Drawing.Point(4, 22);
+            this.tabPgStat.Name = "tabPgStat";
+            this.tabPgStat.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPgStat.Size = new System.Drawing.Size(696, 320);
+            this.tabPgStat.TabIndex = 0;
+            this.tabPgStat.Text = "Statistics";
+            this.tabPgStat.UseVisualStyleBackColor = true;
+            // 
+            // nameList
+            // 
+            this.nameList.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.nameList.FormattingEnabled = true;
+            this.nameList.Location = new System.Drawing.Point(513, 27);
+            this.nameList.Name = "nameList";
+            this.nameList.Size = new System.Drawing.Size(180, 290);
+            this.nameList.TabIndex = 2;
+            // 
+            // gridStat
+            // 
+            this.gridStat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridStat.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gridStat.Location = new System.Drawing.Point(3, 3);
+            this.gridStat.Name = "gridStat";
+            this.gridStat.Size = new System.Drawing.Size(510, 314);
+            this.gridStat.TabIndex = 1;
+            // 
+            // tabCntrl
+            // 
+            this.tabCntrl.Controls.Add(this.tabPgStat);
+            this.tabCntrl.Controls.Add(this.tabPgHud);
+            this.tabCntrl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabCntrl.Location = new System.Drawing.Point(0, 24);
+            this.tabCntrl.Name = "tabCntrl";
+            this.tabCntrl.SelectedIndex = 0;
+            this.tabCntrl.Size = new System.Drawing.Size(704, 346);
+            this.tabCntrl.TabIndex = 3;
+            // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBoxSearch.Location = new System.Drawing.Point(513, 3);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(180, 20);
+            this.textBoxSearch.TabIndex = 3;
+            this.textBoxSearch.Text = "Search...";
+            this.textBoxSearch.Enter += new System.EventHandler(this.textBoxSearch_Enter);
+            this.textBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearch_KeyPress);
+            this.textBoxSearch.Leave += new System.EventHandler(this.textBoxSearch_Leave);
             // 
             // MmForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(705, 436);
+            this.ClientSize = new System.Drawing.Size(704, 462);
+            this.Controls.Add(this.textBoxWatch);
             this.Controls.Add(this.tabCntrl);
             this.Controls.Add(this.mainMenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -214,14 +239,13 @@
             this.Load += new System.EventHandler(this.MmForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
-            this.tabCntrl.ResumeLayout(false);
-            this.tabPgLoad.ResumeLayout(false);
-            this.tabPgLoad.PerformLayout();
-            this.tabPgWatcher.ResumeLayout(false);
-            this.tabPgWatcher.PerformLayout();
-            this.tabPgHud.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrdVwHud)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bndSrdHandHistories)).EndInit();
+            this.tabPgHud.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridHud)).EndInit();
+            this.tabPgStat.ResumeLayout(false);
+            this.tabPgStat.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridStat)).EndInit();
+            this.tabCntrl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,18 +256,10 @@
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
-        private System.Windows.Forms.TextBox textBoxInfo;
         private System.Windows.Forms.FolderBrowserDialog fbdHistory;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.ToolStripMenuItem trackingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabCntrl;
-        private System.Windows.Forms.TabPage tabPgLoad;
-        private System.Windows.Forms.TabPage tabPgWatcher;
-        private System.Windows.Forms.TabPage tabPgHud;
-        private System.Windows.Forms.DataGridView dataGrdVwHud;
         private System.Windows.Forms.BindingSource bndSrdHandHistories;
         private System.Windows.Forms.DataGridViewTextBoxColumn comumnityCardsDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn playersDataGridViewTextBoxColumn;
@@ -262,6 +278,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn rakeDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reinitializeToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBoxWatch;
+        private System.Windows.Forms.TabPage tabPgHud;
+        private System.Windows.Forms.DataGridView gridHud;
+        private System.Windows.Forms.TabPage tabPgStat;
+        private System.Windows.Forms.TabControl tabCntrl;
+        private System.Windows.Forms.DataGridView gridStat;
+        private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showGeneralStatisticToolStripMenuItem;
+        private System.Windows.Forms.ListBox nameList;
+        private System.Windows.Forms.TextBox textBoxSearch;
     }
 }
 
