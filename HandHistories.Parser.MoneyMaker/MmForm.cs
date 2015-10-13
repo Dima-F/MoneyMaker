@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Windows.Forms;
 using HandHistories.Parser.MoneyMaker.Configuration;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
@@ -15,14 +11,16 @@ namespace HandHistories.Parser.MoneyMaker
 {
     public partial class MmForm : Form
     {
+        //forms...
+        private FormSettings _formSettings;
         //files monitoring...
         private FileSystemWatcher _watcher;
         private delegate void UpdateWatchTextDelegate(string newText);
+
         private readonly string _handHistoriesFolder;
         private HandHistoryContext _context;
-
-        private FormSettings _formSettings;
-
+        private IEnumerable<string> _oponentNames; 
+        
         public MmForm()
         {
             InitializeComponent();
@@ -32,23 +30,29 @@ namespace HandHistories.Parser.MoneyMaker
             _watcher.Created += OnCreated;
             _context=new HandHistoryContext();
             _context.Database.Initialize(false);
-
             _formSettings=new FormSettings();
-            
         }
+
+        #region Fields
+        
+        public IEnumerable<string> OponentNames
+        {
+            //lazy load pattern
+            get 
+            {
+                return _oponentNames ?? (_oponentNames = _context.PlayerHistories.Select(p => p.PlayerName).Distinct());
+            }
+        }
+
+        #endregion
+
+        #region Method-handlers...
 
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
             BeginInvoke(new UpdateWatchTextDelegate(UpdateStatistics), string.Format("File:{0} created", e.FullPath));
         }
         
-        //todo:updating statistics
-        private void UpdateStatistics(string newtext)
-        {
-            ShowFileChanging(newtext);
-            gridHud.Update();
-        }
-
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
             BeginInvoke(new UpdateWatchTextDelegate(ShowFileChanging), string.Format("File:{0} {1} ", e.FullPath, e.ChangeType));
@@ -57,20 +61,6 @@ namespace HandHistories.Parser.MoneyMaker
         private void MmForm_Load(object sender, EventArgs e)
         {
             InitializeWatching();
-        }
-
-        private void InitializeWatching()
-        {
-            _watcher.Path = _handHistoriesFolder;
-            _watcher.Filter = "*.txt";
-            _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName;
-            _watcher.EnableRaisingEvents = true;
-        }
-
-        private void ShowFileChanging(string text)
-        {
-            textBoxWatch.Text += text;
-            textBoxWatch.Text += "\n";
         }
 
         //todo:not working...
@@ -86,8 +76,7 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void loadGeneralStatisticToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var opponentsName = _context.PlayerHistories.Select(p => p.PlayerName).Distinct();
-            foreach (var oponent in opponentsName)
+            foreach (var oponent in OponentNames)
             {
                 nameList.Items.Add(oponent);
             }
@@ -104,12 +93,80 @@ namespace HandHistories.Parser.MoneyMaker
                 textBoxSearch.Text = "Search...";
         }
 
-        private void textBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        private void nameList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            var listBox = sender as ListBox;
+            if(listBox==null)return;
+            string name = listBox.Items[listBox.SelectedIndex].ToString();
+            var collection = GetPlayerListByName(name);
+            FillGrid(collection);
         }
 
-        
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox == null) return;
+            var currentText = textBox.Text.Trim();
+            FindMyString(currentText);
+        }
+
+
+        #endregion
+
+        #region Method-workers...
+
+        private void FindMyString(string searchString)
+        {
+            // Ensure we have a proper string to search for.
+            if (searchString != string.Empty && searchString!="Search...")
+            {
+                // Find the item in the list and store the index to the item.
+                int index = nameList.FindString(searchString);
+                // Determine if a valid index is returned. Select the item if it is valid.
+                if (index != -1)
+                    nameList.SetSelected(index, true);
+                else
+                    MessageBox.Show("The search string did not match any items in the list");
+            }
+        }
+
+        private IEnumerable<object> GetPlayerListByName(string name)
+        {
+            return from ph in _context.PlayerHistories
+                where ph.PlayerName == name
+                select new {ph.Id, ph.GameNumber, ph.PlayerName, ph.StartingStack};
+        }
+
+        private void InitializeWatching()
+        {
+            _watcher.Path = _handHistoriesFolder;
+            _watcher.Filter = "*.txt";
+            _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName;
+            _watcher.EnableRaisingEvents = true;
+        }
+
+        private void ShowFileChanging(string text)
+        {
+            textBoxWatch.Text += text;
+            textBoxWatch.Text += "\n";
+        }
+
+        //todo:updating statistics
+        private void UpdateStatistics(string newtext)
+        {
+            ShowFileChanging(newtext);
+            gridHud.Update();
+        }
+
+        private void FillGrid<T>(IEnumerable<T> collection)
+        {
+            var source = new BindingSource { DataSource = collection.ToList() };
+            gridStat.DataSource = source;
+        }
+
+        #endregion
+
+
 
     }
 }
