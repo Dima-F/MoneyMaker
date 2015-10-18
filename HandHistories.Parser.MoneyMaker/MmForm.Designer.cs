@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MmForm));
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,23 +37,29 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reinitializeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showGeneralStatisticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fbdHistory = new System.Windows.Forms.FolderBrowserDialog();
             this.textBoxWatch = new System.Windows.Forms.TextBox();
-            this.tabPgHud = new System.Windows.Forms.TabPage();
-            this.gridHud = new System.Windows.Forms.DataGridView();
-            this.tabPgStat = new System.Windows.Forms.TabPage();
-            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.tabPgGeneral = new System.Windows.Forms.TabPage();
+            this.gridSummary = new System.Windows.Forms.DataGridView();
             this.nameList = new System.Windows.Forms.ListBox();
-            this.gridStat = new System.Windows.Forms.DataGridView();
-            this.tabCntrl = new System.Windows.Forms.TabControl();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.mainTab = new System.Windows.Forms.TabControl();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBoxDetails = new System.Windows.Forms.GroupBox();
+            this.txBoxPlayerName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txBoxSite = new System.Windows.Forms.TextBox();
+            this.groupBoxSummary = new System.Windows.Forms.GroupBox();
+            this.groupBoxStatistics = new System.Windows.Forms.GroupBox();
+            this.gridStatistics = new System.Windows.Forms.DataGridView();
             this.mainMenuStrip.SuspendLayout();
-            this.tabPgHud.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridHud)).BeginInit();
-            this.tabPgStat.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridStat)).BeginInit();
-            this.tabCntrl.SuspendLayout();
+            this.tabPgGeneral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSummary)).BeginInit();
+            this.mainTab.SuspendLayout();
+            this.groupBoxDetails.SuspendLayout();
+            this.groupBoxSummary.SuspendLayout();
+            this.groupBoxStatistics.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridStatistics)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -62,11 +69,10 @@
             this.viewToolStripMenuItem,
             this.trackingToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.databaseToolStripMenuItem,
-            this.statisticsToolStripMenuItem});
+            this.databaseToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(704, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(853, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -93,7 +99,7 @@
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.startToolStripMenuItem.Text = "Start";
             // 
             // settingsToolStripMenuItem
@@ -114,120 +120,162 @@
             // reinitializeToolStripMenuItem
             // 
             this.reinitializeToolStripMenuItem.Name = "reinitializeToolStripMenuItem";
-            this.reinitializeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.reinitializeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reinitializeToolStripMenuItem.Text = "Reinitialize";
             this.reinitializeToolStripMenuItem.Click += new System.EventHandler(this.reinitializeToolStripMenuItem_Click);
             // 
-            // statisticsToolStripMenuItem
-            // 
-            this.statisticsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showGeneralStatisticToolStripMenuItem});
-            this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.statisticsToolStripMenuItem.Text = "Statistic";
-            // 
-            // showGeneralStatisticToolStripMenuItem
-            // 
-            this.showGeneralStatisticToolStripMenuItem.Name = "showGeneralStatisticToolStripMenuItem";
-            this.showGeneralStatisticToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.showGeneralStatisticToolStripMenuItem.Text = "Load general statistic";
-            this.showGeneralStatisticToolStripMenuItem.Click += new System.EventHandler(this.loadGeneralStatisticToolStripMenuItem_Click);
-            // 
             // textBoxWatch
             // 
-            this.textBoxWatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxWatch.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.textBoxWatch.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxWatch.Location = new System.Drawing.Point(0, 370);
+            this.textBoxWatch.Location = new System.Drawing.Point(0, 403);
             this.textBoxWatch.Multiline = true;
             this.textBoxWatch.Name = "textBoxWatch";
             this.textBoxWatch.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxWatch.Size = new System.Drawing.Size(704, 92);
+            this.textBoxWatch.Size = new System.Drawing.Size(853, 59);
             this.textBoxWatch.TabIndex = 4;
             this.textBoxWatch.Text = "Waiting for file changing...";
             // 
-            // tabPgHud
+            // tabPgGeneral
             // 
-            this.tabPgHud.Controls.Add(this.gridHud);
-            this.tabPgHud.Location = new System.Drawing.Point(4, 22);
-            this.tabPgHud.Name = "tabPgHud";
-            this.tabPgHud.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPgHud.Size = new System.Drawing.Size(696, 320);
-            this.tabPgHud.TabIndex = 2;
-            this.tabPgHud.Text = "Hud";
-            this.tabPgHud.UseVisualStyleBackColor = true;
+            this.tabPgGeneral.Controls.Add(this.groupBoxStatistics);
+            this.tabPgGeneral.Controls.Add(this.groupBoxSummary);
+            this.tabPgGeneral.Controls.Add(this.groupBoxDetails);
+            this.tabPgGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabPgGeneral.Name = "tabPgGeneral";
+            this.tabPgGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPgGeneral.Size = new System.Drawing.Size(659, 344);
+            this.tabPgGeneral.TabIndex = 0;
+            this.tabPgGeneral.Text = "General";
+            this.tabPgGeneral.UseVisualStyleBackColor = true;
             // 
-            // gridHud
+            // gridSummary
             // 
-            this.gridHud.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridHud.Location = new System.Drawing.Point(0, 3);
-            this.gridHud.Name = "gridHud";
-            this.gridHud.Size = new System.Drawing.Size(697, 315);
-            this.gridHud.TabIndex = 0;
+            this.gridSummary.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSummary.Location = new System.Drawing.Point(6, 19);
+            this.gridSummary.Name = "gridSummary";
+            this.gridSummary.Size = new System.Drawing.Size(632, 57);
+            this.gridSummary.TabIndex = 1;
             // 
-            // tabPgStat
+            // nameList
             // 
-            this.tabPgStat.Controls.Add(this.textBoxSearch);
-            this.tabPgStat.Controls.Add(this.nameList);
-            this.tabPgStat.Controls.Add(this.gridStat);
-            this.tabPgStat.Location = new System.Drawing.Point(4, 22);
-            this.tabPgStat.Name = "tabPgStat";
-            this.tabPgStat.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPgStat.Size = new System.Drawing.Size(696, 320);
-            this.tabPgStat.TabIndex = 0;
-            this.tabPgStat.Text = "Statistics";
-            this.tabPgStat.UseVisualStyleBackColor = true;
+            this.nameList.FormattingEnabled = true;
+            this.nameList.Location = new System.Drawing.Point(669, 68);
+            this.nameList.Name = "nameList";
+            this.nameList.Size = new System.Drawing.Size(184, 329);
+            this.nameList.TabIndex = 2;
+            this.nameList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nameList_MouseDoubleClick);
             // 
             // textBoxSearch
             // 
-            this.textBoxSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxSearch.Location = new System.Drawing.Point(513, 3);
+            this.textBoxSearch.Location = new System.Drawing.Point(669, 42);
             this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(180, 20);
+            this.textBoxSearch.Size = new System.Drawing.Size(184, 20);
             this.textBoxSearch.TabIndex = 3;
             this.textBoxSearch.Text = "Search...";
             this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             this.textBoxSearch.Enter += new System.EventHandler(this.textBoxSearch_Enter);
             this.textBoxSearch.Leave += new System.EventHandler(this.textBoxSearch_Leave);
             // 
-            // nameList
+            // mainTab
             // 
-            this.nameList.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.nameList.FormattingEnabled = true;
-            this.nameList.Location = new System.Drawing.Point(513, 27);
-            this.nameList.Name = "nameList";
-            this.nameList.Size = new System.Drawing.Size(180, 290);
-            this.nameList.TabIndex = 2;
-            this.nameList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nameList_MouseDoubleClick);
+            this.mainTab.Controls.Add(this.tabPgGeneral);
+            this.mainTab.Location = new System.Drawing.Point(0, 27);
+            this.mainTab.Name = "mainTab";
+            this.mainTab.SelectedIndex = 0;
+            this.mainTab.Size = new System.Drawing.Size(667, 370);
+            this.mainTab.TabIndex = 3;
             // 
-            // gridStat
+            // label1
             // 
-            this.gridStat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridStat.Dock = System.Windows.Forms.DockStyle.Left;
-            this.gridStat.Location = new System.Drawing.Point(3, 3);
-            this.gridStat.Name = "gridStat";
-            this.gridStat.Size = new System.Drawing.Size(510, 314);
-            this.gridStat.TabIndex = 1;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Name:";
             // 
-            // tabCntrl
+            // groupBoxDetails
             // 
-            this.tabCntrl.Controls.Add(this.tabPgStat);
-            this.tabCntrl.Controls.Add(this.tabPgHud);
-            this.tabCntrl.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabCntrl.Location = new System.Drawing.Point(0, 24);
-            this.tabCntrl.Name = "tabCntrl";
-            this.tabCntrl.SelectedIndex = 0;
-            this.tabCntrl.Size = new System.Drawing.Size(704, 346);
-            this.tabCntrl.TabIndex = 3;
+            this.groupBoxDetails.Controls.Add(this.txBoxSite);
+            this.groupBoxDetails.Controls.Add(this.label2);
+            this.groupBoxDetails.Controls.Add(this.txBoxPlayerName);
+            this.groupBoxDetails.Controls.Add(this.label1);
+            this.groupBoxDetails.Location = new System.Drawing.Point(7, 7);
+            this.groupBoxDetails.Name = "groupBoxDetails";
+            this.groupBoxDetails.Size = new System.Drawing.Size(646, 85);
+            this.groupBoxDetails.TabIndex = 4;
+            this.groupBoxDetails.TabStop = false;
+            this.groupBoxDetails.Text = "Player Details";
+            // 
+            // txBoxPlayerName
+            // 
+            this.txBoxPlayerName.Location = new System.Drawing.Point(60, 22);
+            this.txBoxPlayerName.Name = "txBoxPlayerName";
+            this.txBoxPlayerName.ReadOnly = true;
+            this.txBoxPlayerName.Size = new System.Drawing.Size(142, 20);
+            this.txBoxPlayerName.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(208, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Site:";
+            // 
+            // txBoxSite
+            // 
+            this.txBoxSite.Location = new System.Drawing.Point(242, 22);
+            this.txBoxSite.Name = "txBoxSite";
+            this.txBoxSite.ReadOnly = true;
+            this.txBoxSite.Size = new System.Drawing.Size(142, 20);
+            this.txBoxSite.TabIndex = 5;
+            this.txBoxSite.Text = "Poker888";
+            // 
+            // groupBoxSummary
+            // 
+            this.groupBoxSummary.Controls.Add(this.gridSummary);
+            this.groupBoxSummary.Location = new System.Drawing.Point(9, 98);
+            this.groupBoxSummary.Name = "groupBoxSummary";
+            this.groupBoxSummary.Size = new System.Drawing.Size(644, 100);
+            this.groupBoxSummary.TabIndex = 5;
+            this.groupBoxSummary.TabStop = false;
+            this.groupBoxSummary.Text = "Player Summary";
+            // 
+            // groupBoxStatistics
+            // 
+            this.groupBoxStatistics.Controls.Add(this.gridStatistics);
+            this.groupBoxStatistics.Location = new System.Drawing.Point(9, 204);
+            this.groupBoxStatistics.Name = "groupBoxStatistics";
+            this.groupBoxStatistics.Size = new System.Drawing.Size(644, 100);
+            this.groupBoxStatistics.TabIndex = 6;
+            this.groupBoxStatistics.TabStop = false;
+            this.groupBoxStatistics.Text = "Player Statistics";
+            // 
+            // gridStatistics
+            // 
+            this.gridStatistics.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridStatistics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridStatistics.Location = new System.Drawing.Point(6, 22);
+            this.gridStatistics.Name = "gridStatistics";
+            this.gridStatistics.Size = new System.Drawing.Size(632, 57);
+            this.gridStatistics.TabIndex = 2;
             // 
             // MmForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 462);
+            this.ClientSize = new System.Drawing.Size(853, 462);
+            this.Controls.Add(this.nameList);
+            this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.textBoxWatch);
-            this.Controls.Add(this.tabCntrl);
+            this.Controls.Add(this.mainTab);
             this.Controls.Add(this.mainMenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
             this.MaximizeBox = false;
             this.Name = "MmForm";
@@ -235,12 +283,14 @@
             this.Load += new System.EventHandler(this.MmForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
-            this.tabPgHud.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridHud)).EndInit();
-            this.tabPgStat.ResumeLayout(false);
-            this.tabPgStat.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridStat)).EndInit();
-            this.tabCntrl.ResumeLayout(false);
+            this.tabPgGeneral.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridSummary)).EndInit();
+            this.mainTab.ResumeLayout(false);
+            this.groupBoxDetails.ResumeLayout(false);
+            this.groupBoxDetails.PerformLayout();
+            this.groupBoxSummary.ResumeLayout(false);
+            this.groupBoxStatistics.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridStatistics)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,15 +323,19 @@
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reinitializeToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxWatch;
-        private System.Windows.Forms.TabPage tabPgHud;
-        private System.Windows.Forms.DataGridView gridHud;
-        private System.Windows.Forms.TabPage tabPgStat;
-        private System.Windows.Forms.TabControl tabCntrl;
-        private System.Windows.Forms.DataGridView gridStat;
-        private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showGeneralStatisticToolStripMenuItem;
-        private System.Windows.Forms.ListBox nameList;
+        private System.Windows.Forms.TabPage tabPgGeneral;
         private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.ListBox nameList;
+        private System.Windows.Forms.DataGridView gridSummary;
+        private System.Windows.Forms.TabControl mainTab;
+        private System.Windows.Forms.GroupBox groupBoxSummary;
+        private System.Windows.Forms.GroupBox groupBoxDetails;
+        private System.Windows.Forms.TextBox txBoxSite;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txBoxPlayerName;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBoxStatistics;
+        private System.Windows.Forms.DataGridView gridStatistics;
     }
 }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using HandHistories.Parser.MoneyMaker.Configuration;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
+using HandHistories.Parser.MoneyMaker.Tools;
 using HandHistories.SimpleObjects.Entities;
 
 namespace HandHistories.Parser.MoneyMaker
@@ -61,6 +62,7 @@ namespace HandHistories.Parser.MoneyMaker
         private void MmForm_Load(object sender, EventArgs e)
         {
             InitializeWatching();
+            LoadPlayersList();
         }
 
         //todo:not working...
@@ -74,13 +76,6 @@ namespace HandHistories.Parser.MoneyMaker
             _formSettings.ShowDialog();
         }
 
-        private void loadGeneralStatisticToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (var oponent in OponentNames)
-            {
-                nameList.Items.Add(oponent);
-            }
-        }
 
         private void textBoxSearch_Enter(object sender, EventArgs e)
         {
@@ -98,8 +93,7 @@ namespace HandHistories.Parser.MoneyMaker
             var listBox = sender as ListBox;
             if(listBox==null)return;
             string name = listBox.Items[listBox.SelectedIndex].ToString();
-            var collection = GetPlayerListByName(name);
-            FillGrid(collection);
+            FillMainTab(name);
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -110,10 +104,17 @@ namespace HandHistories.Parser.MoneyMaker
             FindMyString(currentText);
         }
 
-
         #endregion
 
         #region Method-workers...
+
+        private void LoadPlayersList()
+        {
+            foreach (var oponent in OponentNames)
+            {
+                nameList.Items.Add(oponent);
+            }
+        }
 
         private void FindMyString(string searchString)
         {
@@ -137,6 +138,15 @@ namespace HandHistories.Parser.MoneyMaker
                 select new {ph.Id, ph.GameNumber, ph.PlayerName, ph.StartingStack};
         }
 
+        private IEnumerable<object> GetOpponentsHandsCount()
+        {
+            foreach (var name in OponentNames.Where(name => !name.IsNullOrEmpty()))
+            {
+                int count = _context.PlayerHistories.Count(ph => ph.PlayerName == name);
+                yield return new { name, count };
+            }
+        }
+
         private void InitializeWatching()
         {
             _watcher.Path = _handHistoriesFolder;
@@ -155,16 +165,41 @@ namespace HandHistories.Parser.MoneyMaker
         private void UpdateStatistics(string newtext)
         {
             ShowFileChanging(newtext);
-            gridHud.Update();
         }
 
         private void FillGrid<T>(IEnumerable<T> collection)
         {
             var source = new BindingSource { DataSource = collection.ToList() };
-            gridStat.DataSource = source;
+            gridSummary.DataSource = source;
+        }
+
+        private void FillMainTab(string name)
+        {
+            FillGeneralPage(name);
+        }
+
+        private void FillGeneralPage(string name)
+        {
+            txBoxPlayerName.Text = name;
+            FillSummaryGrid(name);
+            FillStatisticsGrid(name);
+        }
+
+        private void FillStatisticsGrid(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FillSummaryGrid(string name)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
+
+        
+
+        
 
 
 
