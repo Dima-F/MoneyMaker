@@ -40,26 +40,26 @@
             this.fbdHistory = new System.Windows.Forms.FolderBrowserDialog();
             this.textBoxWatch = new System.Windows.Forms.TextBox();
             this.tabPgGeneral = new System.Windows.Forms.TabPage();
+            this.groupBoxStatistics = new System.Windows.Forms.GroupBox();
+            this.gridStatistics = new System.Windows.Forms.DataGridView();
+            this.groupBoxSummary = new System.Windows.Forms.GroupBox();
             this.gridSummary = new System.Windows.Forms.DataGridView();
+            this.groupBoxDetails = new System.Windows.Forms.GroupBox();
+            this.txBoxSite = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txBoxPlayerName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.nameList = new System.Windows.Forms.ListBox();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabControl();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBoxDetails = new System.Windows.Forms.GroupBox();
-            this.txBoxPlayerName = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txBoxSite = new System.Windows.Forms.TextBox();
-            this.groupBoxSummary = new System.Windows.Forms.GroupBox();
-            this.groupBoxStatistics = new System.Windows.Forms.GroupBox();
-            this.gridStatistics = new System.Windows.Forms.DataGridView();
             this.mainMenuStrip.SuspendLayout();
             this.tabPgGeneral.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridSummary)).BeginInit();
-            this.mainTab.SuspendLayout();
-            this.groupBoxDetails.SuspendLayout();
-            this.groupBoxSummary.SuspendLayout();
             this.groupBoxStatistics.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridStatistics)).BeginInit();
+            this.groupBoxSummary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSummary)).BeginInit();
+            this.groupBoxDetails.SuspendLayout();
+            this.mainTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -120,7 +120,7 @@
             // reinitializeToolStripMenuItem
             // 
             this.reinitializeToolStripMenuItem.Name = "reinitializeToolStripMenuItem";
-            this.reinitializeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reinitializeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.reinitializeToolStripMenuItem.Text = "Reinitialize";
             this.reinitializeToolStripMenuItem.Click += new System.EventHandler(this.reinitializeToolStripMenuItem_Click);
             // 
@@ -149,6 +149,35 @@
             this.tabPgGeneral.Text = "General";
             this.tabPgGeneral.UseVisualStyleBackColor = true;
             // 
+            // groupBoxStatistics
+            // 
+            this.groupBoxStatistics.Controls.Add(this.gridStatistics);
+            this.groupBoxStatistics.Location = new System.Drawing.Point(9, 204);
+            this.groupBoxStatistics.Name = "groupBoxStatistics";
+            this.groupBoxStatistics.Size = new System.Drawing.Size(644, 100);
+            this.groupBoxStatistics.TabIndex = 6;
+            this.groupBoxStatistics.TabStop = false;
+            this.groupBoxStatistics.Text = "Player Statistics";
+            // 
+            // gridStatistics
+            // 
+            this.gridStatistics.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridStatistics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridStatistics.Location = new System.Drawing.Point(6, 22);
+            this.gridStatistics.Name = "gridStatistics";
+            this.gridStatistics.Size = new System.Drawing.Size(632, 57);
+            this.gridStatistics.TabIndex = 2;
+            // 
+            // groupBoxSummary
+            // 
+            this.groupBoxSummary.Controls.Add(this.gridSummary);
+            this.groupBoxSummary.Location = new System.Drawing.Point(9, 98);
+            this.groupBoxSummary.Name = "groupBoxSummary";
+            this.groupBoxSummary.Size = new System.Drawing.Size(644, 100);
+            this.groupBoxSummary.TabIndex = 5;
+            this.groupBoxSummary.TabStop = false;
+            this.groupBoxSummary.Text = "Player Summary";
+            // 
             // gridSummary
             // 
             this.gridSummary.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
@@ -157,6 +186,54 @@
             this.gridSummary.Name = "gridSummary";
             this.gridSummary.Size = new System.Drawing.Size(632, 57);
             this.gridSummary.TabIndex = 1;
+            // 
+            // groupBoxDetails
+            // 
+            this.groupBoxDetails.Controls.Add(this.txBoxSite);
+            this.groupBoxDetails.Controls.Add(this.label2);
+            this.groupBoxDetails.Controls.Add(this.txBoxPlayerName);
+            this.groupBoxDetails.Controls.Add(this.label1);
+            this.groupBoxDetails.Location = new System.Drawing.Point(7, 7);
+            this.groupBoxDetails.Name = "groupBoxDetails";
+            this.groupBoxDetails.Size = new System.Drawing.Size(646, 85);
+            this.groupBoxDetails.TabIndex = 4;
+            this.groupBoxDetails.TabStop = false;
+            this.groupBoxDetails.Text = "Player Details";
+            // 
+            // txBoxSite
+            // 
+            this.txBoxSite.Location = new System.Drawing.Point(242, 22);
+            this.txBoxSite.Name = "txBoxSite";
+            this.txBoxSite.ReadOnly = true;
+            this.txBoxSite.Size = new System.Drawing.Size(142, 20);
+            this.txBoxSite.TabIndex = 5;
+            this.txBoxSite.Text = "Poker888";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(208, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Site:";
+            // 
+            // txBoxPlayerName
+            // 
+            this.txBoxPlayerName.Location = new System.Drawing.Point(60, 22);
+            this.txBoxPlayerName.Name = "txBoxPlayerName";
+            this.txBoxPlayerName.ReadOnly = true;
+            this.txBoxPlayerName.Size = new System.Drawing.Size(142, 20);
+            this.txBoxPlayerName.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Name:";
             // 
             // nameList
             // 
@@ -182,87 +259,11 @@
             // 
             this.mainTab.Controls.Add(this.tabPgGeneral);
             this.mainTab.Location = new System.Drawing.Point(0, 27);
+            this.mainTab.Multiline = true;
             this.mainTab.Name = "mainTab";
             this.mainTab.SelectedIndex = 0;
             this.mainTab.Size = new System.Drawing.Size(667, 370);
             this.mainTab.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Name:";
-            // 
-            // groupBoxDetails
-            // 
-            this.groupBoxDetails.Controls.Add(this.txBoxSite);
-            this.groupBoxDetails.Controls.Add(this.label2);
-            this.groupBoxDetails.Controls.Add(this.txBoxPlayerName);
-            this.groupBoxDetails.Controls.Add(this.label1);
-            this.groupBoxDetails.Location = new System.Drawing.Point(7, 7);
-            this.groupBoxDetails.Name = "groupBoxDetails";
-            this.groupBoxDetails.Size = new System.Drawing.Size(646, 85);
-            this.groupBoxDetails.TabIndex = 4;
-            this.groupBoxDetails.TabStop = false;
-            this.groupBoxDetails.Text = "Player Details";
-            // 
-            // txBoxPlayerName
-            // 
-            this.txBoxPlayerName.Location = new System.Drawing.Point(60, 22);
-            this.txBoxPlayerName.Name = "txBoxPlayerName";
-            this.txBoxPlayerName.ReadOnly = true;
-            this.txBoxPlayerName.Size = new System.Drawing.Size(142, 20);
-            this.txBoxPlayerName.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(208, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Site:";
-            // 
-            // txBoxSite
-            // 
-            this.txBoxSite.Location = new System.Drawing.Point(242, 22);
-            this.txBoxSite.Name = "txBoxSite";
-            this.txBoxSite.ReadOnly = true;
-            this.txBoxSite.Size = new System.Drawing.Size(142, 20);
-            this.txBoxSite.TabIndex = 5;
-            this.txBoxSite.Text = "Poker888";
-            // 
-            // groupBoxSummary
-            // 
-            this.groupBoxSummary.Controls.Add(this.gridSummary);
-            this.groupBoxSummary.Location = new System.Drawing.Point(9, 98);
-            this.groupBoxSummary.Name = "groupBoxSummary";
-            this.groupBoxSummary.Size = new System.Drawing.Size(644, 100);
-            this.groupBoxSummary.TabIndex = 5;
-            this.groupBoxSummary.TabStop = false;
-            this.groupBoxSummary.Text = "Player Summary";
-            // 
-            // groupBoxStatistics
-            // 
-            this.groupBoxStatistics.Controls.Add(this.gridStatistics);
-            this.groupBoxStatistics.Location = new System.Drawing.Point(9, 204);
-            this.groupBoxStatistics.Name = "groupBoxStatistics";
-            this.groupBoxStatistics.Size = new System.Drawing.Size(644, 100);
-            this.groupBoxStatistics.TabIndex = 6;
-            this.groupBoxStatistics.TabStop = false;
-            this.groupBoxStatistics.Text = "Player Statistics";
-            // 
-            // gridStatistics
-            // 
-            this.gridStatistics.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridStatistics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridStatistics.Location = new System.Drawing.Point(6, 22);
-            this.gridStatistics.Name = "gridStatistics";
-            this.gridStatistics.Size = new System.Drawing.Size(632, 57);
-            this.gridStatistics.TabIndex = 2;
             // 
             // MmForm
             // 
@@ -284,13 +285,13 @@
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             this.tabPgGeneral.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridSummary)).EndInit();
-            this.mainTab.ResumeLayout(false);
-            this.groupBoxDetails.ResumeLayout(false);
-            this.groupBoxDetails.PerformLayout();
-            this.groupBoxSummary.ResumeLayout(false);
             this.groupBoxStatistics.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridStatistics)).EndInit();
+            this.groupBoxSummary.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridSummary)).EndInit();
+            this.groupBoxDetails.ResumeLayout(false);
+            this.groupBoxDetails.PerformLayout();
+            this.mainTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
