@@ -13,5 +13,6 @@ namespace HandHistories.Parser.MoneyMaker.BLL
         public int HandsWon { get; set; }
         [Description("Hands won (%)")]
         public decimal HandsWonPercent { get; set; }
+        public int Sessions { get; set; }
     }
 }

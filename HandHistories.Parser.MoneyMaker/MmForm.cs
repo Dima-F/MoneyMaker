@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using HandHistories.Parser.MoneyMaker.BLL;
 using HandHistories.Parser.MoneyMaker.Configuration;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
-using HandHistories.Parser.MoneyMaker.Tools;
-using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleParser;
 
 namespace HandHistories.Parser.MoneyMaker
 {
     public partial class MmForm : Form
     {
+        private Stopwatch _stopwatch;
         //forms...
         private FormSettings _formSettings;
-        //files monitoring...
-        private FileSystemWatcher _watcher;
-        private delegate void UpdateWatchTextDelegate(string newText);
+
+        private FileTrackingManager _fileTrackingManager;
+        
 
         private readonly string _handHistoriesFolder;
         
@@ -26,14 +27,16 @@ namespace HandHistories.Parser.MoneyMaker
 
         public MmForm()
         {
-            _repositoryManager = new LinqManager(new HandHistoryContext());
+            _stopwatch = new Stopwatch();
+            _repositoryManager = new HandHistoryManager(new HandHistoryContext());
             InitializeComponent();
             _handHistoriesFolder = SettingsConfig.GetConfig("HandHistoryFolder");
-            _watcher=new FileSystemWatcher();
-            _watcher.Changed += OnChanged;
-            _watcher.Created += OnCreated;
             _formSettings=new FormSettings();
+            _fileTrackingManager = new FileTrackingManager();
+            _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
+            _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName);
         }
+        
 
         #region Fields
         
@@ -50,19 +53,28 @@ namespace HandHistories.Parser.MoneyMaker
 
         #region Method-handlers...
 
-        private void OnCreated(object sender, FileSystemEventArgs e)
+        private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
-            BeginInvoke(new UpdateWatchTextDelegate(UpdateStatistics), string.Format("File:{0} created", e.FullPath));
+            BeginInvoke(new FileTrackingDelegate(ShowFileChanging), string.Format("Poker file {0} changed at {1}", e.FullPath, DateTime.Now.ToShortTimeString()));
+            FillHudInfo(e.FullPath);
         }
-        
-        private void OnChanged(object sender, FileSystemEventArgs e)
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BeginInvoke(new UpdateWatchTextDelegate(ShowFileChanging), string.Format("File:{0} {1} ", e.FullPath, e.ChangeType));
+            startToolStripMenuItem.Enabled = false;
+            stopTrackCurrentSessionToolStripMenuItem.Enabled = true;
+            _fileTrackingManager.EnableTracking = true;
+        }
+
+        private void stopTrackCurrentSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            startToolStripMenuItem.Enabled = true;
+            stopTrackCurrentSessionToolStripMenuItem.Enabled = false;
+            _fileTrackingManager.EnableTracking = false;
         }
 
         private void MmForm_Load(object sender, EventArgs e)
         {
-            InitializeWatching();
             LoadPlayersList();
         }
 
@@ -76,7 +88,6 @@ namespace HandHistories.Parser.MoneyMaker
         {
             _formSettings.ShowDialog();
         }
-
 
         private void textBoxSearch_Enter(object sender, EventArgs e)
         {
@@ -109,6 +120,12 @@ namespace HandHistories.Parser.MoneyMaker
 
         #region Method-workers...
 
+        private void FillHudInfo(string fullPath)
+        {
+            FillHudMain(fullP)
+
+        }
+
         private void LoadPlayersList()
         {
             foreach (var oponent in OponentNames)
@@ -132,24 +149,10 @@ namespace HandHistories.Parser.MoneyMaker
             }
         }
 
-        private void InitializeWatching()
-        {
-            _watcher.Path = _handHistoriesFolder;
-            _watcher.Filter = "*.txt";
-            _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName;
-            _watcher.EnableRaisingEvents = true;
-        }
-
         private void ShowFileChanging(string text)
         {
             textBoxWatch.Text += text;
-            textBoxWatch.Text += "\n";
-        }
-
-        //todo:updating statistics
-        private void UpdateStatistics(string newtext)
-        {
-            ShowFileChanging(newtext);
+            textBoxWatch.Text += "\r\n";
         }
 
         private void FillMainTab(string name)
@@ -166,21 +169,40 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void FillStatisticsGrid(string name)
         {
+            _stopwatch.Start();
+            var playerStatistics = _repositoryManager.GetPlayerStatisticsByName(name).ToList();
+            _stopwatch.Stop();
+            Debug.WriteLine("Filling statistics grid in " + _stopwatch.Elapsed.Seconds);
+            _stopwatch.Reset();
             gridStatistics.DataSource = new BindingSource
             {
-                DataSource = _repositoryManager.GetPlayerStatisticsByName(name).ToList()
+                DataSource = playerStatistics
             };
         }
 
         private void FillSummaryGrid(string name)
         {
+            _stopwatch.Start();
+            var playerSummaries = _repositoryManager.GetPlayerSummariesByName(name).ToList();
+            _stopwatch.Stop();
+            Debug.WriteLine("Filling summary grid in "+_stopwatch.Elapsed.Seconds);
+            _stopwatch.Reset();
             gridSummary.DataSource = new BindingSource
             {
-                DataSource = _repositoryManager.GetPlayerSummariesByName(name).ToList()
+                DataSource = playerSummaries
             };
         }
 
+        private string ReadFile(string path)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
+
+        
+
+
 
         
 

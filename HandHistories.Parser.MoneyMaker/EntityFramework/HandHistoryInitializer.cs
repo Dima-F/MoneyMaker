@@ -278,7 +278,6 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 if (context != null)
                     context.Dispose();
             }
-            
         }
 
         private DbContext HighSpeedAdd(DbContext context, Game game, int count, int commitCount, bool recreateContext)

@@ -9,5 +9,6 @@ namespace HandHistories.Parser.MoneyMaker.BLL
         public decimal VPIP { get; set; }
         public decimal PFR { get; set; }
         public decimal ATS { get; set; }
+        public decimal AF { get; set; }//agression factor
     }
 }

@@ -64,8 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\FileTrackingManager.cs" />
     <Compile Include="BLL\IRepositoryManager.cs" />
-    <Compile Include="BLL\LinqManager.cs" />
+    <Compile Include="BLL\HandHistoryManager.cs" />
+    <Compile Include="BLL\HudInitializer.cs" />
     <Compile Include="BLL\PlayerStatistics.cs" />
     <Compile Include="BLL\PlayerSummary.cs" />
     <Compile Include="EntityFramework\HandHistoryContext.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\SettingsConfig.cs" />
+    <Compile Include="Tools\GameExtentions.cs" />
     <Compile Include="Tools\StringExtentions.cs" />
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>

@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandHistories.SimpleObjects
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandHistories.SimpleParser", "HandHistories.SimpleParser\HandHistories.SimpleParser.csproj", "{6A5C8D3E-0213-49B6-84C7-59C4A91F29DA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB0E113D-8D61-49F4-AA00-C881094CDFAD}"
+	ProjectSection(SolutionItems) = preProject
+		Tasks.txt = Tasks.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMakerTests", "MoneyMakerTests\MoneyMakerTests.csproj", "{7589A58F-572C-446D-A2DD-535E007E7B8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +60,16 @@ Global
 		{6A5C8D3E-0213-49B6-84C7-59C4A91F29DA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6A5C8D3E-0213-49B6-84C7-59C4A91F29DA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6A5C8D3E-0213-49B6-84C7-59C4A91F29DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7589A58F-572C-446D-A2DD-535E007E7B8E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

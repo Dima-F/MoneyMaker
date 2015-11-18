@@ -17,6 +17,7 @@ namespace HandHistories.SimpleObjects.Entities
         public string PlayerName { get; set; }
         [Required]
         public decimal StartingStack { get; set; }
+
         [Required]
         public byte SeatNumber { get; set; }
 

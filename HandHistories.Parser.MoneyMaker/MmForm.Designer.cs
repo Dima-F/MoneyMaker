@@ -34,6 +34,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trackingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopTrackCurrentSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reinitializeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +53,12 @@
             this.nameList = new System.Windows.Forms.ListBox();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabControl();
+            this.tabPageHud = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.hudMainGrpBx = new System.Windows.Forms.GroupBox();
+            this.hudInfoTxtBx = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.hudGrdVw = new System.Windows.Forms.DataGridView();
             this.mainMenuStrip.SuspendLayout();
             this.tabPgGeneral.SuspendLayout();
             this.groupBoxStatistics.SuspendLayout();
@@ -60,6 +67,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridSummary)).BeginInit();
             this.groupBoxDetails.SuspendLayout();
             this.mainTab.SuspendLayout();
+            this.tabPageHud.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.hudMainGrpBx.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hudGrdVw)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -91,7 +103,8 @@
             // trackingToolStripMenuItem
             // 
             this.trackingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem});
+            this.startToolStripMenuItem,
+            this.stopTrackCurrentSessionToolStripMenuItem});
             this.trackingToolStripMenuItem.Name = "trackingToolStripMenuItem";
             this.trackingToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.trackingToolStripMenuItem.Text = "Tracking";
@@ -99,8 +112,17 @@
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.startToolStripMenuItem.Text = "Start track current session";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            // 
+            // stopTrackCurrentSessionToolStripMenuItem
+            // 
+            this.stopTrackCurrentSessionToolStripMenuItem.Enabled = false;
+            this.stopTrackCurrentSessionToolStripMenuItem.Name = "stopTrackCurrentSessionToolStripMenuItem";
+            this.stopTrackCurrentSessionToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.stopTrackCurrentSessionToolStripMenuItem.Text = "Stop track current session";
+            this.stopTrackCurrentSessionToolStripMenuItem.Click += new System.EventHandler(this.stopTrackCurrentSessionToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -165,7 +187,7 @@
             this.gridStatistics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridStatistics.Location = new System.Drawing.Point(6, 22);
             this.gridStatistics.Name = "gridStatistics";
-            this.gridStatistics.Size = new System.Drawing.Size(632, 57);
+            this.gridStatistics.Size = new System.Drawing.Size(632, 72);
             this.gridStatistics.TabIndex = 2;
             // 
             // groupBoxSummary
@@ -184,7 +206,7 @@
             this.gridSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSummary.Location = new System.Drawing.Point(6, 19);
             this.gridSummary.Name = "gridSummary";
-            this.gridSummary.Size = new System.Drawing.Size(632, 57);
+            this.gridSummary.Size = new System.Drawing.Size(632, 75);
             this.gridSummary.TabIndex = 1;
             // 
             // groupBoxDetails
@@ -258,12 +280,71 @@
             // mainTab
             // 
             this.mainTab.Controls.Add(this.tabPgGeneral);
+            this.mainTab.Controls.Add(this.tabPageHud);
             this.mainTab.Location = new System.Drawing.Point(0, 27);
             this.mainTab.Multiline = true;
             this.mainTab.Name = "mainTab";
             this.mainTab.SelectedIndex = 0;
             this.mainTab.Size = new System.Drawing.Size(667, 370);
             this.mainTab.TabIndex = 3;
+            // 
+            // tabPageHud
+            // 
+            this.tabPageHud.Controls.Add(this.flowLayoutPanel1);
+            this.tabPageHud.Location = new System.Drawing.Point(4, 22);
+            this.tabPageHud.Name = "tabPageHud";
+            this.tabPageHud.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageHud.Size = new System.Drawing.Size(659, 344);
+            this.tabPageHud.TabIndex = 1;
+            this.tabPageHud.Text = "Hud";
+            this.tabPageHud.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.hudMainGrpBx);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox1);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 7);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(644, 331);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // hudMainGrpBx
+            // 
+            this.hudMainGrpBx.Controls.Add(this.hudInfoTxtBx);
+            this.hudMainGrpBx.Location = new System.Drawing.Point(3, 3);
+            this.hudMainGrpBx.Name = "hudMainGrpBx";
+            this.hudMainGrpBx.Size = new System.Drawing.Size(641, 100);
+            this.hudMainGrpBx.TabIndex = 0;
+            this.hudMainGrpBx.TabStop = false;
+            this.hudMainGrpBx.Text = "Main info:";
+            // 
+            // hudInfoTxtBx
+            // 
+            this.hudInfoTxtBx.Location = new System.Drawing.Point(6, 19);
+            this.hudInfoTxtBx.Multiline = true;
+            this.hudInfoTxtBx.Name = "hudInfoTxtBx";
+            this.hudInfoTxtBx.Size = new System.Drawing.Size(629, 67);
+            this.hudInfoTxtBx.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.hudGrdVw);
+            this.groupBox1.Location = new System.Drawing.Point(3, 109);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(641, 222);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Players stats:";
+            // 
+            // hudGrdVw
+            // 
+            this.hudGrdVw.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.hudGrdVw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.hudGrdVw.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hudGrdVw.Location = new System.Drawing.Point(3, 16);
+            this.hudGrdVw.Name = "hudGrdVw";
+            this.hudGrdVw.Size = new System.Drawing.Size(635, 203);
+            this.hudGrdVw.TabIndex = 3;
             // 
             // MmForm
             // 
@@ -292,6 +373,12 @@
             this.groupBoxDetails.ResumeLayout(false);
             this.groupBoxDetails.PerformLayout();
             this.mainTab.ResumeLayout(false);
+            this.tabPageHud.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.hudMainGrpBx.ResumeLayout(false);
+            this.hudMainGrpBx.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.hudGrdVw)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -337,6 +424,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBoxStatistics;
         private System.Windows.Forms.DataGridView gridStatistics;
+        private System.Windows.Forms.ToolStripMenuItem stopTrackCurrentSessionToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPageHud;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.GroupBox hudMainGrpBx;
+        private System.Windows.Forms.TextBox hudInfoTxtBx;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView hudGrdVw;
     }
 }
 

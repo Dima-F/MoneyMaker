@@ -37,6 +37,5 @@ namespace HandHistories.SimpleObjects.Entities
 
         public virtual List<HandAction> HandActions { get; set; }
  
-
     }
 }
