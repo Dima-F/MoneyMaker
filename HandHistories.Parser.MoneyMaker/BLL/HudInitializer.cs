@@ -25,10 +25,7 @@ namespace HandHistories.Parser.MoneyMaker.BLL
 
         public List<IEnumerable<PlayerStatistics>> ParsePlayersStatistics()
         {
-            string fileText = ReadFile(_path);
-            List<Game> games = _innerParser.ParseGames(fileText);
-            List<PlayerHistory> playerHistories = _innerParser.ParsePlayers(fileText);
-
+            throw new NotImplementedException();
         }
 
         private string ReadFile(string path)

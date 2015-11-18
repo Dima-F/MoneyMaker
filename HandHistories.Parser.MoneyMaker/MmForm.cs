@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using HandHistories.Parser.MoneyMaker.BLL;
+using HandHistories.Parser.MoneyMaker.BLL.Repositories;
 using HandHistories.Parser.MoneyMaker.Configuration;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
 using HandHistories.SimpleParser;
@@ -23,12 +24,12 @@ namespace HandHistories.Parser.MoneyMaker
         private readonly string _handHistoriesFolder;
         
         private IEnumerable<string> _oponentNames;
-        private IRepositoryManager _repositoryManager;
+        private IRepository _repositoryManager;
 
         public MmForm()
         {
             _stopwatch = new Stopwatch();
-            _repositoryManager = new HandHistoryManager(new HandHistoryContext());
+            _repositoryManager = new ContextDbRepository(new HandHistoryContext());
             InitializeComponent();
             _handHistoriesFolder = SettingsConfig.GetConfig("HandHistoryFolder");
             _formSettings=new FormSettings();
@@ -122,7 +123,7 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void FillHudInfo(string fullPath)
         {
-            FillHudMain(fullP)
+            throw new NotImplementedException();
 
         }
 
