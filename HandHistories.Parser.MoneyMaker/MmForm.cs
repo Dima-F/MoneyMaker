@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using HandHistories.Parser.MoneyMaker.BLL;
 using HandHistories.Parser.MoneyMaker.BLL.Repositories;
-using HandHistories.Parser.MoneyMaker.Configuration;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
 using HandHistories.SimpleParser;
 
@@ -14,28 +13,32 @@ namespace HandHistories.Parser.MoneyMaker
 {
     public partial class MmForm : Form
     {
+        //Ф:Он имеет одинаковую сигнатуру из FileTrackingDelegate, но я выделил его в отдельный делегат 
+        //из за его отличающейся назначения.
+        public delegate void FillInofDelegate(string path);
+
         private Stopwatch _stopwatch;
         //forms...
         private FormSettings _formSettings;
 
         private FileTrackingManager _fileTrackingManager;
-        
 
-        private readonly string _handHistoriesFolder;
+        private HudInitializer _hudInitializer;
         
         private IEnumerable<string> _oponentNames;
-        private IRepository _repositoryManager;
+
+        private readonly IRepository _repository;
 
         public MmForm()
         {
             _stopwatch = new Stopwatch();
-            _repositoryManager = new ContextDbRepository(new HandHistoryContext());
+            _repository = new ContextDbRepository(new HandHistoryContext());
             InitializeComponent();
-            _handHistoriesFolder = SettingsConfig.GetConfig("HandHistoryFolder");
             _formSettings=new FormSettings();
             _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
             _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName);
+            _hudInitializer = new HudInitializer(new Poker888CashHandHistoryParser());
         }
         
 
@@ -46,7 +49,7 @@ namespace HandHistories.Parser.MoneyMaker
             //lazy load pattern
             get 
             {
-                return _oponentNames ?? (_oponentNames = _repositoryManager.OponentNames);
+                return _oponentNames ?? (_oponentNames = _repository.OponentNames);
             }
         }
 
@@ -57,7 +60,7 @@ namespace HandHistories.Parser.MoneyMaker
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
             BeginInvoke(new FileTrackingDelegate(ShowFileChanging), string.Format("Poker file {0} changed at {1}", e.FullPath, DateTime.Now.ToShortTimeString()));
-            FillHudInfo(e.FullPath);
+            BeginInvoke(new FillInofDelegate(FillHudInfo), e.FullPath);
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,8 +126,12 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void FillHudInfo(string fullPath)
         {
-            throw new NotImplementedException();
-
+            _hudInitializer.Path = fullPath;
+            var hudStatsCollection = _hudInitializer.ParseHudStatistics();
+            hudGrdVw.DataSource = new BindingSource
+            {
+                DataSource = hudStatsCollection
+            };
         }
 
         private void LoadPlayersList()
@@ -171,7 +178,7 @@ namespace HandHistories.Parser.MoneyMaker
         private void FillStatisticsGrid(string name)
         {
             _stopwatch.Start();
-            var playerStatistics = _repositoryManager.GetPlayerStatisticsByName(name).ToList();
+            var playerStatistics = _repository.GetPlayerStatisticsByName(name).ToList();
             _stopwatch.Stop();
             Debug.WriteLine("Filling statistics grid in " + _stopwatch.Elapsed.Seconds);
             _stopwatch.Reset();
@@ -184,7 +191,7 @@ namespace HandHistories.Parser.MoneyMaker
         private void FillSummaryGrid(string name)
         {
             _stopwatch.Start();
-            var playerSummaries = _repositoryManager.GetPlayerSummariesByName(name).ToList();
+            var playerSummaries = _repository.GetPlayerSummariesByName(name).ToList();
             _stopwatch.Stop();
             Debug.WriteLine("Filling summary grid in "+_stopwatch.Elapsed.Seconds);
             _stopwatch.Reset();
@@ -192,11 +199,6 @@ namespace HandHistories.Parser.MoneyMaker
             {
                 DataSource = playerSummaries
             };
-        }
-
-        private string ReadFile(string path)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

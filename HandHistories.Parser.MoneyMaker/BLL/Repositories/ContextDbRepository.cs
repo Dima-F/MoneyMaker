@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HandHistories.Parser.MoneyMaker.BLL.ViewEntities;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
 using HandHistories.Parser.MoneyMaker.Tools;
 using HandHistories.SimpleObjects.Entities;

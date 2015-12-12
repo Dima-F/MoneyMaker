@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HandHistories.Parser.MoneyMaker.BLL.ViewEntities;
 
 namespace HandHistories.Parser.MoneyMaker.BLL.Repositories
 {

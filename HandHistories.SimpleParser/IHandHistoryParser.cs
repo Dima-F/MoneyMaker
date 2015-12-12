@@ -4,7 +4,7 @@ using HandHistories.SimpleObjects.Entities;
 namespace HandHistories.SimpleParser
 {
     /// <summary>
-    /// Ф:Интерфейс парсинга разширеного класса истории рук
+    /// Ф:Интерфейс задает поведение парсинга игр, историй игроков и действий.
     /// </summary>
     public interface IHandHistoryParser 
     {

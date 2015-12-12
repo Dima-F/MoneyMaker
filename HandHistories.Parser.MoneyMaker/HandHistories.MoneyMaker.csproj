@@ -68,8 +68,9 @@
     <Compile Include="BLL\Repositories\IRepository.cs" />
     <Compile Include="BLL\Repositories\ContextDbRepository.cs" />
     <Compile Include="BLL\HudInitializer.cs" />
-    <Compile Include="BLL\PlayerStatistics.cs" />
-    <Compile Include="BLL\PlayerSummary.cs" />
+    <Compile Include="BLL\ViewEntities\HudStatistics.cs" />
+    <Compile Include="BLL\ViewEntities\PlayerStatistics.cs" />
+    <Compile Include="BLL\ViewEntities\PlayerSummary.cs" />
     <Compile Include="BLL\Repositories\LiveRepository.cs" />
     <Compile Include="EntityFramework\HandHistoryContext.cs" />
     <Compile Include="EntityFramework\HandHistoryInitializer.cs" />
