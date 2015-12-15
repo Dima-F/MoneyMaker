@@ -59,6 +59,9 @@
             this.hudInfoTxtBx = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.hudGrdVw = new System.Windows.Forms.DataGridView();
+            this.panelCards = new System.Windows.Forms.Panel();
+            this.heroCardsLbl = new System.Windows.Forms.Label();
+            this.muckLabel = new System.Windows.Forms.Label();
             this.mainMenuStrip.SuspendLayout();
             this.tabPgGeneral.SuspendLayout();
             this.groupBoxStatistics.SuspendLayout();
@@ -72,6 +75,7 @@
             this.hudMainGrpBx.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hudGrdVw)).BeginInit();
+            this.panelCards.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -150,7 +154,7 @@
             // 
             this.textBoxWatch.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.textBoxWatch.ForeColor = System.Drawing.Color.Navy;
-            this.textBoxWatch.Location = new System.Drawing.Point(0, 403);
+            this.textBoxWatch.Location = new System.Drawing.Point(0, 434);
             this.textBoxWatch.Multiline = true;
             this.textBoxWatch.Name = "textBoxWatch";
             this.textBoxWatch.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -166,7 +170,7 @@
             this.tabPgGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabPgGeneral.Name = "tabPgGeneral";
             this.tabPgGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPgGeneral.Size = new System.Drawing.Size(659, 344);
+            this.tabPgGeneral.Size = new System.Drawing.Size(659, 370);
             this.tabPgGeneral.TabIndex = 0;
             this.tabPgGeneral.Text = "General";
             this.tabPgGeneral.UseVisualStyleBackColor = true;
@@ -262,7 +266,7 @@
             this.nameList.FormattingEnabled = true;
             this.nameList.Location = new System.Drawing.Point(669, 68);
             this.nameList.Name = "nameList";
-            this.nameList.Size = new System.Drawing.Size(184, 329);
+            this.nameList.Size = new System.Drawing.Size(184, 355);
             this.nameList.TabIndex = 2;
             this.nameList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nameList_MouseDoubleClick);
             // 
@@ -285,7 +289,7 @@
             this.mainTab.Multiline = true;
             this.mainTab.Name = "mainTab";
             this.mainTab.SelectedIndex = 0;
-            this.mainTab.Size = new System.Drawing.Size(667, 370);
+            this.mainTab.Size = new System.Drawing.Size(667, 396);
             this.mainTab.TabIndex = 3;
             // 
             // tabPageHud
@@ -294,7 +298,7 @@
             this.tabPageHud.Location = new System.Drawing.Point(4, 22);
             this.tabPageHud.Name = "tabPageHud";
             this.tabPageHud.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageHud.Size = new System.Drawing.Size(659, 344);
+            this.tabPageHud.Size = new System.Drawing.Size(659, 370);
             this.tabPageHud.TabIndex = 1;
             this.tabPageHud.Text = "Hud";
             this.tabPageHud.UseVisualStyleBackColor = true;
@@ -302,10 +306,11 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.hudMainGrpBx);
+            this.flowLayoutPanel1.Controls.Add(this.panelCards);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(644, 331);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(644, 357);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // hudMainGrpBx
@@ -313,7 +318,7 @@
             this.hudMainGrpBx.Controls.Add(this.hudInfoTxtBx);
             this.hudMainGrpBx.Location = new System.Drawing.Point(3, 3);
             this.hudMainGrpBx.Name = "hudMainGrpBx";
-            this.hudMainGrpBx.Size = new System.Drawing.Size(641, 100);
+            this.hudMainGrpBx.Size = new System.Drawing.Size(431, 116);
             this.hudMainGrpBx.TabIndex = 0;
             this.hudMainGrpBx.TabStop = false;
             this.hudMainGrpBx.Text = "Main info:";
@@ -323,15 +328,15 @@
             this.hudInfoTxtBx.Location = new System.Drawing.Point(6, 19);
             this.hudInfoTxtBx.Multiline = true;
             this.hudInfoTxtBx.Name = "hudInfoTxtBx";
-            this.hudInfoTxtBx.Size = new System.Drawing.Size(629, 67);
+            this.hudInfoTxtBx.Size = new System.Drawing.Size(414, 91);
             this.hudInfoTxtBx.TabIndex = 0;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.hudGrdVw);
-            this.groupBox1.Location = new System.Drawing.Point(3, 109);
+            this.groupBox1.Location = new System.Drawing.Point(3, 125);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(641, 222);
+            this.groupBox1.Size = new System.Drawing.Size(641, 232);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Players stats:";
@@ -343,14 +348,45 @@
             this.hudGrdVw.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hudGrdVw.Location = new System.Drawing.Point(3, 16);
             this.hudGrdVw.Name = "hudGrdVw";
-            this.hudGrdVw.Size = new System.Drawing.Size(635, 203);
+            this.hudGrdVw.Size = new System.Drawing.Size(635, 213);
             this.hudGrdVw.TabIndex = 3;
+            // 
+            // panelCards
+            // 
+            this.panelCards.Controls.Add(this.muckLabel);
+            this.panelCards.Controls.Add(this.heroCardsLbl);
+            this.panelCards.Location = new System.Drawing.Point(440, 3);
+            this.panelCards.Name = "panelCards";
+            this.panelCards.Size = new System.Drawing.Size(201, 110);
+            this.panelCards.TabIndex = 2;
+            // 
+            // heroCardsLbl
+            // 
+            this.heroCardsLbl.AutoSize = true;
+            this.heroCardsLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.heroCardsLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.heroCardsLbl.Location = new System.Drawing.Point(13, 9);
+            this.heroCardsLbl.Name = "heroCardsLbl";
+            this.heroCardsLbl.Size = new System.Drawing.Size(88, 17);
+            this.heroCardsLbl.TabIndex = 0;
+            this.heroCardsLbl.Text = "Hero cards";
+            // 
+            // muckLabel
+            // 
+            this.muckLabel.AutoSize = true;
+            this.muckLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.muckLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.muckLabel.Location = new System.Drawing.Point(13, 48);
+            this.muckLabel.Name = "muckLabel";
+            this.muckLabel.Size = new System.Drawing.Size(67, 17);
+            this.muckLabel.TabIndex = 1;
+            this.muckLabel.Text = "Mucking";
             // 
             // MmForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 462);
+            this.ClientSize = new System.Drawing.Size(853, 493);
             this.Controls.Add(this.nameList);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.textBoxWatch);
@@ -379,6 +415,8 @@
             this.hudMainGrpBx.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hudGrdVw)).EndInit();
+            this.panelCards.ResumeLayout(false);
+            this.panelCards.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,6 +469,9 @@
         private System.Windows.Forms.TextBox hudInfoTxtBx;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView hudGrdVw;
+        private System.Windows.Forms.Panel panelCards;
+        private System.Windows.Forms.Label muckLabel;
+        private System.Windows.Forms.Label heroCardsLbl;
     }
 }
 

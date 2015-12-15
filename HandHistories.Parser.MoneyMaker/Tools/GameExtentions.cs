@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleParser;
 
 namespace HandHistories.Parser.MoneyMaker.Tools
 {
@@ -9,6 +10,18 @@ namespace HandHistories.Parser.MoneyMaker.Tools
         public static IEnumerable<string> GetDistinctPlayerNames(this IEnumerable<PlayerHistory> playerHistories)
         {
             return playerHistories.Select(p => p.PlayerName).Distinct();
+        }
+
+        public static IEnumerable<string> GetLivePlayerNames(this IEnumerable<Game> games)
+        {
+            var lastGame = games.Last();
+            return lastGame.PlayerHistories.Where(ph => ph.GameNumber == lastGame.GameNumber).Select(p => p.PlayerName).Distinct();
+        }
+
+        public static IEnumerable<string> GetLivePlayerNames(this IEnumerable<Game> games, IEnumerable<PlayerHistory> playerHistories)
+        {
+            var lastGame = games.Last();
+            return playerHistories.Where(ph => ph.GameNumber == lastGame.GameNumber).Select(p => p.PlayerName).Distinct();
         }
 
         public static IEnumerable<SeatType> GetDistinctLimits(this IEnumerable<Game> games)
@@ -99,10 +112,30 @@ namespace HandHistories.Parser.MoneyMaker.Tools
             return atsSituationCount == 0 ? 0 : (decimal)atsRaiseCount / (decimal)atsSituationCount * 100;
         }
 
+        /// <summary>
+        /// Ф:Следует проверять возвращенное значение на null
+        /// </summary>
+        public static byte[] GetHeroCardsFromLastGame(this IEnumerable<Game> games)
+        {
+            var lastGame = games.Last();
+            var hero = lastGame.PlayerHistories.FirstOrDefault(ph => ph.PlayerName == lastGame.Hero);
+            return hero != null ? hero.HoleCards : null;
+        }
+        
+        //mucking
+        public static bool WasMucking(this Game game)
+        {
+            return game.HandActions.Find(ha => ha.HandActionType == HandActionType.MUCKS) != null;
+        }
 
-
-
-
+        public static string GetPlayerAndMuckedCardsAsString(this Game game)
+        {
+            if (!game.WasMucking())
+                return "There was no mucking in this game";
+            var player = game.HandActions.Find(ha => ha.HandActionType == HandActionType.MUCKS).PlayerName;
+            var cards = game.PlayerHistories.Find(ph => ph.PlayerName == player).HoleCards.ConvertByteCardsToString();
+            return string.Format("{0} mucks:\n {1}", player, cards);
+        }
 
         //Ф:Вся сложность в том, что в истории рук Poker888 за столами 9max позиции нумеруются от 1 до 10, а не от 1 до 9. Просто пропускается из
         //неизвесных мне причин, например восьмая позиция. Поетому алгоритм метода слегка упрощен.

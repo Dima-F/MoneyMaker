@@ -127,6 +127,9 @@ namespace HandHistories.Parser.MoneyMaker
         private void FillHudInfo(string fullPath)
         {
             _hudInitializer.Path = fullPath;
+            hudInfoTxtBx.Text = _hudInitializer.GetHudInfo();
+            heroCardsLbl.Text = "Hero had in last game:\n"+_hudInitializer.GetHeroCards();
+            muckLabel.Text = _hudInitializer.GetMucking();
             var hudStatsCollection = _hudInitializer.ParseHudStatistics();
             hudGrdVw.DataSource = new BindingSource
             {

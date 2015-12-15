@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using HandHistories.SimpleObjects.Entities;
 
 namespace HandHistories.SimpleParser
@@ -74,6 +75,22 @@ namespace HandHistories.SimpleParser
                     throw new Exception("Exception! Suit of the card is empty");
             }
             return (byte)((byte)suit | (byte)rank);
+        }
+
+        public static string ConvertByteCardToString(this byte byteCard)
+        {
+            var card = (Card)byteCard;
+            return Enum.GetName(typeof (Card), card).Replace('_', ' ').Trim();
+        }
+
+        public static string ConvertByteCardsToString(this byte[] byteCards)
+        {
+            var b = new StringBuilder();
+            foreach (var byteCard in byteCards)
+            {
+                b.Append(byteCard.ConvertByteCardToString());
+            }
+            return b.ToString().Insert(2, ",");
         }
 
         public static void InitializeNewCards(this byte[] cards, byte[] newCards)

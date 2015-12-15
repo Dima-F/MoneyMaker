@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace HandHistories.Parser.MoneyMaker.BLL
 {
     /// <summary>
     /// Ф:Уникальный класс, используется в качестве парсера в режиме реального времени с одновременным возвратом необходимых статистических данных 
-    /// без сохранения в базе данных. Т.е. он использует только данные текущей сессии.
+    /// без сохранения в базе данных. Т.е. он использует только данные текущей сессии. Корректно отслеживает изменение только в одном файле(можно 
+    /// играть только за одним столом).
     /// </summary>
     public class HudInitializer
     {
@@ -26,15 +28,60 @@ namespace HandHistories.Parser.MoneyMaker.BLL
 
         public IEnumerable<HudStatistics> ParseHudStatistics()
         {
+            var games = ParseGames();
+            var livePlayerNames = games.GetLivePlayerNames();
+            var handActions = ParseHandActions();
+            return livePlayerNames.Select(playerName => GetHudStatisticsByName(playerName, games, handActions));
+        }
+
+        public string GetHudInfo()
+        {
+            var fileName = System.IO.Path.GetFileNameWithoutExtension(Path);
+            var builder = new StringBuilder();
+            builder.AppendLine("Date: " + fileName.GetDateFromFileName().ToShortDateString());
+            builder.AppendLine("Table name: "+ fileName.GetTableFromFileName());
+            builder.AppendLine("Limit: " + fileName.GetLimitFromFileName());
+            builder.AppendLine("Blinds: " + fileName.GetBlindsFromFileName());
+            builder.AppendLine("Played hands: " + ParseGames().Count);
+            builder.AppendLine("Sitting for: " + ParseTimeSession()+" minutes");
+            return builder.ToString();
+        }
+
+        public string GetHeroCards()
+        {
+            var heroCards = ParseGames().GetHeroCardsFromLastGame();
+            return heroCards != null ? heroCards.ConvertByteCardsToString() : string.Empty;
+        }
+
+        public string GetMucking()
+        {
+            var lastGame = ParseGames().Last();
+            return lastGame.WasMucking() ? lastGame.GetPlayerAndMuckedCardsAsString() : "Wait for mucking...";
+        }
+
+
+
+
+
+        private List<Game> ParseGames()
+        {
             string allText = ReadFile(Path);
-            var games = _innerParser.ParseGames(allText);
-            var playerHistories = _innerParser.ParsePlayers(allText);
-            var playerNames = playerHistories.GetDistinctPlayerNames();
-            var handActions = _innerParser.ParseHandActions(allText);
-            return playerNames.Select(playerName => GetHudStatisticsByName(playerName, games, handActions));
-        } 
+            return _innerParser.ParseGames(allText);
+        }
 
+        private List<HandAction> ParseHandActions()
+        {
+            string allText = ReadFile(Path);
+            return _innerParser.ParseHandActions(allText);
+        }
 
+        private int ParseTimeSession()
+        {
+            var games = ParseGames();
+            TimeSpan start = games.First().DateOfHand.TimeOfDay;
+            var end = games.Last().DateOfHand.TimeOfDay;
+            return Convert.ToInt32((end - start).TotalMinutes);
+        }
 
         /// <summary>
         /// Ф:Читает один конкретный текстовый файл.
