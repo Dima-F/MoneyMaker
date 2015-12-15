@@ -113,11 +113,13 @@ namespace HandHistories.Parser.MoneyMaker.BLL
             var preflopRaiseCount = playerGames.PFRCountForPlayer(name);
             var atsPercent = playerGames.GetATSPercentForPlayer(name);
             var afpfPercent = playerGames.GetAFPercentForPlayer(name);
+            var profit = playerGames.CalculateWinningMoney(name);
             var hudStatistics = new HudStatistics
             {
                 Name = name,
                 Hands = gamesCount,
-                HandsWonPercent = decimal.Round((decimal)handsWon / (decimal)gamesCount * 100, 2),
+                WinPercent = decimal.Round((decimal)handsWon / (decimal)gamesCount * 100, 2),
+                Profit = decimal.Round((decimal)profit,2),
                 VPIP = decimal.Round((decimal)valPutCount / (decimal)gamesCount * 100, 2),
                 PFR = decimal.Round((decimal)preflopRaiseCount / (decimal)gamesCount * 100, 2),
                 ATS = decimal.Round((decimal)atsPercent, 2),

@@ -140,12 +140,12 @@ namespace HandHistories.SimpleParser
                     {
                         case "posts small":
                             ha.HandActionType = HandActionType.SMALL_BLIND;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "posts big":
                             ha.HandActionType = HandActionType.BIG_BLIND;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "folds":
@@ -158,17 +158,17 @@ namespace HandHistories.SimpleParser
                             continue;
                         case "calls":
                             ha.HandActionType = HandActionType.CALL;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "bets":
                             ha.HandActionType = HandActionType.BET;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "raises":
                             ha.HandActionType = HandActionType.RAISE;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "shows":
@@ -181,7 +181,7 @@ namespace HandHistories.SimpleParser
                             continue;
                         case "collected":
                             ha.HandActionType = HandActionType.WINS;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                     }
@@ -257,12 +257,12 @@ namespace HandHistories.SimpleParser
                     {
                         case "posts small":
                             ha.HandActionType = HandActionType.SMALL_BLIND;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "posts big":
                             ha.HandActionType = HandActionType.BIG_BLIND;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "folds":
@@ -275,17 +275,17 @@ namespace HandHistories.SimpleParser
                             continue;
                         case "calls":
                             ha.HandActionType = HandActionType.CALL;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "bets":
                             ha.HandActionType = HandActionType.BET;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "raises":
                             ha.HandActionType = HandActionType.RAISE;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "shows":
@@ -300,7 +300,7 @@ namespace HandHistories.SimpleParser
                             continue;
                         case "collected":
                             ha.HandActionType = HandActionType.WINS;
-                            ha.Amount = multipleLines[i].FindActionAmount();
+                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                     }
@@ -345,6 +345,27 @@ namespace HandHistories.SimpleParser
                 text[i] = text[i].Trim();
             }
             return text.ToList();
+        }
+
+        /// <summary>
+        /// Ф:Обворачивает DefineActionAmount() и добавляет знак (положительный и отрицательный) в зависимости от дохода
+        /// </summary>
+        private decimal DefineActionAmount(HandAction handAction, string inputLine)
+        {
+            var amount = inputLine.FindActionAmount();
+            switch (handAction.HandActionType)
+            {
+                case HandActionType.BET:
+                case HandActionType.BIG_BLIND:
+                case HandActionType.SMALL_BLIND:
+                case HandActionType.CALL:
+                case HandActionType.ALL_IN:
+                case HandActionType.ANTE:
+                case HandActionType.RAISE:
+                    amount = -amount;
+                    break;
+            }
+            return amount;
         }
 
     }

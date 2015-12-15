@@ -137,6 +137,12 @@ namespace HandHistories.Parser.MoneyMaker.Tools
             return string.Format("{0} mucks:\n {1}", player, cards);
         }
 
+        public static decimal CalculateWinningMoney(this IEnumerable<Game> games, string player)
+        {
+            return games.SelectMany(game => game.HandActions.Where(ha => ha.PlayerName == player)).Sum(ha => ha.Amount);
+        }
+
+
         //Ф:Вся сложность в том, что в истории рук Poker888 за столами 9max позиции нумеруются от 1 до 10, а не от 1 до 9. Просто пропускается из
         //неизвесных мне причин, например восьмая позиция. Поетому алгоритм метода слегка упрощен.
         private static byte DefineCutofPosition(Game game)
