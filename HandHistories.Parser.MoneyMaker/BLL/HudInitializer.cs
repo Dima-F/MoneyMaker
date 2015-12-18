@@ -30,8 +30,12 @@ namespace HandHistories.Parser.MoneyMaker.BLL
         {
             var games = ParseGames();
             var livePlayerNames = games.GetLivePlayerNames();
-            var handActions = ParseHandActions();
-            return livePlayerNames.Select(playerName => GetHudStatisticsByName(playerName, games, handActions));
+            var allHandActions = new List<HandAction>();
+            foreach (var game in games)
+            {
+                allHandActions.AddRange(game.HandActions);
+            }
+            return livePlayerNames.Select(playerName => GetHudStatisticsByName(playerName, games, allHandActions));
         }
 
         public string GetHudInfo()
@@ -67,12 +71,6 @@ namespace HandHistories.Parser.MoneyMaker.BLL
         {
             string allText = ReadFile(Path);
             return _innerParser.ParseGames(allText);
-        }
-
-        private List<HandAction> ParseHandActions()
-        {
-            string allText = ReadFile(Path);
-            return _innerParser.ParseHandActions(allText);
         }
 
         private int ParseTimeSession()

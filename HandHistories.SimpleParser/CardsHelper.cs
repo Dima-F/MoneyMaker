@@ -93,13 +93,13 @@ namespace HandHistories.SimpleParser
             return b.ToString().Insert(2, ",");
         }
 
-        public static void InitializeNewCards(this byte[] cards, byte[] newCards)
+        public static void InitializeNewCards(this byte[] oldCards, byte[] newCards)
         {
-            if(cards.Length<newCards.Length)
+            if(oldCards.Length<newCards.Length)
                 throw new ArgumentOutOfRangeException("Board cards must be more than flop cards");
             for (var i = 0; i < newCards.Length; i++)
             {
-                cards[i] = newCards[i];
+                oldCards[i] = newCards[i];
             }
         }
     }

@@ -1,0 +1,13 @@
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\MoneyMakerTests.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\MoneyMakerTests.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\HandHistories.Parser.MoneyMaker.exe
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\HandHistories.SimpleParser.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\EntityFramework.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\HandHistories.Parser.MoneyMaker.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\HandHistories.SimpleParser.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\EntityFramework.xml
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMakerTests.csprojResolveAssemblyReference.cache
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMakerTests.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMakerTests.pdb

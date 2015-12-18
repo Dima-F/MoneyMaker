@@ -103,5 +103,11 @@ namespace HandHistories.Parser.MoneyMaker.Tools
 
             return string.Join(seperator, array);
         }
+
+        public static int SimbolCount(this string inputString, char simbol)
+        {
+            var chars = inputString.ToCharArray();
+            return chars.Count(c => c == simbol);
+        }
     }
 }

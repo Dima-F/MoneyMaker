@@ -9,16 +9,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EAA6EA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandHistories.MoneyMaker", "HandHistories.Parser.MoneyMaker\HandHistories.MoneyMaker.csproj", "{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandHistories.SimpleObjects", "HandHistories.SimpleObjects\HandHistories.SimpleObjects.csproj", "{C4245DCB-A5D5-4D0E-866A-AEDC60BB0F2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandHistories.Objects", "HandHistories.SimpleObjects\HandHistories.Objects.csproj", "{C4245DCB-A5D5-4D0E-866A-AEDC60BB0F2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandHistories.SimpleParser", "HandHistories.SimpleParser\HandHistories.SimpleParser.csproj", "{6A5C8D3E-0213-49B6-84C7-59C4A91F29DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandHistories.Parser", "HandHistories.SimpleParser\HandHistories.Parser.csproj", "{6A5C8D3E-0213-49B6-84C7-59C4A91F29DA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB0E113D-8D61-49F4-AA00-C881094CDFAD}"
 	ProjectSection(SolutionItems) = preProject
 		Tasks.txt = Tasks.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMakerTests", "MoneyMakerTests\MoneyMakerTests.csproj", "{7589A58F-572C-446D-A2DD-535E007E7B8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaker.Tests", "MoneyMakerTests\MoneyMaker.Tests.csproj", "{7589A58F-572C-446D-A2DD-535E007E7B8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

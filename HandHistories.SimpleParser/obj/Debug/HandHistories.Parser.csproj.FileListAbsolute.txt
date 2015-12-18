@@ -1,0 +1,7 @@
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleParser\bin\Debug\HandHistories.SimpleParser.dll
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleParser\bin\Debug\HandHistories.SimpleParser.pdb
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleParser\bin\Debug\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleParser\bin\Debug\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleParser\obj\Debug\HandHistories.Parser.csprojResolveAssemblyReference.cache
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleParser\obj\Debug\HandHistories.SimpleParser.dll
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleParser\obj\Debug\HandHistories.SimpleParser.pdb

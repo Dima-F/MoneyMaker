@@ -4,12 +4,10 @@ using HandHistories.SimpleObjects.Entities;
 namespace HandHistories.SimpleParser
 {
     /// <summary>
-    /// Ф:Интерфейс задает поведение парсинга игр, историй игроков и действий.
+    /// Ф:Интерфейс парсинга игр (рук). Прим: парсинг игроков и типов действий агрегирован в 1 общий метод.
     /// </summary>
     public interface IHandHistoryParser 
     {
         List<Game> ParseGames(string allHandsText);
-        List<PlayerHistory> ParsePlayers(string allHandsText);
-        List<HandAction> ParseHandActions(string allHandsText);
     }
 }

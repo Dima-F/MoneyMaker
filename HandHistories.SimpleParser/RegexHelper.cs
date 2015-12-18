@@ -94,7 +94,11 @@ namespace HandHistories.SimpleParser
 
         public static decimal FindActionAmount(this string inputString)
         {
-            return Decimal.Parse(ActionAmountRegex.Match(inputString).Value.Replace('.',',').Trim());
+            var numberOfDollarSign = SimbolCount(inputString, '$');
+            if (numberOfDollarSign <= 1)
+                return Decimal.Parse(ActionAmountRegex.Match(inputString).Value.Replace('.', ',').Trim());
+            var parts = ActionAmountRegex.Match(inputString).Value.Split('+');
+            return parts.Sum(part => Decimal.Parse(part.Replace('.', ',').Trim().Trim('$')));
         }
 
         public static byte[] FindFlopCards(this string inputString)
@@ -184,6 +188,12 @@ namespace HandHistories.SimpleParser
                 default:
                     return GameType.Any;
             }
+        }
+
+        private static  int SimbolCount(string inputString, char simbol)
+        {
+            var chars = inputString.ToCharArray();
+            return chars.Count(c => c == simbol);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿namespace HandHistories.SimpleObjects.Entities
 {
+    /// <summary>
+    /// HeadsUp or 6Max or FullRing9Handed...
+    /// </summary>
     public enum SeatType : byte
     {
         Unknown = 0,

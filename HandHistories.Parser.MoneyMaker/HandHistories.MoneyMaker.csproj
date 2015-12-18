@@ -125,13 +125,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HandHistories.SimpleObjects\HandHistories.SimpleObjects.csproj">
+    <ProjectReference Include="..\HandHistories.SimpleObjects\HandHistories.Objects.csproj">
       <Project>{c4245dcb-a5d5-4d0e-866a-aedc60bb0f2b}</Project>
-      <Name>HandHistories.SimpleObjects</Name>
+      <Name>HandHistories.Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HandHistories.SimpleParser\HandHistories.SimpleParser.csproj">
+    <ProjectReference Include="..\HandHistories.SimpleParser\HandHistories.Parser.csproj">
       <Project>{6a5c8d3e-0213-49b6-84c7-59c4a91f29da}</Project>
-      <Name>HandHistories.SimpleParser</Name>
+      <Name>HandHistories.Parser</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
