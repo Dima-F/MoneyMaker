@@ -138,15 +138,19 @@ namespace HandHistories.SimpleParser
                     var action = multipleLines[i].Split(' ')[1].Trim();
                     switch (action)
                     {
-                        case "posts small":
-                            ha.HandActionType = HandActionType.SMALL_BLIND;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
-                            handActions.Add(ha);
-                            continue;
-                        case "posts big":
-                            ha.HandActionType = HandActionType.BIG_BLIND;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
-                            handActions.Add(ha);
+                        case "posts":
+                            if (multipleLines[i].Split(' ')[2].Trim() == "big")
+                            {
+                                ha.HandActionType = HandActionType.BIG_BLIND;
+                                ha.Amount = DefineActionAmount(ha,multipleLines[i]);
+                                handActions.Add(ha);
+                            }
+                            else
+                            {
+                                ha.HandActionType = HandActionType.SMALL_BLIND;
+                                ha.Amount = DefineActionAmount(ha,multipleLines[i]);
+                                handActions.Add(ha);
+                            }
                             continue;
                         case "folds":
                             ha.HandActionType = HandActionType.FOLD;
@@ -255,15 +259,19 @@ namespace HandHistories.SimpleParser
                     var action = multipleLines[i].Split(' ')[1].Trim();
                     switch (action)
                     {
-                        case "posts small":
-                            ha.HandActionType = HandActionType.SMALL_BLIND;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
-                            handActions.Add(ha);
-                            continue;
-                        case "posts big":
-                            ha.HandActionType = HandActionType.BIG_BLIND;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
-                            handActions.Add(ha);
+                        case "posts":
+                            if (multipleLines[i].Split(' ')[2].Trim() == "big")
+                            {
+                                ha.HandActionType = HandActionType.BIG_BLIND;
+                                ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                                handActions.Add(ha);
+                            }
+                            else
+                            {
+                                ha.HandActionType = HandActionType.SMALL_BLIND;
+                                ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                                handActions.Add(ha);
+                            }
                             continue;
                         case "folds":
                             ha.HandActionType = HandActionType.FOLD;
