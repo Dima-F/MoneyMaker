@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleObjects.Tools;
 
 namespace HandHistories.SimpleParser
 {

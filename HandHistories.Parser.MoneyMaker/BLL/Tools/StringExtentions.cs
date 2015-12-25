@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace HandHistories.Parser.MoneyMaker.Tools
+namespace HandHistories.Parser.MoneyMaker.BLL.Tools
 {
     public static class StringExtensions
     {

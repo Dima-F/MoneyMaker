@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using HandHistories.Parser.MoneyMaker.BLL.Tools;
 using HandHistories.Parser.MoneyMaker.BLL.ViewEntities;
-using HandHistories.Parser.MoneyMaker.Tools;
 using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleObjects.Tools;
 using HandHistories.SimpleParser;
 
 namespace HandHistories.Parser.MoneyMaker.BLL
@@ -57,15 +58,11 @@ namespace HandHistories.Parser.MoneyMaker.BLL
             return heroCards != null ? heroCards.ConvertByteCardsToString() : string.Empty;
         }
 
-        public string GetMucking()
+        public Muck GetMucking()
         {
             var lastGame = ParseGames().Last();
-            return lastGame.WasMucking() ? lastGame.GetPlayerAndMuckedCardsAsString() : "Wait for mucking...";
+            return lastGame.WasMucking() ? lastGame.GetMuck() : null;
         }
-
-
-
-
 
         private List<Game> ParseGames()
         {

@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CardsHelper.cs" />
     <Compile Include="IHandHistoryParser.cs" />
     <Compile Include="Poker888CashGameParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

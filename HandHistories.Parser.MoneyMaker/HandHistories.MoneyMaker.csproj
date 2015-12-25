@@ -69,6 +69,7 @@
     <Compile Include="BLL\Repositories\ContextDbRepository.cs" />
     <Compile Include="BLL\HudInitializer.cs" />
     <Compile Include="BLL\ViewEntities\HudStatistics.cs" />
+    <Compile Include="BLL\ViewEntities\Muck.cs" />
     <Compile Include="BLL\ViewEntities\PlayerStatistics.cs" />
     <Compile Include="BLL\ViewEntities\PlayerSummary.cs" />
     <Compile Include="BLL\Repositories\LiveRepository.cs" />
@@ -89,9 +90,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\SettingsConfig.cs" />
-    <Compile Include="Tools\GameExtentions.cs" />
-    <Compile Include="Tools\PathParserExtention.cs" />
-    <Compile Include="Tools\StringExtentions.cs" />
+    <Compile Include="BLL\Tools\GameExtentions.cs" />
+    <Compile Include="BLL\Tools\PathParserExtention.cs" />
+    <Compile Include="BLL\Tools\StringExtentions.cs" />
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>

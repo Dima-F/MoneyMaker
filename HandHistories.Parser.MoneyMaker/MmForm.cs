@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using HandHistories.Parser.MoneyMaker.BLL;
 using HandHistories.Parser.MoneyMaker.BLL.Repositories;
+using HandHistories.Parser.MoneyMaker.BLL.Tools;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
+using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleObjects.Tools;
 using HandHistories.SimpleParser;
 
 namespace HandHistories.Parser.MoneyMaker
@@ -128,13 +132,47 @@ namespace HandHistories.Parser.MoneyMaker
         {
             _hudInitializer.Path = fullPath;
             hudInfoTxtBx.Text = _hudInitializer.GetHudInfo();
-            heroCardsLbl.Text = "Hero had in last game:\n"+_hudInitializer.GetHeroCards();
-            muckLabel.Text = _hudInitializer.GetMucking();
+            DrawHeroCards();
+            DrawMuckCards();
             var hudStatsCollection = _hudInitializer.ParseHudStatistics();
             hudGrdVw.DataSource = new BindingSource
             {
                 DataSource = hudStatsCollection
             };
+        }
+
+        private void DrawMuckCards()
+        {
+            var muck = _hudInitializer.GetMucking();
+            if (muck != null)
+            {
+                var cardsArray = muck.Cards.Split(',');
+                muckLabel.Text = muck.PlayerName;
+                pictureBoxMuck1.Image = CardsImageManager.GetImageCard((Card) cardsArray[0].ConvertStringCardToByte());
+                pictureBoxMuck2.Image = CardsImageManager.GetImageCard((Card) cardsArray[1].ConvertStringCardToByte());
+            }
+            else
+            {
+                muckLabel.Text = "Mucking";
+                pictureBoxMuck1.Image = CardsImageManager.GetShirt();
+                pictureBoxMuck2.Image = CardsImageManager.GetShirt();
+            }
+        }
+
+        private void DrawHeroCards()
+        {
+            var heroCards = _hudInitializer.GetHeroCards();
+            if (!heroCards.IsNullOrEmpty())
+            {
+                var heroArray = heroCards.Split(',');
+                pictureBoxHero1.Image = CardsImageManager.GetImageCard((Card) heroArray[0].ConvertStringCardToByte());
+                pictureBoxHero2.Image = CardsImageManager.GetImageCard((Card) heroArray[1].ConvertStringCardToByte());
+            }
+            else
+            {
+                pictureBoxHero1.Image = CardsImageManager.GetShirt();
+                pictureBoxHero2.Image = CardsImageManager.GetShirt();
+            }
         }
 
         private void LoadPlayersList()

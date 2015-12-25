@@ -1,5 +1,5 @@
 ﻿using HandHistories.SimpleObjects.Entities;
-using HandHistories.SimpleParser;
+using HandHistories.SimpleObjects.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MoneyMakerTests.Parsing

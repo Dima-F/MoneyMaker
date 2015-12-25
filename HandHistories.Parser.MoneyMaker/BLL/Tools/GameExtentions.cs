@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HandHistories.Parser.MoneyMaker.BLL.ViewEntities;
 using HandHistories.SimpleObjects.Entities;
-using HandHistories.SimpleParser;
+using HandHistories.SimpleObjects.Tools;
 
-namespace HandHistories.Parser.MoneyMaker.Tools
+namespace HandHistories.Parser.MoneyMaker.BLL.Tools
 {
     public static class GameExtentions
     {
@@ -128,13 +129,12 @@ namespace HandHistories.Parser.MoneyMaker.Tools
             return game.HandActions.Find(ha => ha.HandActionType == HandActionType.MUCKS) != null;
         }
 
-        public static string GetPlayerAndMuckedCardsAsString(this Game game)
+        public static Muck GetMuck(this Game game)
         {
-            if (!game.WasMucking())
-                return "There was no mucking in this game";
             var player = game.HandActions.Find(ha => ha.HandActionType == HandActionType.MUCKS).PlayerName;
             var cards = game.PlayerHistories.Find(ph => ph.PlayerName == player).HoleCards.ConvertByteCardsToString();
-            return string.Format("{0} mucks:\n {1}", player, cards);
+            var muck = new Muck() {PlayerName = player, Cards = cards};
+            return muck;
         }
 
         public static decimal CalculateWinningMoney(this IEnumerable<Game> games, string player)

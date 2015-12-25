@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,7 +49,66 @@
     <Compile Include="Entities\PlayerHistory.cs" />
     <Compile Include="Entities\SeatType.cs" />
     <Compile Include="Entities\Street.cs" />
+    <Compile Include="Tools\CardsHelper.cs" />
+    <Compile Include="Tools\CardsImageManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Cards images\Tc.png" />
+    <EmbeddedResource Include="Cards images\Td.png" />
+    <EmbeddedResource Include="Cards images\Th.png" />
+    <EmbeddedResource Include="Cards images\Ts.png" />
+    <EmbeddedResource Include="Cards images\2c.png" />
+    <EmbeddedResource Include="Cards images\2d.png" />
+    <EmbeddedResource Include="Cards images\2h.png" />
+    <EmbeddedResource Include="Cards images\2s.png" />
+    <EmbeddedResource Include="Cards images\3c.png" />
+    <EmbeddedResource Include="Cards images\3d.png" />
+    <EmbeddedResource Include="Cards images\3h.png" />
+    <EmbeddedResource Include="Cards images\3s.png" />
+    <EmbeddedResource Include="Cards images\4c.png" />
+    <EmbeddedResource Include="Cards images\4d.png" />
+    <EmbeddedResource Include="Cards images\4h.png" />
+    <EmbeddedResource Include="Cards images\4s.png" />
+    <EmbeddedResource Include="Cards images\5c.png" />
+    <EmbeddedResource Include="Cards images\5d.png" />
+    <EmbeddedResource Include="Cards images\5h.png" />
+    <EmbeddedResource Include="Cards images\5s.png" />
+    <EmbeddedResource Include="Cards images\6c.png" />
+    <EmbeddedResource Include="Cards images\6d.png" />
+    <EmbeddedResource Include="Cards images\6h.png" />
+    <EmbeddedResource Include="Cards images\6s.png" />
+    <EmbeddedResource Include="Cards images\7c.png" />
+    <EmbeddedResource Include="Cards images\7d.png" />
+    <EmbeddedResource Include="Cards images\7h.png" />
+    <EmbeddedResource Include="Cards images\7s.png" />
+    <EmbeddedResource Include="Cards images\8c.png" />
+    <EmbeddedResource Include="Cards images\8d.png" />
+    <EmbeddedResource Include="Cards images\8h.png" />
+    <EmbeddedResource Include="Cards images\8s.png" />
+    <EmbeddedResource Include="Cards images\9c.png" />
+    <EmbeddedResource Include="Cards images\9d.png" />
+    <EmbeddedResource Include="Cards images\9h.png" />
+    <EmbeddedResource Include="Cards images\9s.png" />
+    <EmbeddedResource Include="Cards images\Ac.png" />
+    <EmbeddedResource Include="Cards images\Ad.png" />
+    <EmbeddedResource Include="Cards images\Ah.png" />
+    <EmbeddedResource Include="Cards images\As.png" />
+    <EmbeddedResource Include="Cards images\Jc.png" />
+    <EmbeddedResource Include="Cards images\Jd.png" />
+    <EmbeddedResource Include="Cards images\Jh.png" />
+    <EmbeddedResource Include="Cards images\Js.png" />
+    <EmbeddedResource Include="Cards images\Kc.png" />
+    <EmbeddedResource Include="Cards images\Kd.png" />
+    <EmbeddedResource Include="Cards images\Kh.png" />
+    <EmbeddedResource Include="Cards images\Ks.png" />
+    <EmbeddedResource Include="Cards images\Qc.png" />
+    <EmbeddedResource Include="Cards images\Qd.png" />
+    <EmbeddedResource Include="Cards images\Qh.png" />
+    <EmbeddedResource Include="Cards images\Qs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Cards images\Shirt.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

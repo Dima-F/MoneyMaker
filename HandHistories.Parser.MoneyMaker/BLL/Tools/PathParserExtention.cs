@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
 
-namespace HandHistories.Parser.MoneyMaker.Tools
+namespace HandHistories.Parser.MoneyMaker.BLL.Tools
 {
     /// <summary>
     /// Ф:Парсит основную инфу сессии из имени файла

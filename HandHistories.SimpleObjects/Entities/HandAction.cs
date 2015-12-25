@@ -10,10 +10,13 @@ namespace HandHistories.SimpleObjects.Entities
         //FK:
         [Required]
         public int GameNumber { get; set; }
+
         public string PlayerName { get; set; }
         [Required]
         public HandActionType HandActionType { get; set; }
+
         public decimal Amount { get; set; }
+        [Required]
         public Street Street { get; set; }
 
         //nav keys:

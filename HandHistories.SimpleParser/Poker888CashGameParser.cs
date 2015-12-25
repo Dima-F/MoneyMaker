@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleObjects.Tools;
 
 namespace HandHistories.SimpleParser
 {
@@ -40,7 +41,7 @@ namespace HandHistories.SimpleParser
 
         #region MethodWorkers
 
-        private IEnumerable<HandAction> ParseHandActions(Game game, IReadOnlyList<string> multipleLines)
+        private static IEnumerable<HandAction> ParseHandActions(Game game, IReadOnlyList<string> multipleLines)
         {
             var handActions = new List<HandAction>();
             var currentStreet = Street.Preflop;
@@ -163,7 +164,7 @@ namespace HandHistories.SimpleParser
             return handActions;
         }
 
-        private List<PlayerHistory> ParsePlayers(int gameNumber, byte numberOfPlayers, IReadOnlyList<string> multipleLines)
+        private static List<PlayerHistory> ParsePlayers(int gameNumber, byte numberOfPlayers, IReadOnlyList<string> multipleLines)
         {
             var players=new List<PlayerHistory>();
             for (var i = 0; i < numberOfPlayers; i++)
@@ -184,14 +185,14 @@ namespace HandHistories.SimpleParser
             return players;
         }
 
-        private IEnumerable<string> SplitAllTextInMultipleGames(string allHandsText)
+        private static IEnumerable<string> SplitAllTextInMultipleGames(string allHandsText)
         {
             return GameSplitRegex.Split(allHandsText)//разделить входную строку по шаблону регулярного выраж.
                             .Where(s => !string.IsNullOrWhiteSpace(s))//откинуть пустые строки
                             .Select(s => s.Trim('\r', '\n')).ToList();//удалить начальные и конечные управляющие символи
         }
 
-        private List<string> SplitOneGameTextInMultipleLines(string gameText)
+        private static List<string> SplitOneGameTextInMultipleLines(string gameText)
         {
             var text = gameText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < text.Length; i++)
@@ -204,7 +205,7 @@ namespace HandHistories.SimpleParser
         /// <summary>
         /// Ф:Обворачивает DefineActionAmount() и добавляет знак (положительный и отрицательный) в зависимости от дохода
         /// </summary>
-        private decimal DefineActionAmount(HandAction handAction, string inputLine)
+        private static decimal DefineActionAmount(HandAction handAction, string inputLine)
         {
             var amount = inputLine.FindActionAmount();
             switch (handAction.HandActionType)

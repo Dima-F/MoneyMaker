@@ -2,7 +2,7 @@
 using System.Text;
 using HandHistories.SimpleObjects.Entities;
 
-namespace HandHistories.SimpleParser
+namespace HandHistories.SimpleObjects.Tools
 {
     /// <summary>
     /// Ф:Класс методов разширения для переобразования строковых представлений карт в битовые и наоборот.

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HandHistories.Parser.MoneyMaker.BLL.Tools;
 using HandHistories.Parser.MoneyMaker.BLL.ViewEntities;
-using HandHistories.Parser.MoneyMaker.Tools;
 using HandHistories.SimpleObjects.Entities;
 
 namespace HandHistories.Parser.MoneyMaker.BLL.Repositories
