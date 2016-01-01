@@ -18,7 +18,7 @@ namespace MoneyMakerTests.Parsing
         [TestInitialize]
         public void Initialize()
         {
-            _parser = new Poker888CashHandHistoryParser();
+            _parser = new Poker888CashParser();
             _inputText = @"#Game No : 431598730
 ***** 888poker Hand History for Game 431598730 *****
 0,01$/0,02$ Blinds No Limit Holdem - *** 15 12 2015 22:57:07

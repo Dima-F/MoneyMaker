@@ -23,7 +23,7 @@ namespace HandHistories.SimpleObjects.Entities
         BET,
         SMALL_BLIND,
         BIG_BLIND,
-        UNCALLED_BET,
+        UNCALLED_BET,//it can be uncalled bet, raise or all in
         REQUEST_TIME,
         FIFTEEN_SECONDS_LEFT,
         FIVE_SECONDS_LEFT,

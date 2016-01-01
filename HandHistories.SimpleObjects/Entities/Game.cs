@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace HandHistories.SimpleObjects.Entities
 {
     /// <summary>
+    /// HandHistory
     /// Ф:Сущьность одной раздачи (игры, истории руки и т.д.)
     /// Уже заранее подразумевается,что покер рум - 888, а тип игры - кеш на реальные деньги. Позже нужно разширить модель и 
     /// внедрить в нее возможность вариации.

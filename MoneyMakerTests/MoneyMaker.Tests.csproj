@@ -54,25 +54,22 @@
     <Compile Include="Parsing\RegexHelperTest.cs" />
     <Compile Include="Parsing\Poker888ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BLLTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HandHistories.Parser.MoneyMaker\HandHistories.MoneyMaker.csproj">
+    <ProjectReference Include="..\HandHistories.Parser.MoneyMaker\MoneyMaker.UI.csproj">
       <Project>{3c3d1744-7ef0-4c22-a17f-b1f050c9d8ac}</Project>
-      <Name>HandHistories.MoneyMaker</Name>
+      <Name>MoneyMaker.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HandHistories.SimpleObjects\HandHistories.Objects.csproj">
+    <ProjectReference Include="..\HandHistories.SimpleObjects\MoneyMaker.Objects.csproj">
       <Project>{c4245dcb-a5d5-4d0e-866a-aedc60bb0f2b}</Project>
-      <Name>HandHistories.Objects</Name>
+      <Name>MoneyMaker.Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HandHistories.SimpleParser\HandHistories.Parser.csproj">
+    <ProjectReference Include="..\HandHistories.SimpleParser\ManeyMaker.Parser.csproj">
       <Project>{6a5c8d3e-0213-49b6-84c7-59c4a91f29da}</Project>
-      <Name>HandHistories.Parser</Name>
+      <Name>ManeyMaker.Parser</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Poker objects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

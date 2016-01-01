@@ -1,0 +1,16 @@
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.UI.Light.exe.config
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.UI.Light.exe
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.UI.Light.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\HandHistories.SimpleParser.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.BLL.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\HandHistories.SimpleParser.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.BLL.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.csprojResolveAssemblyReference.cache
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.FormSettings.resources
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.MmLightForm.resources
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.Properties.Resources.resources
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.csproj.GenerateResource.Cache
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.exe
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.pdb

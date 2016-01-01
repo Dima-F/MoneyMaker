@@ -10,8 +10,8 @@ namespace HandHistories.SimpleObjects.Entities
         //FK:
         [Required]
         public int GameNumber { get; set; }
-
-        public string PlayerName { get; set; }
+        [Required]
+        public string Source { get; set; }
         [Required]
         public HandActionType HandActionType { get; set; }
 

@@ -11,3 +11,5 @@ E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\EntityFramework.xml
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMaker.Tests.csprojResolveAssemblyReference.cache
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMakerTests.dll
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMakerTests.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\MoneyMaker.BLL.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\MoneyMaker.BLL.pdb

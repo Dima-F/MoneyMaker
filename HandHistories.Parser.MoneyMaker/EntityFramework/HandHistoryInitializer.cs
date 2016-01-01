@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using HandHistories.Parser.MoneyMaker.Configuration;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleParser;
+using MoneyMaker.BLL.Configuration;
 
 namespace HandHistories.Parser.MoneyMaker.EntityFramework
 {
@@ -145,14 +145,14 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                     Game = game,
                     GameNumber = game.GameNumber,
                     HandActionType = HandActionType.DEALT_HERO_CARDS,
-                    PlayerName = "VipNeborak",
+                    Source = "VipNeborak",
                     Street = Street.Preflop
                 },
                 new HandAction
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "VipNeborak",
+                    Source = "VipNeborak",
                     HandActionType = HandActionType.SMALL_BLIND,
                     Amount = (decimal) 0.01,
                     Street = Street.Preflop
@@ -161,7 +161,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "henriquepp",
+                    Source = "henriquepp",
                     HandActionType = HandActionType.BIG_BLIND,
                     Amount = (decimal) 0.02,
                     Street = Street.Preflop
@@ -170,7 +170,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "can4a",
+                    Source = "can4a",
                     HandActionType = HandActionType.FOLD,
                     Street = Street.Preflop
                 },
@@ -178,7 +178,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "mattymitch69",
+                    Source = "mattymitch69",
                     HandActionType = HandActionType.CALL,
                     Amount = (decimal) 0.02,
                     Street = Street.Preflop
@@ -187,7 +187,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "VipNeborak",
+                    Source = "VipNeborak",
                     HandActionType = HandActionType.CALL,
                     Amount = (decimal) 0.01,
                     Street = Street.Preflop
@@ -196,7 +196,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "henriquepp",
+                    Source = "henriquepp",
                     HandActionType = HandActionType.CHECK,
                     Street = Street.Preflop
                 }
@@ -214,7 +214,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "VipNeborak",
+                    Source = "VipNeborak",
                     HandActionType = HandActionType.BET,
                     Amount = (decimal) 0.04,
                     Street = Street.Flop
@@ -223,7 +223,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "henriquepp",
+                    Source = "henriquepp",
                     HandActionType = HandActionType.FOLD,
                     Street = Street.Flop
                 },
@@ -231,7 +231,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "mattymitch69",
+                    Source = "mattymitch69",
                     HandActionType = HandActionType.RAISE,
                     Amount = (decimal) 0.20,
                     Street = Street.Flop
@@ -240,7 +240,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "VipNeborak",
+                    Source = "VipNeborak",
                     HandActionType = HandActionType.FOLD,
                     Street = Street.Flop
                 },
@@ -248,7 +248,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
                 {
                     Game = game,
                     GameNumber = game.GameNumber,
-                    PlayerName = "mattymitch69",
+                    Source = "mattymitch69",
                     HandActionType = HandActionType.WINS,
                     Amount = (decimal) 0.30,
                     Street = Street.Flop
@@ -261,7 +261,7 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
 
         private  void HandHistoryTextSeed(DbContext context, string allText)
         {
-            IHandHistoryParser parser=new Poker888CashHandHistoryParser();
+            IHandHistoryParser parser=new Poker888CashParser();
             var games = parser.ParseGames(allText);
             try
             {

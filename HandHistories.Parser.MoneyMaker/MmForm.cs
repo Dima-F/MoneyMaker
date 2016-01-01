@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using HandHistories.Parser.MoneyMaker.BLL;
-using HandHistories.Parser.MoneyMaker.BLL.Repositories;
-using HandHistories.Parser.MoneyMaker.BLL.Tools;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
+using HandHistories.Parser.MoneyMaker.Repositories;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
 using HandHistories.SimpleParser;
+using MoneyMaker.BLL;
 
 namespace HandHistories.Parser.MoneyMaker
 {
@@ -19,7 +17,7 @@ namespace HandHistories.Parser.MoneyMaker
     {
         //Ф:Он имеет одинаковую сигнатуру из FileTrackingDelegate, но я выделил его в отдельный делегат 
         //из за его отличающейся назначения.
-        public delegate void FillInofDelegate(string path);
+        public delegate void FillInfoDelegate(string path);
 
         private Stopwatch _stopwatch;
         //forms...
@@ -27,8 +25,6 @@ namespace HandHistories.Parser.MoneyMaker
 
         private FileTrackingManager _fileTrackingManager;
 
-        private HudInitializer _hudInitializer;
-        
         private IEnumerable<string> _oponentNames;
 
         private readonly IRepository _repository;
@@ -36,13 +32,12 @@ namespace HandHistories.Parser.MoneyMaker
         public MmForm()
         {
             _stopwatch = new Stopwatch();
+            _fileTrackingManager=new FileTrackingManager();
             _repository = new ContextDbRepository(new HandHistoryContext());
             InitializeComponent();
             _formSettings=new FormSettings();
-            _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
             _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName);
-            _hudInitializer = new HudInitializer(new Poker888CashHandHistoryParser());
         }
         
 
@@ -64,7 +59,7 @@ namespace HandHistories.Parser.MoneyMaker
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
             BeginInvoke(new FileTrackingDelegate(ShowFileChanging), string.Format("Poker file {0} changed at {1}", e.FullPath, DateTime.Now.ToShortTimeString()));
-            BeginInvoke(new FillInofDelegate(FillHudInfo), e.FullPath);
+            BeginInvoke(new FillInfoDelegate(FillHudInfo), e.FullPath);
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -130,20 +125,20 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void FillHudInfo(string fullPath)
         {
-            _hudInitializer.Path = fullPath;
-            hudInfoTxtBx.Text = _hudInitializer.GetHudInfo();
-            DrawHeroCards();
-            DrawMuckCards();
-            var hudStatsCollection = _hudInitializer.ParseHudStatistics();
+            var hudInitializer = new HudInitializer(new Poker888CashParser(), fullPath);
+            hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
+            DrawHeroCards(hudInitializer);
+            DrawMuckCards(hudInitializer);
+            var hudStatsCollection = hudInitializer.ParseHudStatistics();
             hudGrdVw.DataSource = new BindingSource
             {
                 DataSource = hudStatsCollection
             };
         }
 
-        private void DrawMuckCards()
+        private void DrawMuckCards(HudInitializer hudInitializer)
         {
-            var muck = _hudInitializer.GetMucking();
+            var muck = hudInitializer.GetMucking();
             if (muck != null)
             {
                 var cardsArray = muck.Cards.Split(',');
@@ -159,10 +154,10 @@ namespace HandHistories.Parser.MoneyMaker
             }
         }
 
-        private void DrawHeroCards()
+        private void DrawHeroCards(HudInitializer hudInitializer)
         {
-            var heroCards = _hudInitializer.GetHeroCards();
-            if (!heroCards.IsNullOrEmpty())
+            var heroCards = hudInitializer.GetHeroCards();
+            if (!string.IsNullOrEmpty(heroCards))
             {
                 var heroArray = heroCards.Split(',');
                 pictureBoxHero1.Image = CardsImageManager.GetImageCard((Card) heroArray[0].ConvertStringCardToByte());
