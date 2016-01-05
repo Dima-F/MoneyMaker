@@ -32,12 +32,12 @@ namespace HandHistories.Parser.MoneyMaker
         public MmForm()
         {
             _stopwatch = new Stopwatch();
-            _fileTrackingManager=new FileTrackingManager();
+            _fileTrackingManager = new FileTrackingManager();
             _repository = new ContextDbRepository(new HandHistoryContext());
             InitializeComponent();
             _formSettings=new FormSettings();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
-            _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName);
+            _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName,"");
         }
         
 

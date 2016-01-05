@@ -1,44 +1,47 @@
-﻿using System.IO;
-using MoneyMaker.BLL.Configuration;
+﻿using System;
+using System.IO;
 
 namespace MoneyMaker.BLL
 {
     public delegate void FileTrackingDelegate(string path);
+
     /// <summary>
     /// Ф:Обертка над FileSystemWatcher
     /// Пояснения до событийной модели:менеджер ловит событие FileSystemWatcher по изменению файла в директории
     /// и в обработчике генерирует свое в том случае, если имеется хотябы один подписчик.
+    /// Плюс еще до того, FileTrackingManager реализует механизм устранения двойной генерации события FileSystemWatcher.
     /// </summary>
-    public class FileTrackingManager
+    public sealed class FileTrackingManager
     {
-        //files monitoring...
-        private FileSystemWatcher _watcher;
-        private string _folderPath;
+        private readonly FileSystemWatcher _watcher;
 
-        public FileTrackingManager(string folderPath):this()
-        {
-            _folderPath = folderPath;
-        }
+        private DateTime _lastRead;
 
         public FileTrackingManager()
         {
-            _folderPath = SettingsConfig.GetConfig("FileTrackingFolder");
             _watcher = new FileSystemWatcher();
             _watcher.Changed += OnChanged;
+            _lastRead = DateTime.MinValue;
         }
+
+        public string FolderPath { get; private set; }
 
         public event FileSystemEventHandler PokerFileChanged;
 
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
-            if (PokerFileChanged != null)
-                PokerFileChanged(sender, e);
+            if (PokerFileChanged == null) return;
+            var lastWriteTime = File.GetLastWriteTime(e.FullPath);
+            if (lastWriteTime == _lastRead) return;
+            PokerFileChanged(sender, e);
+            _lastRead = lastWriteTime;
         }
 
         //example:filter="*.txt"  notifyFilters=NotifyFilters.LastWrite | NotifyFilters.FileName
-        public void Initialize(string filter, NotifyFilters notifyFilters)
+        public void Initialize(string filter, NotifyFilters notifyFilters, string path)
         {
-            _watcher.Path = _folderPath;
+            FolderPath = path;
+            _watcher.Path = path;
             _watcher.Filter = "*.txt";
             _watcher.NotifyFilter = notifyFilters;
         }
@@ -47,6 +50,7 @@ namespace MoneyMaker.BLL
         {
             set { _watcher.EnableRaisingEvents = value; }
         }
+
 
 
 

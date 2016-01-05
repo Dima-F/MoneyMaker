@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\SettingsConfig.cs" />
     <Compile Include="FileTrackingManager.cs" />
     <Compile Include="HudInitializer.cs" />
     <Compile Include="IHudInitializer.cs" />

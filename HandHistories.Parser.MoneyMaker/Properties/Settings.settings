@@ -1,7 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HandHistories.Parser.MoneyMaker.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CommitCount" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="HandHistoryFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\TexasHoldem\888Poker\HandsHistory\Cash</Value>
+    </Setting>
+    <Setting Name="FileTrackingFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\TexasHoldem\888Poker\HandsHistory\VipNeborak</Value>
+    </Setting>
+    <Setting Name="Hero" Type="System.String" Scope="User">
+      <Value Profile="(Default)">VipNeborak</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

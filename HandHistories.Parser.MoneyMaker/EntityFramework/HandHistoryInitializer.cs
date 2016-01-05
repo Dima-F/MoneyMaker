@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleParser;
-using MoneyMaker.BLL.Configuration;
 
 namespace HandHistories.Parser.MoneyMaker.EntityFramework
 {
@@ -29,9 +26,9 @@ namespace HandHistories.Parser.MoneyMaker.EntityFramework
 
         public HandHistoryInitializer()
         {
-            _handHistoryFloder = SettingsConfig.GetConfig("HandHistoryFolder");
-            _commitCount = Int32.Parse(SettingsConfig.GetConfig("CommitCount"));
-            _manualInitializing = Boolean.Parse(SettingsConfig.GetConfig("IsManualInitializing"));
+            _handHistoryFloder = Properties.Settings.Default.HandHistoryFolder;
+            _commitCount = (int)Properties.Settings.Default.CommitCount;
+            _manualInitializing = false;
             _stopwatch = new Stopwatch();
         }
 

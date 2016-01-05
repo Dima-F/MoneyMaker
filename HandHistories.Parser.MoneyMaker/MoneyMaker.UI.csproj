@@ -63,17 +63,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\ContextDbRepository.cs" />
-    <Compile Include="Repositories\LiveRepository.cs" />
-    <Compile Include="EntityFramework\HandHistoryContext.cs" />
-    <Compile Include="EntityFramework\HandHistoryInitializer.cs" />
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ContextDbRepository.cs" />
+    <Compile Include="Repositories\LiveRepository.cs" />
+    <Compile Include="EntityFramework\HandHistoryContext.cs" />
+    <Compile Include="EntityFramework\HandHistoryInitializer.cs" />
     <Compile Include="MmForm.cs">
       <SubType>Form</SubType>
     </Compile>

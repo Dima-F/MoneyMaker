@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using MoneyMaker.BLL.Configuration;
 
 namespace HandHistories.Parser.MoneyMaker
 {
@@ -10,23 +9,27 @@ namespace HandHistories.Parser.MoneyMaker
         {
             InitializeComponent();
         }
+
         private void FormSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             Hide();
         }
+
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             Close();
         }
+
         private void FormSettings_Load(object sender, EventArgs e)
         {
-            hhFolderTextBox.Text = SettingsConfig.GetConfig("HandHistoryFolder");
-            fileTrackingTxtBx.Text = SettingsConfig.GetConfig("FileTrackingFolder");
-            heroTextBox.Text = SettingsConfig.GetConfig("Hero");
-            numericUpDownComit.Value = Int32.Parse(SettingsConfig.GetConfig("CommitCount"));
+            hhFolderTextBox.Text = Properties.Settings.Default.HandHistoryFolder;
+            fileTrackingTxtBx.Text = Properties.Settings.Default.FileTrackingFolder;
+            heroTextBox.Text = Properties.Settings.Default.Hero;
+            numericUpDownComit.Value = Properties.Settings.Default.CommitCount;
 
         }
+
         private void hhFolderButton_Click(object sender, EventArgs e)
         {
             var result=folderDialog.ShowDialog();
@@ -35,12 +38,14 @@ namespace HandHistories.Parser.MoneyMaker
                 hhFolderTextBox.Text = folderDialog.SelectedPath;
             }
         }
+
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            SettingsConfig.SetConfig("HandHistoryFolder", hhFolderTextBox.Text);
-            SettingsConfig.SetConfig("FileTrackingFolder", fileTrackingTxtBx.Text);
-            SettingsConfig.SetConfig("Hero", heroTextBox.Text);
-            SettingsConfig.SetConfig("CommitCount", numericUpDownComit.Value.ToString());
+            Properties.Settings.Default.HandHistoryFolder = hhFolderTextBox.Text;
+            Properties.Settings.Default.FileTrackingFolder = fileTrackingTxtBx.Text;
+            Properties.Settings.Default.Hero = heroTextBox.Text;
+            Properties.Settings.Default.CommitCount = numericUpDownComit.Value;
+            Properties.Settings.Default.Save();
             Close();
         }
 

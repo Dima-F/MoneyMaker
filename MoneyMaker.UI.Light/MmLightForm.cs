@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -22,15 +22,24 @@ namespace MoneyMaker.UI.Light
 
         private readonly FileTrackingManager _fileTrackingManager;
 
+        private bool _trackingState;
 
 
         public MmLightForm()
         {
+            _trackingState = false;
             InitializeComponent();
             _formSettings = new FormSettings();
             _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
-            _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName);
+            _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Properties.Settings.Default.FileTrackingFolder);
+            Properties.Settings.Default.PropertyChanged += OnSettingsPropertyChanged;
+        }
+
+        private void OnSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "FileTrackingFolder")
+                _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Properties.Settings.Default.FileTrackingFolder);
         }
 
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
@@ -54,16 +63,16 @@ namespace MoneyMaker.UI.Light
 
         private void DrawGraphic(HudInitializer hudInitializer)
         {
-            profitChart.Series["Hero"].ChartType = SeriesChartType.Spline;
+            profitChart.Titles.Add(new Title("Profit graphic"));
+            profitChart.Series["Series1"].ChartType = SeriesChartType.Spline;
             var profits = hudInitializer.GetHeroProfits().ToList();
             var totalProfit = 0m;
-            profitChart.Series["Hero"].Points.AddY(totalProfit);
-            for(var i=0;i<profits.Count();i++)
+            for (var i = 0; i < profits.Count(); i++)
             {
                 totalProfit += profits[i];
-                profitChart.Series["Hero"].Points.AddY(totalProfit);
+                profitChart.Series["Series1"].Points.AddXY(i+1, totalProfit);
             }
-            profitChart.Series["Hero"].LegendText = "bla bla";
+            profitChart.Series["Series1"].LegendText = "Hero";
         }
 
         private void DrawMuckCards(HudInitializer hudInitializer)
@@ -100,14 +109,26 @@ namespace MoneyMaker.UI.Light
             }
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private void pictureBoxTrack_Click(object sender, EventArgs e)
         {
-            _fileTrackingManager.EnableTracking = true;
+            _trackingState = !_trackingState;
+            _fileTrackingManager.EnableTracking = _trackingState;
+            ToggleTrackingButton(_trackingState);
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void ToggleTrackingButton(bool trackingState)
+        {
+            pictureBoxTrack.Image = trackingState ? Properties.Resources.track_of : Properties.Resources.track_on;
+        }
+
+        private void pictureBoxSettings_Click(object sender, EventArgs e)
         {
             _formSettings.ShowDialog();
+        }
+
+        private void MmLightForm_Load(object sender, EventArgs e)
+        {
+            ToggleTrackingButton(_trackingState);
         }
     }
 }

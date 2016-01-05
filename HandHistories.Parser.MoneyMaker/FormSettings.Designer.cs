@@ -30,6 +30,9 @@
         {
             this.settingsTab = new System.Windows.Forms.TabControl();
             this.commonTabPage = new System.Windows.Forms.TabPage();
+            this.fileTrackingBtn = new System.Windows.Forms.Button();
+            this.fileTrackingTxtBx = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.heroTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -44,9 +47,6 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.label4 = new System.Windows.Forms.Label();
-            this.fileTrackingTxtBx = new System.Windows.Forms.TextBox();
-            this.fileTrackingBtn = new System.Windows.Forms.Button();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.advancedTabPage.SuspendLayout();
@@ -83,6 +83,32 @@
             this.commonTabPage.TabIndex = 0;
             this.commonTabPage.Text = "Common";
             this.commonTabPage.UseVisualStyleBackColor = true;
+            // 
+            // fileTrackingBtn
+            // 
+            this.fileTrackingBtn.Location = new System.Drawing.Point(335, 65);
+            this.fileTrackingBtn.Name = "fileTrackingBtn";
+            this.fileTrackingBtn.Size = new System.Drawing.Size(31, 23);
+            this.fileTrackingBtn.TabIndex = 8;
+            this.fileTrackingBtn.Text = "...";
+            this.fileTrackingBtn.UseVisualStyleBackColor = true;
+            this.fileTrackingBtn.Click += new System.EventHandler(this.fileTrackingBtn_Click);
+            // 
+            // fileTrackingTxtBx
+            // 
+            this.fileTrackingTxtBx.Location = new System.Drawing.Point(20, 65);
+            this.fileTrackingTxtBx.Name = "fileTrackingTxtBx";
+            this.fileTrackingTxtBx.Size = new System.Drawing.Size(309, 20);
+            this.fileTrackingTxtBx.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 49);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "File tracking folder:";
             // 
             // heroTextBox
             // 
@@ -226,32 +252,6 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 49);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(96, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "File tracking folder:";
-            // 
-            // fileTrackingTxtBx
-            // 
-            this.fileTrackingTxtBx.Location = new System.Drawing.Point(20, 65);
-            this.fileTrackingTxtBx.Name = "fileTrackingTxtBx";
-            this.fileTrackingTxtBx.Size = new System.Drawing.Size(309, 20);
-            this.fileTrackingTxtBx.TabIndex = 7;
-            // 
-            // fileTrackingBtn
-            // 
-            this.fileTrackingBtn.Location = new System.Drawing.Point(335, 65);
-            this.fileTrackingBtn.Name = "fileTrackingBtn";
-            this.fileTrackingBtn.Size = new System.Drawing.Size(31, 23);
-            this.fileTrackingBtn.TabIndex = 8;
-            this.fileTrackingBtn.Text = "...";
-            this.fileTrackingBtn.UseVisualStyleBackColor = true;
-            this.fileTrackingBtn.Click += new System.EventHandler(this.fileTrackingBtn_Click);
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -264,6 +264,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSettings_FormClosing);
             this.Load += new System.EventHandler(this.FormSettings_Load);
