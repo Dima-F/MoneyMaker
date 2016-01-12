@@ -10,6 +10,8 @@ using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
 using HandHistories.SimpleParser;
 using MoneyMaker.BLL;
+using MoneyMaker.BLL.Files;
+using MoneyMaker.BLL.Hud;
 
 namespace HandHistories.Parser.MoneyMaker
 {

@@ -42,7 +42,7 @@ namespace HandHistories.SimpleParser
             return games;
         }
 
-        #region MethodWorkers
+        #region Method Workers
 
         private static IEnumerable<HandAction> ParseHandActions(Game game, IReadOnlyList<string> multipleLines)
         {
@@ -171,8 +171,6 @@ namespace HandHistories.SimpleParser
             CheckAllHandActionsForUncalled(handActions);
             return handActions;
         }
-
-        
 
         private static List<PlayerHistory> ParsePlayers(int gameNumber, byte numberOfPlayers, IReadOnlyList<string> multipleLines)
         {

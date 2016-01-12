@@ -3,11 +3,12 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
 using HandHistories.SimpleParser;
 using MoneyMaker.BLL;
+using MoneyMaker.BLL.Files;
+using MoneyMaker.BLL.Hud;
 
 namespace MoneyMaker.UI.Light
 {
@@ -23,7 +24,6 @@ namespace MoneyMaker.UI.Light
         private readonly FileTrackingManager _fileTrackingManager;
 
         private bool _trackingState;
-
 
         public MmLightForm()
         {
@@ -63,8 +63,8 @@ namespace MoneyMaker.UI.Light
 
         private void DrawGraphic(HudInitializer hudInitializer)
         {
-            profitChart.Titles.Add(new Title("Profit graphic"));
-            profitChart.Series["Series1"].ChartType = SeriesChartType.Spline;
+
+            profitChart.Series["Series1"].Points.Clear();
             var profits = hudInitializer.GetHeroProfits().ToList();
             var totalProfit = 0m;
             for (var i = 0; i < profits.Count(); i++)
