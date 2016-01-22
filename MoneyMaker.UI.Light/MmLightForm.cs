@@ -1,23 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using HandHistories.SimpleObjects.Entities;
-using HandHistories.SimpleObjects.Tools;
-using HandHistories.SimpleParser;
-using MoneyMaker.BLL;
 using MoneyMaker.BLL.Files;
-using MoneyMaker.BLL.Hud;
 
 namespace MoneyMaker.UI.Light
 {
     public partial class MmLightForm : Form
     {
-        //Ф:Он имеет одинаковую сигнатуру из FileTrackingDelegate, но я выделил его в отдельный делегат 
-        //из за его отличающейся назначения.
-        public delegate void FillInfoDelegate(string path);
-
         //forms...
         private readonly FormSettings _formSettings;
 
@@ -25,11 +16,15 @@ namespace MoneyMaker.UI.Light
 
         private bool _trackingState;
 
+        private readonly IDictionary<string, HudForm> _huds;
+
         public MmLightForm()
         {
+            _huds=new Dictionary<string, HudForm>();
             _trackingState = false;
             InitializeComponent();
             _formSettings = new FormSettings();
+            
             _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
             _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Properties.Settings.Default.FileTrackingFolder);
@@ -44,69 +39,8 @@ namespace MoneyMaker.UI.Light
 
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
-            BeginInvoke(new FillInfoDelegate(FillHudInfo), e.FullPath);
-        }
-
-        private void FillHudInfo(string fullPath)
-        {
-            var hudInitializer = new HudInitializer(new Poker888CashParser(), fullPath);
-            hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
-            DrawHeroCards(hudInitializer);
-            DrawMuckCards(hudInitializer);
-            DrawGraphic(hudInitializer);
-            var hudStatsCollection = hudInitializer.ParseHudStatistics();
-            hudGrdVw.DataSource = new BindingSource
-            {
-                DataSource = hudStatsCollection
-            };
-        }
-
-        private void DrawGraphic(HudInitializer hudInitializer)
-        {
-
-            profitChart.Series["Series1"].Points.Clear();
-            var profits = hudInitializer.GetHeroProfits().ToList();
-            var totalProfit = 0m;
-            for (var i = 0; i < profits.Count(); i++)
-            {
-                totalProfit += profits[i];
-                profitChart.Series["Series1"].Points.AddXY(i+1, totalProfit);
-            }
-            profitChart.Series["Series1"].LegendText = "Hero";
-        }
-
-        private void DrawMuckCards(HudInitializer hudInitializer)
-        {
-            var muck = hudInitializer.GetMucking();
-            if (muck != null)
-            {
-                var cardsArray = muck.Cards.Split(',');
-                muckLabel.Text = muck.PlayerName;
-                pictureBoxMuck1.Image = CardsImageManager.GetImageCard((Card)cardsArray[0].ConvertStringCardToByte());
-                pictureBoxMuck2.Image = CardsImageManager.GetImageCard((Card)cardsArray[1].ConvertStringCardToByte());
-            }
-            else
-            {
-                muckLabel.Text = "Mucking:";
-                pictureBoxMuck1.Image = CardsImageManager.GetShirt();
-                pictureBoxMuck2.Image = CardsImageManager.GetShirt();
-            }
-        }
-
-        private void DrawHeroCards(HudInitializer hudInitializer)
-        {
-            var heroCards = hudInitializer.GetHeroCards();
-            if (!string.IsNullOrEmpty(heroCards))
-            {
-                var heroArray = heroCards.Split(',');
-                pictureBoxHero1.Image = CardsImageManager.GetImageCard((Card)heroArray[0].ConvertStringCardToByte());
-                pictureBoxHero2.Image = CardsImageManager.GetImageCard((Card)heroArray[1].ConvertStringCardToByte());
-            }
-            else
-            {
-                pictureBoxHero1.Image = CardsImageManager.GetShirt();
-                pictureBoxHero2.Image = CardsImageManager.GetShirt();
-            }
+            Action action = () => ShowHudForm( e.FullPath);
+            Invoke(action);
         }
 
         private void pictureBoxTrack_Click(object sender, EventArgs e)
@@ -123,12 +57,27 @@ namespace MoneyMaker.UI.Light
 
         private void pictureBoxSettings_Click(object sender, EventArgs e)
         {
-            _formSettings.ShowDialog();
+            _formSettings.Show();
         }
 
         private void MmLightForm_Load(object sender, EventArgs e)
         {
             ToggleTrackingButton(_trackingState);
+        }
+
+        private void ShowHudForm(string fullPath)
+        {
+            if (!_huds.ContainsKey(fullPath))
+            {
+                var hudForm=new HudForm(fullPath);
+                hudForm.Show();
+                _huds.Add(fullPath,hudForm);
+            }
+            else
+            {
+                _huds[fullPath].Invalidate();
+                _huds[fullPath].Show();
+            }
         }
     }
 }

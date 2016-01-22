@@ -60,7 +60,10 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
-            BeginInvoke(new FileTrackingDelegate(ShowFileChanging), string.Format("Poker file {0} changed at {1}", e.FullPath, DateTime.Now.ToShortTimeString()));
+            //один способ
+            Action action = () => ShowFileChanging(string.Format("Poker file {0} changed at {1}", e.FullPath, DateTime.Now.ToShortTimeString()));
+            BeginInvoke(action);
+            //другой способ
             BeginInvoke(new FillInfoDelegate(FillHudInfo), e.FullPath);
         }
 
