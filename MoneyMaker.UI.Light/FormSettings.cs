@@ -27,6 +27,7 @@ namespace MoneyMaker.UI.Light
             fileTrackingTxtBx.Text = Properties.Settings.Default.FileTrackingFolder;
             heroTextBox.Text = Properties.Settings.Default.Hero;
             numericUpDownComit.Value = Properties.Settings.Default.CommitCount;
+            checkBoxTray.Checked = Properties.Settings.Default.MinimizeInTray;
 
         }
 
@@ -45,6 +46,7 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.FileTrackingFolder = fileTrackingTxtBx.Text;
             Properties.Settings.Default.Hero = heroTextBox.Text;
             Properties.Settings.Default.CommitCount = numericUpDownComit.Value;
+            Properties.Settings.Default.MinimizeInTray = checkBoxTray.Checked;
             Properties.Settings.Default.Save();
             Close();
         }

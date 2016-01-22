@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MmLightForm));
             this.menuPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxSettings = new System.Windows.Forms.PictureBox();
             this.pictureBoxTrack = new System.Windows.Forms.PictureBox();
+            this.notifyIconTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
@@ -83,6 +86,13 @@
             this.pictureBoxTrack.TabStop = false;
             this.pictureBoxTrack.Click += new System.EventHandler(this.pictureBoxTrack_Click);
             // 
+            // notifyIconTray
+            // 
+            this.notifyIconTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIconTray.Icon")));
+            this.notifyIconTray.Text = "MoneyMaker";
+            this.notifyIconTray.Visible = true;
+            this.notifyIconTray.DoubleClick += new System.EventHandler(this.notifyIconTray_DoubleClick);
+            // 
             // MmLightForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -95,6 +105,7 @@
             this.Name = "MmLightForm";
             this.Text = "Money maker light";
             this.Load += new System.EventHandler(this.MmLightForm_Load);
+            this.Resize += new System.EventHandler(this.MmLightForm_Resize);
             this.menuPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).EndInit();
@@ -109,6 +120,7 @@
         private System.Windows.Forms.PictureBox pictureBoxTrack;
         private System.Windows.Forms.PictureBox pictureBoxSettings;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.NotifyIcon notifyIconTray;
     }
 }
 

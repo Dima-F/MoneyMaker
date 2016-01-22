@@ -82,5 +82,17 @@ namespace MoneyMaker.UI.Light.Properties {
                 this["IsManualInitializing"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MinimizeInTray {
+            get {
+                return ((bool)(this["MinimizeInTray"]));
+            }
+            set {
+                this["MinimizeInTray"] = value;
+            }
+        }
     }
 }

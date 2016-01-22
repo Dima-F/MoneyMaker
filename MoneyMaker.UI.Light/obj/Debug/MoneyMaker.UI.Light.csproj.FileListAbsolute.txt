@@ -15,3 +15,4 @@ E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.c
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.exe
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.pdb
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.HudForm.resources
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.FormAbout.resources

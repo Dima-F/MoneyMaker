@@ -48,6 +48,9 @@ namespace MoneyMaker.UI.Light
             _trackingState = !_trackingState;
             _fileTrackingManager.EnableTracking = _trackingState;
             ToggleTrackingButton(_trackingState);
+            if (Properties.Settings.Default.MinimizeInTray &&_trackingState)
+                WindowState = FormWindowState.Minimized;
+
         }
 
         private void ToggleTrackingButton(bool trackingState)
@@ -78,6 +81,18 @@ namespace MoneyMaker.UI.Light
                 _huds[fullPath].Invalidate();
                 _huds[fullPath].Show();
             }
+        }
+
+        private void MmLightForm_Resize(object sender, EventArgs e)
+        {
+            if(WindowState==FormWindowState.Minimized)
+                Hide();
+        }
+
+        private void notifyIconTray_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
         }
     }
 }

@@ -47,8 +47,10 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.checkBoxTray = new System.Windows.Forms.CheckBox();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.advancedTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComit)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -128,6 +130,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxTray);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox1.Location = new System.Drawing.Point(3, 130);
             this.groupBox1.Name = "groupBox1";
@@ -252,6 +255,16 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
+            // checkBoxTray
+            // 
+            this.checkBoxTray.AutoSize = true;
+            this.checkBoxTray.Location = new System.Drawing.Point(8, 30);
+            this.checkBoxTray.Name = "checkBoxTray";
+            this.checkBoxTray.Size = new System.Drawing.Size(168, 17);
+            this.checkBoxTray.TabIndex = 0;
+            this.checkBoxTray.Text = "Minimize to tray when tracking";
+            this.checkBoxTray.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -271,6 +284,8 @@
             this.settingsTab.ResumeLayout(false);
             this.commonTabPage.ResumeLayout(false);
             this.commonTabPage.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.advancedTabPage.ResumeLayout(false);
             this.advancedTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComit)).EndInit();
@@ -301,5 +316,6 @@
         private System.Windows.Forms.TextBox fileTrackingTxtBx;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button fileTrackingBtn;
+        private System.Windows.Forms.CheckBox checkBoxTray;
     }
 }
