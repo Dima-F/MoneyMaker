@@ -1,6 +1,3 @@
-E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.UI.Light.exe.config
-E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.UI.Light.exe
-E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.UI.Light.pdb
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\HandHistories.SimpleObjects.dll
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\HandHistories.SimpleParser.dll
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.BLL.dll
@@ -12,7 +9,14 @@ E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.F
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.MmLightForm.resources
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.Properties.Resources.resources
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.csproj.GenerateResource.Cache
-E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.exe
-E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.pdb
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.HudForm.resources
-E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.UI.Light.FormAbout.resources
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.exe.config
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.exe.manifest
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.application
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.exe
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\bin\Debug\MoneyMaker.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.TrustInfo.xml
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.exe.manifest
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.application
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.exe
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Debug\MoneyMaker.pdb

@@ -13,5 +13,6 @@
         public decimal PFR { get; set; }
         public decimal ATS { get; set; }
         public decimal AF { get; set; }
+        public decimal ThB { get; set; }
     }
 }

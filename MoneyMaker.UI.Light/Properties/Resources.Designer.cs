@@ -73,6 +73,16 @@ namespace MoneyMaker.UI.Light.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap first_skin {
+            get {
+                object obj = ResourceManager.GetObject("first_skin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap green_settings {
             get {
                 object obj = ResourceManager.GetObject("green_settings", resourceCulture);

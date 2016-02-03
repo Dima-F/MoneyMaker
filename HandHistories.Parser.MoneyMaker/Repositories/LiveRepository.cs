@@ -51,7 +51,7 @@ namespace HandHistories.Parser.MoneyMaker.Repositories
             {
                 SeatType l = limit;
                 var limitPlayerGames = playerGames.GetGamesForLimit(l);
-                var handsWon = HandActions.GetHandsWonCountForPlayer(name);
+                var handsWon = HandActions.GetWonActionsCountForPlayer(name);
 
                 var sessionGroups = from lg in limitPlayerGames
                                     group lg by new { lg.TableName, lg.DateOfHand.Date };

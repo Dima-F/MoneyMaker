@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
@@ -18,11 +19,17 @@ namespace MoneyMaker.BLL.Tools
             var lastGame = games.Last();
             return lastGame.PlayerHistories.Where(ph => ph.GameNumber == lastGame.GameNumber).Select(p => p.PlayerName).Distinct();
         }
-
-        public static IEnumerable<string> GetLivePlayerNames(this IEnumerable<Game> games, IEnumerable<PlayerHistory> playerHistories)
+        
+        public static IEnumerable<string> GetLast3GamesPlayerNames(this IEnumerable<Game> games)
         {
-            var lastGame = games.Last();
-            return playerHistories.Where(ph => ph.GameNumber == lastGame.GameNumber).Select(p => p.PlayerName).Distinct();
+            var gamesCount = games.Count();
+            var last3Games = games.Skip(gamesCount - 3);
+            var playerHistories = new List<PlayerHistory>();
+            foreach (Game g in last3Games)
+            {
+                playerHistories.AddRange(g.PlayerHistories);
+            }
+            return playerHistories.Select(p => p.PlayerName).Distinct();
         }
 
         public static IEnumerable<SeatType> GetDistinctLimits(this IEnumerable<Game> games)
@@ -40,10 +47,20 @@ namespace MoneyMaker.BLL.Tools
             return games.Where(game => game.SeatType == seatType);
         }
 
-        public static int GetHandsWonCountForPlayer(this IEnumerable<HandAction> actions, string player)
+        public static int GetWonActionsCountForPlayer(this IEnumerable<HandAction> actions, string player)
         {
             return actions.Count(ha => ha.Source == player
                     && (ha.HandActionType == HandActionType.WINS || ha.HandActionType == HandActionType.WINS_SIDE_POT));
+        }
+
+        public static int GetHandsWonCountForPlayerGames(this IEnumerable<Game> games, string player)
+        {
+            var count = 0;
+            foreach (Game g in games)
+            {
+                count += g.HandActions.Count(ha =>ha.Source==player && ( ha.HandActionType == HandActionType.WINS || ha.HandActionType == HandActionType.WINS_SIDE_POT));
+            }
+            return count;
         }
 
         public static int VPIPCountForPlayer(this IEnumerable<Game> games, string player)
@@ -89,10 +106,11 @@ namespace MoneyMaker.BLL.Tools
             foreach (var g in games)
             {
                 byte buttonPosition = g.ButtonPosition;
-                byte cutofPosition = DefineCutofPosition(g);
+                byte cutofPosition = DefineCutoffPosition(g);
+                byte smallBlindPosition = DefineSBPosition(g);
                 //сначала проверяем, на какой позиции находится игрок - нас интересует CO и BTN
                 byte playerSeatNumber = g.PlayerHistories.Find(p => p.PlayerName == player).SeatNumber;
-                if (!(playerSeatNumber == buttonPosition || playerSeatNumber == cutofPosition))
+                if (!(playerSeatNumber == buttonPosition || playerSeatNumber == cutofPosition || playerSeatNumber==smallBlindPosition))
                     continue;
                 //кэшируем все действия игроков на префлопе
                 var allPlayersPreflopHandActions = g.HandActions.Where(ha => !string.IsNullOrEmpty(ha.Source) && ha.Street == Street.Preflop).ToList();
@@ -113,6 +131,26 @@ namespace MoneyMaker.BLL.Tools
             return atsSituationCount == 0 ? 0 : (decimal)atsRaiseCount / (decimal)atsSituationCount * 100;
         }
 
+        public static int Get3BCountForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var count = 0;
+            foreach (Game g in games)
+            {
+                foreach(HandAction prHa in g.HandActions.Where(ha=>ha.Street==Street.Preflop))
+                {
+                    if (prHa.Source == player && prHa.HandActionType == HandActionType.RAISE)
+                    {
+                        //здесь игрок сделал рейз, теперь проверим, есть ли рейз на прейлопе из меньшим значением (т.е. он будет до нас)
+                        if (g.HandActions.Any(ha => ha.Street == Street.Preflop && ha.Source != player 
+                        && ha.HandActionType == HandActionType.RAISE && ha.Amount < prHa.Amount))
+                            count++;
+                    }
+                }
+            }
+            return count;
+
+        }
+        
         /// <summary>
         /// Ф:Следует проверять возвращенное значение на null
         /// </summary>
@@ -151,38 +189,31 @@ namespace MoneyMaker.BLL.Tools
         {
             return game.HandActions.Where(ha => ha.Source == game.Hero).Sum(ha => ha.Amount);
         }
-
-
-        //Ф:Вся сложность в том, что в истории рук Poker888 за столами 9max позиции нумеруются от 1 до 10, а не от 1 до 9. Просто пропускается из
-        //неизвесных мне причин, например восьмая позиция. Поетому алгоритм метода слегка упрощен.
-        private static byte DefineCutofPosition(Game game)
+        
+        private static byte DefineCutoffPosition(Game g)
         {
-            byte buttonPosition = game.ButtonPosition;
+            byte buttonPosition = g.ButtonPosition;
             //позиции, на которых сидят игроки
-            var positions = game.PlayerHistories.Select(player => player.SeatNumber).ToList();
-            var index = positions.IndexOf(buttonPosition);
-            if (index != -1)
+            var positions = g.PlayerHistories.Select(player => player.SeatNumber).OrderBy(p => p).ToList();
+            if (positions.First() != buttonPosition)
             {
-                //игрок сидит на батоне
-                return index > 0 ? positions[index - 1] : positions.Last();
+                var index = positions.IndexOf(buttonPosition) - 1;
+                return positions[index];
             }
-            //игрок не сидит на батоне
-            return NearestInArrayValue(positions, buttonPosition);
+            else return positions.Max();
         }
 
-        private static byte NearestInArrayValue(List<byte> positions, byte buttonPosition)
+        private static byte DefineSBPosition(Game g)
         {
-            var initialPosition = buttonPosition;
-            while (positions.IndexOf(initialPosition) != -1)
+            byte buttonPosition = g.ButtonPosition;
+            //позиции, на которых сидят игроки
+            var positions = g.PlayerHistories.Select(player => player.SeatNumber).OrderBy(p => p).ToList();
+            if (positions.Last() != buttonPosition)
             {
-                if (initialPosition > 0)
-                    initialPosition--;
-                else
-                {
-                    initialPosition = positions[positions.Count() - 1];
-                }
+                var index = positions.IndexOf(buttonPosition) + 1;
+                return positions[index];
             }
-            return initialPosition;
+            else return positions.Min();
         }
     }
 }

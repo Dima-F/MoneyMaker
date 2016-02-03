@@ -48,8 +48,8 @@ namespace MoneyMaker.BLL.Hud
 
         public IEnumerable<HudStatistics> ParseHudStatistics()
         {
-            var livePlayerNames = _games.GetLivePlayerNames();
-            return livePlayerNames.Select(GetHudStatisticsByName);
+            var last3GamesPlayerNames = _games.GetLast3GamesPlayerNames();
+            return last3GamesPlayerNames.Select(GetHudStatisticsByName);
         }
 
         public string GetHudInfo()
@@ -82,7 +82,6 @@ namespace MoneyMaker.BLL.Hud
             return _games.Select(game => game.CalculateHeroProfit());
         }
 
-
         private List<Game> ParseGames(IHandHistoryParser parser)
         {
             var allText = PokerFileReader.ReadFileWithWaiting(Path);
@@ -100,10 +99,11 @@ namespace MoneyMaker.BLL.Hud
         private HudStatistics GetHudStatisticsByName(string name)
         {
             var playerGames = _games.GetGamesForPlayer(name).ToList();
-            var handsWon = _allHandActions.GetHandsWonCountForPlayer(name);
+            var handsWon = playerGames.GetHandsWonCountForPlayerGames(name);
             var gamesCount = playerGames.Count();
             var valPutCount = playerGames.VPIPCountForPlayer(name);
             var preflopRaiseCount = playerGames.PFRCountForPlayer(name);
+            var preflop3BCount = playerGames.Get3BCountForPlayer(name);
             var atsPercent = playerGames.GetATSPercentForPlayer(name);
             var afpfPercent = playerGames.GetAFPercentForPlayer(name);
             var profit = playerGames.CalculateTotalProfit(name);
@@ -116,7 +116,8 @@ namespace MoneyMaker.BLL.Hud
                 VPIP = decimal.Round((decimal)valPutCount / (decimal)gamesCount * 100, 2),
                 PFR = decimal.Round((decimal)preflopRaiseCount / (decimal)gamesCount * 100, 2),
                 ATS = decimal.Round((decimal)atsPercent, 2),
-                AF = decimal.Round((decimal)afpfPercent, 2)
+                AF = decimal.Round((decimal)afpfPercent, 2),
+                ThB = decimal.Round((decimal)preflop3BCount / (decimal)gamesCount * 100, 2),
             };
             return hudStatistics;
         }

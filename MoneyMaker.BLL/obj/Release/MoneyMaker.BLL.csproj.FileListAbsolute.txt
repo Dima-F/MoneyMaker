@@ -1,0 +1,9 @@
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\bin\Release\MoneyMaker.BLL.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\bin\Release\MoneyMaker.BLL.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\bin\Release\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\bin\Release\HandHistories.SimpleParser.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\bin\Release\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\bin\Release\HandHistories.SimpleParser.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\obj\Release\MoneyMaker.BLL.csprojResolveAssemblyReference.cache
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\obj\Release\MoneyMaker.BLL.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.BLL\obj\Release\MoneyMaker.BLL.pdb

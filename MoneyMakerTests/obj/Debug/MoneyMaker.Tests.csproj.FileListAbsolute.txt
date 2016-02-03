@@ -13,3 +13,5 @@ E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMakerTests.dll
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Debug\MoneyMakerTests.pdb
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\MoneyMaker.BLL.dll
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\MoneyMaker.BLL.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Debug\ru\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll

@@ -1,0 +1,15 @@
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\MoneyMakerTests.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\MoneyMakerTests.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\HandHistories.Parser.MoneyMaker.exe
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\HandHistories.SimpleParser.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\EntityFramework.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\MoneyMaker.BLL.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\HandHistories.Parser.MoneyMaker.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\HandHistories.SimpleParser.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\EntityFramework.xml
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\MoneyMaker.BLL.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Release\MoneyMaker.Tests.csprojResolveAssemblyReference.cache
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Release\MoneyMakerTests.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Release\MoneyMakerTests.pdb

@@ -24,7 +24,6 @@ namespace MoneyMaker.UI.Light
             _trackingState = false;
             InitializeComponent();
             _formSettings = new FormSettings();
-            
             _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
             _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Properties.Settings.Default.FileTrackingFolder);
