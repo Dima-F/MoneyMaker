@@ -55,26 +55,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleParser.dll" size="16896">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleParser.dll" size="17408">
       <assemblyIdentity name="HandHistories.SimpleParser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VzinaSFPZdlGDX0W78fBttVIPdzd8HMBJ6yYnRRvkXk=</dsig:DigestValue>
+        <dsig:DigestValue>W+P3q1+1z4lfyM27q10XXJ6XnbT9by3YBxaHOHD3PeA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="240040">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="239528">
       <assemblyIdentity name="MoneyMaker" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>po7/qWBTR75RNIHiLJeeFd9FHGZfUhd+ddu/Fymeua8=</dsig:DigestValue>
+        <dsig:DigestValue>CLK+FL0r266cnJsoWyqP4OBTK7G0nh6EfjbsZxWY0Go=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>oAW4rvwFlcDqw712g9prs8LfdqqW+RT6wncfEWMS/7M=</dsig:DigestValue>
+        <dsig:DigestValue>vbKIH1rsJU/8OYw7NRc9wwfmtTcIXn+/JJoCObd3yk8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

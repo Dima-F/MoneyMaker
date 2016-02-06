@@ -23,7 +23,8 @@ namespace MoneyMaker.UI.Light
 
         public void FillHudInfo(string fullPath)
         {
-            var hudInitializer = new HudInitializer(new Poker888CashParser(), fullPath);
+            IHandHistoryParser parser = ParserFactory.CreateParser(Path.GetFileNameWithoutExtension(fullPath));
+            var hudInitializer = new HudInitializer(parser, fullPath);
             hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
             DrawHeroCards(hudInitializer);
             DrawMuckCards(hudInitializer);
@@ -93,11 +94,5 @@ namespace MoneyMaker.UI.Light
             e.Cancel = true;
             Hide();
         }
-
-        private void HudForm_Paint(object sender, PaintEventArgs e)
-        {
-            FillHudInfo(_keyPath);
-        }
-
     }
 }

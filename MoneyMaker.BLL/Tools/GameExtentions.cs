@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
@@ -22,10 +21,11 @@ namespace MoneyMaker.BLL.Tools
         
         public static IEnumerable<string> GetLast3GamesPlayerNames(this IEnumerable<Game> games)
         {
-            var gamesCount = games.Count();
-            var last3Games = games.Skip(gamesCount - 3);
+            var enumerable = games as Game[] ?? games.ToArray();
+            var gamesCount = enumerable.Length;
+            var last3Games = enumerable.Skip(gamesCount - 3);
             var playerHistories = new List<PlayerHistory>();
-            foreach (Game g in last3Games)
+            foreach (var g in last3Games)
             {
                 playerHistories.AddRange(g.PlayerHistories);
             }

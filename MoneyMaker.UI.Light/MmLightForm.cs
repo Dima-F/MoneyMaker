@@ -77,7 +77,7 @@ namespace MoneyMaker.UI.Light
             }
             else
             {
-                _huds[fullPath].Invalidate();
+                _huds[fullPath].FillHudInfo(fullPath);
                 _huds[fullPath].Show();
             }
         }

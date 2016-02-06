@@ -92,8 +92,11 @@ namespace MoneyMaker.BLL.Hud
         private int ParseTimeSession()
         {
             TimeSpan start = _games.First().DateOfHand.TimeOfDay;
-            var end = _games.Last().DateOfHand.TimeOfDay;
-            return Convert.ToInt32((end - start).TotalMinutes);
+            TimeSpan end = _games.Last().DateOfHand.TimeOfDay;
+            if(end>=start)
+                return Convert.ToInt32((end - start).TotalMinutes);
+            var timeBefore = (new TimeSpan(23, 59, 59)) - start;
+            return Convert.ToInt32((timeBefore + end).TotalMinutes);
         }
 
         private HudStatistics GetHudStatisticsByName(string name)
@@ -117,7 +120,7 @@ namespace MoneyMaker.BLL.Hud
                 PFR = decimal.Round((decimal)preflopRaiseCount / (decimal)gamesCount * 100, 2),
                 ATS = decimal.Round((decimal)atsPercent, 2),
                 AF = decimal.Round((decimal)afpfPercent, 2),
-                ThB = decimal.Round((decimal)preflop3BCount / (decimal)gamesCount * 100, 2),
+                _3B = decimal.Round((decimal)preflop3BCount / (decimal)gamesCount * 100, 2),
             };
             return hudStatistics;
         }
