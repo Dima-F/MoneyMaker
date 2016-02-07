@@ -12,6 +12,8 @@ namespace MoneyMaker.UI.Light
         //forms...
         private readonly FormSettings _formSettings;
 
+        private readonly AboutForm _aboutForm; 
+
         private readonly FileTrackingManager _fileTrackingManager;
 
         private bool _trackingState;
@@ -24,6 +26,7 @@ namespace MoneyMaker.UI.Light
             _trackingState = false;
             InitializeComponent();
             _formSettings = new FormSettings();
+            _aboutForm=new AboutForm();
             _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
             _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Properties.Settings.Default.FileTrackingFolder);
@@ -59,7 +62,7 @@ namespace MoneyMaker.UI.Light
 
         private void pictureBoxSettings_Click(object sender, EventArgs e)
         {
-            _formSettings.Show();
+            _formSettings.ShowDialog();
         }
 
         private void MmLightForm_Load(object sender, EventArgs e)
@@ -92,6 +95,11 @@ namespace MoneyMaker.UI.Light
         {
             Show();
             WindowState = FormWindowState.Normal;
+        }
+
+        private void pictureBoxAbout_Click(object sender, EventArgs e)
+        {
+            _aboutForm.ShowDialog();
         }
     }
 }

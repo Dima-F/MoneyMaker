@@ -6,7 +6,7 @@
     <InstallUrlHistory />
     <SupportUrlHistory />
     <UpdateUrlHistory />
-    <BootstrapperUrlHistory>C:\Program Files %28x86%29\Microsoft.NET</BootstrapperUrlHistory>
+    <BootstrapperUrlHistory>http://go.microsoft.com/fwlink/p/%3fLinkId=528232|C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\SDK\Bootstrapper|C:\Program Files %28x86%29\Microsoft.NET</BootstrapperUrlHistory>
     <ErrorReportUrlHistory />
     <FallbackCulture>ru-RU</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>

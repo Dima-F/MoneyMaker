@@ -31,22 +31,22 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MmLightForm));
             this.menuPanel = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxSettings = new System.Windows.Forms.PictureBox();
+            this.pictureBoxAbout = new System.Windows.Forms.PictureBox();
             this.pictureBoxTrack = new System.Windows.Forms.PictureBox();
+            this.pictureBoxSettings = new System.Windows.Forms.PictureBox();
             this.notifyIconTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.pictureBoxSkin = new System.Windows.Forms.PictureBox();
             this.menuPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSkin)).BeginInit();
             this.SuspendLayout();
             // 
             // menuPanel
             // 
             this.menuPanel.BackColor = System.Drawing.Color.Black;
-            this.menuPanel.Controls.Add(this.pictureBox1);
+            this.menuPanel.Controls.Add(this.pictureBoxAbout);
             this.menuPanel.Controls.Add(this.pictureBoxTrack);
             this.menuPanel.Controls.Add(this.pictureBoxSettings);
             this.menuPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -55,16 +55,28 @@
             this.menuPanel.Size = new System.Drawing.Size(301, 63);
             this.menuPanel.TabIndex = 0;
             // 
-            // pictureBox1
+            // pictureBoxAbout
             // 
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Image = global::MoneyMaker.UI.Light.Properties.Resources.blue_info;
-            this.pictureBox1.Location = new System.Drawing.Point(242, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(56, 56);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
+            this.pictureBoxAbout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBoxAbout.Image = global::MoneyMaker.UI.Light.Properties.Resources.blue_info;
+            this.pictureBoxAbout.Location = new System.Drawing.Point(242, 3);
+            this.pictureBoxAbout.Name = "pictureBoxAbout";
+            this.pictureBoxAbout.Size = new System.Drawing.Size(56, 56);
+            this.pictureBoxAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxAbout.TabIndex = 13;
+            this.pictureBoxAbout.TabStop = false;
+            this.pictureBoxAbout.Click += new System.EventHandler(this.pictureBoxAbout_Click);
+            // 
+            // pictureBoxTrack
+            // 
+            this.pictureBoxTrack.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBoxTrack.Location = new System.Drawing.Point(118, 3);
+            this.pictureBoxTrack.Name = "pictureBoxTrack";
+            this.pictureBoxTrack.Size = new System.Drawing.Size(56, 56);
+            this.pictureBoxTrack.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxTrack.TabIndex = 11;
+            this.pictureBoxTrack.TabStop = false;
+            this.pictureBoxTrack.Click += new System.EventHandler(this.pictureBoxTrack_Click);
             // 
             // pictureBoxSettings
             // 
@@ -77,17 +89,6 @@
             this.pictureBoxSettings.TabIndex = 12;
             this.pictureBoxSettings.TabStop = false;
             this.pictureBoxSettings.Click += new System.EventHandler(this.pictureBoxSettings_Click);
-            // 
-            // pictureBoxTrack
-            // 
-            this.pictureBoxTrack.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBoxTrack.Location = new System.Drawing.Point(118, 3);
-            this.pictureBoxTrack.Name = "pictureBoxTrack";
-            this.pictureBoxTrack.Size = new System.Drawing.Size(56, 56);
-            this.pictureBoxTrack.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxTrack.TabIndex = 11;
-            this.pictureBoxTrack.TabStop = false;
-            this.pictureBoxTrack.Click += new System.EventHandler(this.pictureBoxTrack_Click);
             // 
             // notifyIconTray
             // 
@@ -123,9 +124,9 @@
             this.Load += new System.EventHandler(this.MmLightForm_Load);
             this.Resize += new System.EventHandler(this.MmLightForm_Resize);
             this.menuPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSkin)).EndInit();
             this.ResumeLayout(false);
 
@@ -136,7 +137,7 @@
         private System.Windows.Forms.Panel menuPanel;
         private System.Windows.Forms.PictureBox pictureBoxTrack;
         private System.Windows.Forms.PictureBox pictureBoxSettings;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBoxAbout;
         private System.Windows.Forms.NotifyIcon notifyIconTray;
         private System.Windows.Forms.PictureBox pictureBoxSkin;
     }

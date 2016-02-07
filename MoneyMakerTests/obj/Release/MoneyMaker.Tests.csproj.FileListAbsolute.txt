@@ -13,3 +13,5 @@ E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\MoneyMaker.BLL.pdb
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Release\MoneyMaker.Tests.csprojResolveAssemblyReference.cache
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Release\MoneyMakerTests.dll
 E:\Programs\Poker\MoneyMaker\MoneyMakerTests\obj\Release\MoneyMakerTests.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+E:\Programs\Poker\MoneyMaker\MoneyMakerTests\bin\Release\ru\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll

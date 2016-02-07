@@ -20,3 +20,4 @@ E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Release\MoneyMaker.exe.mani
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Release\MoneyMaker.application
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Release\MoneyMaker.exe
 E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Release\MoneyMaker.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.UI.Light\obj\Release\MoneyMaker.UI.Light.AboutForm.resources

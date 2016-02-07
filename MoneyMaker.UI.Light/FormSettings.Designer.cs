@@ -36,6 +36,7 @@
             this.heroTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxTray = new System.Windows.Forms.CheckBox();
             this.hhFolderButton = new System.Windows.Forms.Button();
             this.hhFolderTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,7 +48,6 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.checkBoxTray = new System.Windows.Forms.CheckBox();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -138,6 +138,16 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Other options";
+            // 
+            // checkBoxTray
+            // 
+            this.checkBoxTray.AutoSize = true;
+            this.checkBoxTray.Location = new System.Drawing.Point(8, 30);
+            this.checkBoxTray.Name = "checkBoxTray";
+            this.checkBoxTray.Size = new System.Drawing.Size(168, 17);
+            this.checkBoxTray.TabIndex = 0;
+            this.checkBoxTray.Text = "Minimize to tray when tracking";
+            this.checkBoxTray.UseVisualStyleBackColor = true;
             // 
             // hhFolderButton
             // 
@@ -255,20 +265,11 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // checkBoxTray
-            // 
-            this.checkBoxTray.AutoSize = true;
-            this.checkBoxTray.Location = new System.Drawing.Point(8, 30);
-            this.checkBoxTray.Name = "checkBoxTray";
-            this.checkBoxTray.Size = new System.Drawing.Size(168, 17);
-            this.checkBoxTray.TabIndex = 0;
-            this.checkBoxTray.Text = "Minimize to tray when tracking";
-            this.checkBoxTray.UseVisualStyleBackColor = true;
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(382, 375);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.saveBtn);
