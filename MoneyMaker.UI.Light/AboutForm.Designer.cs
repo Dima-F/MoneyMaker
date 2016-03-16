@@ -128,7 +128,9 @@
             this.MinimizeBox = false;
             this.Name = "AboutForm";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About program";
+            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxZetony)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

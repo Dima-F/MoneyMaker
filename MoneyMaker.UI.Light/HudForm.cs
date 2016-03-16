@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Windows.Forms;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
 using HandHistories.SimpleParser;
 using MoneyMaker.BLL.Hud;
+using MoneyMaker.BLL.Stats;
+using MoneyMaker.BLL.ViewEntities;
 
 namespace MoneyMaker.UI.Light
 {
@@ -21,7 +27,7 @@ namespace MoneyMaker.UI.Light
             Text = _keyPath;
         }
 
-        public void FillHudInfo(string fullPath)
+        public void FillHud(string fullPath)
         {
             IHandHistoryParser parser = ParserFactory.CreateParser(Path.GetFileNameWithoutExtension(fullPath));
             var hudInitializer = new HudInitializer(parser, fullPath);
@@ -29,17 +35,15 @@ namespace MoneyMaker.UI.Light
             DrawHeroCards(hudInitializer);
             DrawMuckCards(hudInitializer);
             DrawGraphic(hudInitializer);
-            var hudStatsCollection = hudInitializer.ParseHudStatistics();
-            hudGrdVw.DataSource = new BindingSource
-            {
-                DataSource = hudStatsCollection
-            };
+            hudGrdVw.DataSource = FillDataTable(hudInitializer.ParseHudStats());
+            MinimizeGridVidth();
         }
 
         private void DrawGraphic(HudInitializer hudInitializer)
         {
 
             profitChart.Series["Series1"].Points.Clear();
+            profitChart.Series["Series1"].IsVisibleInLegend = false;
             var profits = hudInitializer.GetHeroProfits().ToList();
             var totalProfit = 0m;
             for (var i = 0; i < profits.Count(); i++)
@@ -86,7 +90,7 @@ namespace MoneyMaker.UI.Light
 
         private void HudForm_Load(object sender, EventArgs e)
         {
-            FillHudInfo(_keyPath);
+            FillHud(_keyPath);
         }
 
         private void HudForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -94,5 +98,40 @@ namespace MoneyMaker.UI.Light
             e.Cancel = true;
             Hide();
         }
+
+        private void MinimizeGridVidth()
+        {
+            hudGrdVw.Columns[0].Width = 65;
+            for (int i = 1; i < hudGrdVw.Columns.Count; i++)
+            {
+                hudGrdVw.Columns[i].Width = 48;
+            }
+        }
+
+        /// <summary>
+        /// Ф:Получает набор статов игроков и формирует таблицу DataTable, которую 
+        /// удобно привязывать к DataGridView
+        /// </summary>
+        private DataTable FillDataTable(List<PlayerStats> hudStatsCollection)
+        {
+            var table = new DataTable();
+            table.Columns.Add("Player");
+            foreach (var stat in hudStatsCollection.First())
+            {
+                table.Columns.Add(stat.Name);
+            }
+            foreach (var ps in hudStatsCollection)
+            {
+                var row = table.NewRow();
+                row[0] = ps.Player;
+                for (var j = 0; j < ps.Count; j++)
+                {
+                    row[j + 1] = ps[j].Value;
+                }
+                table.Rows.Add(row);
+            }
+            return table;
+        }
+        
     }
 }
