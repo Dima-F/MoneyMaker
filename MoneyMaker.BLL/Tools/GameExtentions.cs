@@ -2,7 +2,7 @@
 using System.Linq;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
-using MoneyMaker.BLL.ViewEntities;
+using MoneyMaker.BLL.Hud;
 
 namespace MoneyMaker.BLL.Tools
 {

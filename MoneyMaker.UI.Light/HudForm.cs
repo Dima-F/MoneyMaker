@@ -11,7 +11,7 @@ using HandHistories.SimpleObjects.Tools;
 using HandHistories.SimpleParser;
 using MoneyMaker.BLL.Hud;
 using MoneyMaker.BLL.Stats;
-using MoneyMaker.BLL.ViewEntities;
+using MoneyMaker.UI.Light.BLL;
 
 namespace MoneyMaker.UI.Light
 {
@@ -30,13 +30,14 @@ namespace MoneyMaker.UI.Light
         public void FillHud(string fullPath)
         {
             IHandHistoryParser parser = ParserFactory.CreateParser(Path.GetFileNameWithoutExtension(fullPath));
-            var hudInitializer = new HudInitializer(parser, fullPath);
+            IStatOperator sOperator=new ConditionalStatOperator();
+            var hudInitializer = new HudInitializer(parser,sOperator,fullPath);
             hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
             DrawHeroCards(hudInitializer);
             DrawMuckCards(hudInitializer);
             DrawGraphic(hudInitializer);
-            hudGrdVw.DataSource = FillDataTable(hudInitializer.ParseHudStats());
-            MinimizeGridVidth();
+            hudGrdVw.DataSource = FillDataTable(hudInitializer.GetPlayerStatsList());
+            MinimizeGridWidth();
         }
 
         private void DrawGraphic(HudInitializer hudInitializer)
@@ -99,7 +100,7 @@ namespace MoneyMaker.UI.Light
             Hide();
         }
 
-        private void MinimizeGridVidth()
+        private void MinimizeGridWidth()
         {
             hudGrdVw.Columns[0].Width = 65;
             for (int i = 1; i < hudGrdVw.Columns.Count; i++)

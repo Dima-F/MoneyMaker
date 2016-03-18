@@ -29,6 +29,15 @@ namespace MoneyMaker.UI.Light
             numericUpDownComit.Value = Properties.Settings.Default.CommitCount;
             checkBoxTray.Checked = Properties.Settings.Default.MinimizeInTray;
 
+            cbStatHands.Checked = Properties.Settings.Default.Stat_Hands;
+            cbStatProfit.Checked = Properties.Settings.Default.Stat_Profit;
+            cbStatWin.Checked = Properties.Settings.Default.Stat_Win;
+            cbStatVpip.Checked = Properties.Settings.Default.Stat_VPIP;
+            cbStatPfr.Checked = Properties.Settings.Default.Stat_PFR;
+            cbStatAts.Checked = Properties.Settings.Default.Stat_ATS;
+            cbStatAf.Checked = Properties.Settings.Default.Stat_AF;
+            cbStat3B.Checked = Properties.Settings.Default.Stat_3B;
+            
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -47,6 +56,16 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.Hero = heroTextBox.Text;
             Properties.Settings.Default.CommitCount = numericUpDownComit.Value;
             Properties.Settings.Default.MinimizeInTray = checkBoxTray.Checked;
+
+            Properties.Settings.Default.Stat_Hands=cbStatHands.Checked;
+            Properties.Settings.Default.Stat_Profit = cbStatProfit.Checked;
+            Properties.Settings.Default.Stat_Win = cbStatWin.Checked;
+            Properties.Settings.Default.Stat_VPIP = cbStatVpip.Checked;
+            Properties.Settings.Default.Stat_PFR = cbStatPfr.Checked;
+            Properties.Settings.Default.Stat_ATS = cbStatAts.Checked;
+            Properties.Settings.Default.Stat_AF = cbStatAf.Checked;
+            Properties.Settings.Default.Stat_3B = cbStat3B.Checked; 
+
             Properties.Settings.Default.Save();
             Close();
         }

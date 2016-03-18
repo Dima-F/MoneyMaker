@@ -8,7 +8,6 @@ using HandHistories.SimpleParser;
 using MoneyMaker.BLL.Files;
 using MoneyMaker.BLL.Stats;
 using MoneyMaker.BLL.Tools;
-using MoneyMaker.BLL.ViewEntities;
 
 namespace MoneyMaker.BLL.Hud
 {
@@ -17,20 +16,23 @@ namespace MoneyMaker.BLL.Hud
     /// Ф:Клас-парсер в режиме реального времени с одновременным возвратом необходимых статистических данных 
     /// без сохранения в базе данных. Т.е. он использует только данные текущей сессии. 
     /// </summary>
-    public class HudInitializer : IHudInitializer
+    public  class HudInitializer
     {
         private readonly List<Game> _games;
 
+        private IStatOperator _statOperator;
+
         private readonly List<HandAction> _allHandActions;
 
-        public HudInitializer(IHandHistoryParser parser, string path)
+        public HudInitializer(IHandHistoryParser parser, IStatOperator statOperator, string path)
         {
             Path = path;
             _games = parser.ParseGames(PokerFileReader.ReadFileWithWaiting(Path));
             _allHandActions = new List<HandAction>();
+            _statOperator = statOperator;
         }
 
-        public string Path { get; private set; }
+        public string Path { get; }
 
         //Lazy load pattern
         public List<HandAction> AllHandActions
@@ -47,13 +49,12 @@ namespace MoneyMaker.BLL.Hud
             }
         }
 
-        public List<PlayerStats> ParseHudStats()
+        public virtual List<PlayerStats> GetPlayerStatsList()
         {
-            var last3GamesPlayerNames = _games.GetLast3GamesPlayerNames();
-            return last3GamesPlayerNames.Select(GetStatCollection).ToList();
+            return _statOperator.GetPlayerStatsList(_games);
         }
 
-        public string GetHudInfo()
+        public virtual string GetHudInfo()
         {
             var fileName = System.IO.Path.GetFileNameWithoutExtension(Path);
             var builder = new StringBuilder();
@@ -62,7 +63,7 @@ namespace MoneyMaker.BLL.Hud
             builder.AppendLine("Limit: " + fileName.GetLimitFromFileName());
             builder.AppendLine("Blinds: " + fileName.GetBlindsFromFileName());
             builder.AppendLine("Played hands: " + _games.Count);
-            builder.AppendLine("Sitting for: " + ParseTimeSession() + " minutes");
+            builder.AppendLine("Sitting for: " + GetTimeSession() + " minutes");
             return builder.ToString();
         }
 
@@ -82,12 +83,8 @@ namespace MoneyMaker.BLL.Hud
         {
             return _games.Select(game => game.CalculateHeroProfit());
         }
-
-
-
-
-
-        private int ParseTimeSession()
+        
+        private int GetTimeSession()
         {
             TimeSpan start = _games.First().DateOfHand.TimeOfDay;
             TimeSpan end = _games.Last().DateOfHand.TimeOfDay;
@@ -95,58 +92,6 @@ namespace MoneyMaker.BLL.Hud
                 return Convert.ToInt32((end - start).TotalMinutes);
             var timeBefore = (new TimeSpan(23, 59, 59)) - start;
             return Convert.ToInt32((timeBefore + end).TotalMinutes);
-        }
-
-        private PlayerStats GetStatCollection(string playerName)
-        {
-            var playerGames = _games.GetGamesForPlayer(playerName).ToList();
-            var handsWon = playerGames.GetHandsWonCountForPlayerGames(playerName);
-            var gamesCount = playerGames.Count();
-            var valPutCount = playerGames.VPIPCountForPlayer(playerName);
-            var preflopRaiseCount = playerGames.PFRCountForPlayer(playerName);
-            var preflop3BCount = playerGames.Get3BCountForPlayer(playerName);
-            var atsPercent = playerGames.GetATSPercentForPlayer(playerName);
-            var afpfPercent = playerGames.GetAFPercentForPlayer(playerName);
-            var profit = playerGames.CalculateTotalProfit(playerName);
-            var statCollection = new PlayerStats(playerName, gamesCount)
-            {
-                new Stat
-                {
-                    Name = "Win %",
-                    Value = decimal.Round((decimal) handsWon/(decimal) gamesCount*100, 2)
-                },
-                new Stat
-                {
-                    Name = "Profit",
-                    Value = decimal.Round((decimal) profit, 2)
-                },
-                new Stat
-                {
-                    Name = "VPIP",
-                    Value = decimal.Round((decimal) valPutCount/(decimal) gamesCount*100, 2)
-                },
-                new Stat()
-                {
-                    Name = "PFR",
-                    Value = decimal.Round((decimal) preflopRaiseCount/(decimal) gamesCount*100, 2)
-                },
-                new Stat
-                {
-                    Name = "ATS",
-                    Value = decimal.Round(atsPercent, 2)
-                },
-                new Stat()
-                {
-                    Name = "AF",
-                    Value = decimal.Round((decimal) afpfPercent, 2)
-                },
-                new Stat()
-                {
-                    Name = "3B",
-                    Value = decimal.Round((decimal) preflop3BCount/(decimal) gamesCount*100, 2)
-                }
-            };
-            return statCollection;
         }
 
     }

@@ -12,6 +12,7 @@ using HandHistories.SimpleParser;
 using MoneyMaker.BLL;
 using MoneyMaker.BLL.Files;
 using MoneyMaker.BLL.Hud;
+using MoneyMaker.BLL.Stats;
 
 namespace HandHistories.Parser.MoneyMaker
 {
@@ -130,11 +131,11 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void FillHudInfo(string fullPath)
         {
-            var hudInitializer = new HudInitializer(new Poker888CashParser(), fullPath);
+            var hudInitializer = new HudInitializer(new Poker888CashParser(),new ConditionalStatOperator(),  fullPath);
             hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
             DrawHeroCards(hudInitializer);
             DrawMuckCards(hudInitializer);
-            var hudStatsCollection = hudInitializer.ParseHudStatistics();
+            var hudStatsCollection = hudInitializer.GetPlayerStatsList();
             hudGrdVw.DataSource = new BindingSource
             {
                 DataSource = hudStatsCollection

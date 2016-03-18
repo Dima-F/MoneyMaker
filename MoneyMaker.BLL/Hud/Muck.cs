@@ -1,4 +1,4 @@
-﻿namespace MoneyMaker.BLL.ViewEntities
+﻿namespace MoneyMaker.BLL.Hud
 {
     /// <summary>
     /// Ф:Обеденяет в себе игрока и карты, которые не показал игрок.

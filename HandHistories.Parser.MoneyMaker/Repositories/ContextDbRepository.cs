@@ -4,7 +4,6 @@ using System.Linq;
 using HandHistories.Parser.MoneyMaker.EntityFramework;
 using HandHistories.SimpleObjects.Entities;
 using MoneyMaker.BLL.Tools;
-using MoneyMaker.BLL.ViewEntities;
 
 namespace HandHistories.Parser.MoneyMaker.Repositories
 {

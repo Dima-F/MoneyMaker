@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using HandHistories.SimpleObjects.Entities;
+using MoneyMaker.BLL.Tools;
 
 namespace MoneyMaker.BLL.Stats
 {
@@ -10,18 +13,5 @@ namespace MoneyMaker.BLL.Stats
         public string Name;
         public decimal Value;
         public bool Enabled;
-    }
-
-    /// <summary>
-    /// Ф:Коллекция статов одного игрока
-    /// </summary>
-    public class PlayerStats : List<Stat>
-    {
-        public string Player { get; private set; }
-        public PlayerStats(string name, int hands)
-        {
-            Player = name;
-            Add(new Stat { Name = "Hands", Value = hands, Enabled = true });
-        }
     }
 }

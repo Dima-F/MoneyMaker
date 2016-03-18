@@ -40,6 +40,7 @@
             this.hhFolderButton = new System.Windows.Forms.Button();
             this.hhFolderTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPageStat = new System.Windows.Forms.TabPage();
             this.advancedTabPage = new System.Windows.Forms.TabPage();
             this.numericUpDownComit = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -48,9 +49,19 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbStatHands = new System.Windows.Forms.CheckBox();
+            this.cbStatProfit = new System.Windows.Forms.CheckBox();
+            this.cbStatWin = new System.Windows.Forms.CheckBox();
+            this.cbStatPfr = new System.Windows.Forms.CheckBox();
+            this.cbStatVpip = new System.Windows.Forms.CheckBox();
+            this.cbStatAts = new System.Windows.Forms.CheckBox();
+            this.cbStatAf = new System.Windows.Forms.CheckBox();
+            this.cbStat3B = new System.Windows.Forms.CheckBox();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPageStat.SuspendLayout();
             this.advancedTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComit)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -59,6 +70,7 @@
             // settingsTab
             // 
             this.settingsTab.Controls.Add(this.commonTabPage);
+            this.settingsTab.Controls.Add(this.tabPageStat);
             this.settingsTab.Controls.Add(this.advancedTabPage);
             this.settingsTab.Dock = System.Windows.Forms.DockStyle.Top;
             this.settingsTab.Location = new System.Drawing.Point(0, 0);
@@ -175,6 +187,25 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Hand histories folder:";
             // 
+            // tabPageStat
+            // 
+            this.tabPageStat.Controls.Add(this.cbStat3B);
+            this.tabPageStat.Controls.Add(this.cbStatAf);
+            this.tabPageStat.Controls.Add(this.cbStatAts);
+            this.tabPageStat.Controls.Add(this.cbStatVpip);
+            this.tabPageStat.Controls.Add(this.cbStatPfr);
+            this.tabPageStat.Controls.Add(this.cbStatWin);
+            this.tabPageStat.Controls.Add(this.cbStatProfit);
+            this.tabPageStat.Controls.Add(this.cbStatHands);
+            this.tabPageStat.Controls.Add(this.label5);
+            this.tabPageStat.Location = new System.Drawing.Point(4, 22);
+            this.tabPageStat.Name = "tabPageStat";
+            this.tabPageStat.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageStat.Size = new System.Drawing.Size(374, 288);
+            this.tabPageStat.TabIndex = 2;
+            this.tabPageStat.Text = "Stats";
+            this.tabPageStat.UseVisualStyleBackColor = true;
+            // 
             // advancedTabPage
             // 
             this.advancedTabPage.Controls.Add(this.numericUpDownComit);
@@ -265,6 +296,97 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.ForeColor = System.Drawing.Color.Navy;
+            this.label5.Location = new System.Drawing.Point(103, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(145, 17);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Stats display settings:";
+            // 
+            // cbStatHands
+            // 
+            this.cbStatHands.AutoSize = true;
+            this.cbStatHands.Location = new System.Drawing.Point(8, 39);
+            this.cbStatHands.Name = "cbStatHands";
+            this.cbStatHands.Size = new System.Drawing.Size(57, 17);
+            this.cbStatHands.TabIndex = 2;
+            this.cbStatHands.Text = "Hands";
+            this.cbStatHands.UseVisualStyleBackColor = true;
+            // 
+            // cbStatProfit
+            // 
+            this.cbStatProfit.AutoSize = true;
+            this.cbStatProfit.Location = new System.Drawing.Point(8, 62);
+            this.cbStatProfit.Name = "cbStatProfit";
+            this.cbStatProfit.Size = new System.Drawing.Size(50, 17);
+            this.cbStatProfit.TabIndex = 3;
+            this.cbStatProfit.Text = "Profit";
+            this.cbStatProfit.UseVisualStyleBackColor = true;
+            // 
+            // cbStatWin
+            // 
+            this.cbStatWin.AutoSize = true;
+            this.cbStatWin.Location = new System.Drawing.Point(8, 85);
+            this.cbStatWin.Name = "cbStatWin";
+            this.cbStatWin.Size = new System.Drawing.Size(56, 17);
+            this.cbStatWin.TabIndex = 4;
+            this.cbStatWin.Text = "Win %";
+            this.cbStatWin.UseVisualStyleBackColor = true;
+            // 
+            // cbStatPfr
+            // 
+            this.cbStatPfr.AutoSize = true;
+            this.cbStatPfr.Location = new System.Drawing.Point(8, 131);
+            this.cbStatPfr.Name = "cbStatPfr";
+            this.cbStatPfr.Size = new System.Drawing.Size(47, 17);
+            this.cbStatPfr.TabIndex = 5;
+            this.cbStatPfr.Text = "PFR";
+            this.cbStatPfr.UseVisualStyleBackColor = true;
+            // 
+            // cbStatVpip
+            // 
+            this.cbStatVpip.AutoSize = true;
+            this.cbStatVpip.Location = new System.Drawing.Point(8, 108);
+            this.cbStatVpip.Name = "cbStatVpip";
+            this.cbStatVpip.Size = new System.Drawing.Size(50, 17);
+            this.cbStatVpip.TabIndex = 6;
+            this.cbStatVpip.Text = "VPIP";
+            this.cbStatVpip.UseVisualStyleBackColor = true;
+            // 
+            // cbStatAts
+            // 
+            this.cbStatAts.AutoSize = true;
+            this.cbStatAts.Location = new System.Drawing.Point(8, 154);
+            this.cbStatAts.Name = "cbStatAts";
+            this.cbStatAts.Size = new System.Drawing.Size(47, 17);
+            this.cbStatAts.TabIndex = 7;
+            this.cbStatAts.Text = "ATS";
+            this.cbStatAts.UseVisualStyleBackColor = true;
+            // 
+            // cbStatAf
+            // 
+            this.cbStatAf.AutoSize = true;
+            this.cbStatAf.Location = new System.Drawing.Point(8, 177);
+            this.cbStatAf.Name = "cbStatAf";
+            this.cbStatAf.Size = new System.Drawing.Size(39, 17);
+            this.cbStatAf.TabIndex = 8;
+            this.cbStatAf.Text = "AF";
+            this.cbStatAf.UseVisualStyleBackColor = true;
+            // 
+            // cbStat3B
+            // 
+            this.cbStat3B.AutoSize = true;
+            this.cbStat3B.Location = new System.Drawing.Point(8, 200);
+            this.cbStat3B.Name = "cbStat3B";
+            this.cbStat3B.Size = new System.Drawing.Size(39, 17);
+            this.cbStat3B.TabIndex = 9;
+            this.cbStat3B.Text = "3B";
+            this.cbStat3B.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -287,6 +409,8 @@
             this.commonTabPage.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPageStat.ResumeLayout(false);
+            this.tabPageStat.PerformLayout();
             this.advancedTabPage.ResumeLayout(false);
             this.advancedTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComit)).EndInit();
@@ -318,5 +442,15 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button fileTrackingBtn;
         private System.Windows.Forms.CheckBox checkBoxTray;
+        private System.Windows.Forms.TabPage tabPageStat;
+        private System.Windows.Forms.CheckBox cbStat3B;
+        private System.Windows.Forms.CheckBox cbStatAf;
+        private System.Windows.Forms.CheckBox cbStatAts;
+        private System.Windows.Forms.CheckBox cbStatVpip;
+        private System.Windows.Forms.CheckBox cbStatPfr;
+        private System.Windows.Forms.CheckBox cbStatWin;
+        private System.Windows.Forms.CheckBox cbStatProfit;
+        private System.Windows.Forms.CheckBox cbStatHands;
+        private System.Windows.Forms.Label label5;
     }
 }

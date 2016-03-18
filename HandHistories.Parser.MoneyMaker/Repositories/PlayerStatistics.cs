@@ -1,6 +1,6 @@
 ﻿using HandHistories.SimpleObjects.Entities;
 
-namespace MoneyMaker.BLL.ViewEntities
+namespace HandHistories.Parser.MoneyMaker.Repositories
 {
     public class PlayerStatistics
     {
