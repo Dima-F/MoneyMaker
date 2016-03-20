@@ -20,14 +20,16 @@ namespace MoneyMaker.BLL.Hud
     {
         private readonly List<Game> _games;
 
-        private IStatOperator _statOperator;
+        private readonly IStatOperator _statOperator;
 
         private readonly List<HandAction> _allHandActions;
 
-        public HudInitializer(IHandHistoryParser parser, IStatOperator statOperator, string path)
+        public HudInitializer(IStatOperator statOperator, string path)
         {
             Path = path;
-            _games = parser.ParseGames(PokerFileReader.ReadFileWithWaiting(Path));
+            var text = PokerFileReader.ReadFileWithWaiting(Path);
+            var parser = ParserFactory.CreateParser(System.IO.Path.GetFileNameWithoutExtension(path));
+            _games = parser.ParseGames(text);
             _allHandActions = new List<HandAction>();
             _statOperator = statOperator;
         }

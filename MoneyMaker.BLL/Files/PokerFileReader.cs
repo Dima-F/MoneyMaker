@@ -28,7 +28,7 @@ namespace MoneyMaker.BLL.Files
                     Thread.Sleep(1000);
                 }
             }
-            using (var reader = new StreamReader(fs, Encoding.Default))
+            using (var reader = new StreamReader(fs, Encoding.UTF8))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)

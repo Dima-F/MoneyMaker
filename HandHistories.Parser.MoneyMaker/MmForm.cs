@@ -131,7 +131,7 @@ namespace HandHistories.Parser.MoneyMaker
 
         private void FillHudInfo(string fullPath)
         {
-            var hudInitializer = new HudInitializer(new Poker888CashParser(),new ConditionalStatOperator(),  fullPath);
+            var hudInitializer = new HudInitializer(new BaseStatOperator(),  fullPath);
             hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
             DrawHeroCards(hudInitializer);
             DrawMuckCards(hudInitializer);

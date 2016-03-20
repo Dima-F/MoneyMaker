@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HandHistories.SimpleObjects.Entities;
@@ -84,21 +87,22 @@ namespace HandHistories.SimpleParser
 
         public static byte FindSeatNumber(this string inputString)
         {
-            return Byte.Parse(PlayerSeatRegex.Match(inputString).Value.Trim());
+            return byte.Parse(PlayerSeatRegex.Match(inputString).Value.Trim(), CultureInfo.InvariantCulture);
         }
 
-        public static decimal FindPlayerStartingStack(this string inputString)
+        public static  decimal  FindPlayerStartingStack(this string inputString)
         {
-            return Decimal.Parse(PlayerStackRegex.Match(inputString).Value.Replace('.',','));
+            var s = PlayerStackRegex.Match(inputString).Value.Trim();
+            return decimal.Parse(s.Replace(",", "."), CultureInfo.InvariantCulture);
         }
 
         public static decimal FindActionAmount(this string inputString)
         {
             var numberOfDollarSign = SimbolCount(inputString, '$');
             if (numberOfDollarSign <= 1)
-                return Decimal.Parse(ActionAmountRegex.Match(inputString).Value.Replace('.', ',').Trim());
+                return decimal.Parse(ActionAmountRegex.Match(inputString).Value.Replace(',', '.').Trim(), CultureInfo.InvariantCulture);
             var parts = ActionAmountRegex.Match(inputString).Value.Split('+');
-            return parts.Sum(part => Decimal.Parse(part.Replace('.', ',').Trim().Trim('$')));
+            return parts.Sum(part => decimal.Parse(part.Replace(',', '.').Trim().Trim('$').Trim(), CultureInfo.InvariantCulture));
         }
 
         public static byte[] FindFlopCards(this string inputString)
@@ -137,7 +141,7 @@ namespace HandHistories.SimpleParser
 
         public static byte[] FindShowdounCards(this string inputString)
         {
-            string[] strCards = ShowdounCardsRegex.Match(inputString).Value.Replace(" ", "").Split(',');
+            string[] strCards = ShowdounCardsRegex.Match(inputString).Value.Trim().Replace(" ", "").Split(',');
             var byteArray = new byte[2];
             for (int i = 0; i < strCards.Length; i++)
             {

@@ -41,7 +41,7 @@ namespace MoneyMaker.UI.Light
 
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
-            Action action = () => ShowHudForm( e.FullPath);
+            Action action = () => ShowHudForm(e.FullPath);
             Invoke(action);
         }
 
@@ -80,7 +80,7 @@ namespace MoneyMaker.UI.Light
             }
             else
             {
-                _huds[fullPath].FillHud(fullPath);
+                _huds[fullPath].FillHud();
                 _huds[fullPath].Show();
             }
         }

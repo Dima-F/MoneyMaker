@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HandHistories.SimpleObjects.Entities;
@@ -12,20 +13,20 @@ namespace HandHistories.SimpleParser
     /// <summary>
     /// Ф:Реализация класса парсинга истории рук для кэш игры покеррума Poker888
     /// </summary>
-    public class Poker888CashParser:IHandHistoryParser
+    public class Poker888CashParser : IHandHistoryParser
     {
-        private const string  NameOfSystem="System";
+        private const string NameOfSystem = "System";
         private static readonly Regex GameSplitRegex = new Regex("(?:\r\n\r\n)|(?:\n\n\n)", RegexOptions.Compiled);
 
         public List<Game> ParseGames(string allHandsText)
         {
-            var games=new List<Game>();
+            var games = new List<Game>();
             IEnumerable<string> multipleGames = SplitAllTextInMultipleGames(allHandsText);
             foreach (var concreteGame in multipleGames)
             {
-                if(concreteGame.FindBadHand())
+                if (concreteGame.FindBadHand())
                     continue;
-                var game = new Game {BoardCards = new byte[5]};
+                var game = new Game { BoardCards = new byte[5] };
                 var multipleLines = SplitOneGameTextInMultipleLines(concreteGame);
                 game.GameNumber = multipleLines[0].FindGameNumber();
                 game.HandText = concreteGame;
@@ -38,6 +39,7 @@ namespace HandHistories.SimpleParser
                 game.PlayerHistories = ParsePlayers(game.GameNumber, game.NumberOfPlayers, multipleLines);
                 game.HandActions = ParseHandActions(game, multipleLines).ToList();
                 games.Add(game);
+
             }
             return games;
         }
@@ -66,7 +68,7 @@ namespace HandHistories.SimpleParser
                     {
                         ha.Source = NameOfSystem;
                         ha.HandActionType = HandActionType.DEALING_TURN;
-                        game.BoardCards[3]=multipleLines[i].FindTurnCard();
+                        game.BoardCards[3] = multipleLines[i].FindTurnCard();
                         handActions.Add(ha);
                         currentStreet = Street.Turn;
                         continue;
@@ -137,22 +139,22 @@ namespace HandHistories.SimpleParser
                             continue;
                         case "calls":
                             ha.HandActionType = HandActionType.CALL;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
+                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "bets":
                             ha.HandActionType = HandActionType.BET;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
+                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "raises":
                             ha.HandActionType = HandActionType.RAISE;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
+                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                         case "shows":
                             ha.HandActionType = HandActionType.SHOW;
-                            game.PlayerHistories.Find(p=>p.PlayerName==ha.Source).HoleCards.InitializeNewCards(multipleLines[i].FindShowdounCards());
+                            game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(multipleLines[i].FindShowdounCards());
                             handActions.Add(ha);
                             continue;
                         case "mucks":
@@ -162,7 +164,7 @@ namespace HandHistories.SimpleParser
                             continue;
                         case "collected":
                             ha.HandActionType = HandActionType.WINS;
-                            ha.Amount = DefineActionAmount(ha,multipleLines[i]);
+                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                             handActions.Add(ha);
                             continue;
                     }
@@ -174,15 +176,15 @@ namespace HandHistories.SimpleParser
 
         private static List<PlayerHistory> ParsePlayers(int gameNumber, byte numberOfPlayers, IReadOnlyList<string> multipleLines)
         {
-            var players=new List<PlayerHistory>();
+            var players = new List<PlayerHistory>();
             for (var i = 0; i < numberOfPlayers; i++)
             {
                 string oneLine = multipleLines[6 + i];
                 // Expected format:
                 // Seat 1: josesoyXD ( 2,37$ )
-                var player=new PlayerHistory
+                var player = new PlayerHistory
                 {
-                    GameNumber = gameNumber, 
+                    GameNumber = gameNumber,
                     PlayerName = oneLine.FindPlayerName(),
                     SeatNumber = oneLine.FindSeatNumber(),
                     StartingStack = oneLine.FindPlayerStartingStack(),
@@ -225,7 +227,7 @@ namespace HandHistories.SimpleParser
                 case HandActionType.ALL_IN:
                 case HandActionType.ANTE:
                 case HandActionType.RAISE:
-                    return  -amount;
+                    return -amount;
                 case HandActionType.WINS:
                 case HandActionType.WINS_SIDE_POT:
                 case HandActionType.WINS_THE_LOW:
@@ -240,12 +242,12 @@ namespace HandHistories.SimpleParser
             var count = handActions.Count();
             var lastAgrassiveAction =
                 handActions.LastOrDefault(
-                    ha => ha.HandActionType == HandActionType.BET || ha.HandActionType == HandActionType.RAISE || ha.HandActionType==HandActionType.ALL_IN);
-            if(lastAgrassiveAction==null)return;
+                    ha => ha.HandActionType == HandActionType.BET || ha.HandActionType == HandActionType.RAISE || ha.HandActionType == HandActionType.ALL_IN);
+            if (lastAgrassiveAction == null) return;
             var index = handActions.IndexOf(lastAgrassiveAction);
             for (var i = index; i < count; i++)
             {
-                if(handActions[i].HandActionType==HandActionType.CALL||handActions[i].HandActionType==HandActionType.ALL_IN)
+                if (handActions[i].HandActionType == HandActionType.CALL || handActions[i].HandActionType == HandActionType.ALL_IN)
                     return;
             }
             //тип действия пока не меняем, чтобы не вызвать сбои в остальной части кода програмы.

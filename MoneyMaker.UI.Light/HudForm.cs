@@ -27,11 +27,10 @@ namespace MoneyMaker.UI.Light
             Text = _keyPath;
         }
 
-        public void FillHud(string fullPath)
+        public void FillHud()
         {
-            IHandHistoryParser parser = ParserFactory.CreateParser(Path.GetFileNameWithoutExtension(fullPath));
             IStatOperator sOperator=new ConditionalStatOperator();
-            var hudInitializer = new HudInitializer(parser,sOperator,fullPath);
+            var hudInitializer = new HudInitializer(sOperator, _keyPath);
             hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
             DrawHeroCards(hudInitializer);
             DrawMuckCards(hudInitializer);
@@ -91,7 +90,7 @@ namespace MoneyMaker.UI.Light
 
         private void HudForm_Load(object sender, EventArgs e)
         {
-            FillHud(_keyPath);
+            FillHud();
         }
 
         private void HudForm_FormClosing(object sender, FormClosingEventArgs e)
