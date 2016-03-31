@@ -56,10 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HandHistories.Parser.MoneyMaker\MoneyMaker.UI.csproj">
-      <Project>{3c3d1744-7ef0-4c22-a17f-b1f050c9d8ac}</Project>
-      <Name>MoneyMaker.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HandHistories.SimpleObjects\MoneyMaker.Objects.csproj">
       <Project>{c4245dcb-a5d5-4d0e-866a-aedc60bb0f2b}</Project>
       <Name>MoneyMaker.Objects</Name>

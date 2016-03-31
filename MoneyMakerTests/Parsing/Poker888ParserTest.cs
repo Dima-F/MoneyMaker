@@ -2,6 +2,7 @@
 using System.Linq;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleParser;
+using HandHistories.SimpleParser.Poker888;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MoneyMakerTests.Parsing

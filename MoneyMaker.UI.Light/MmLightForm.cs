@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using MoneyMaker.BLL.Files;
@@ -41,6 +42,7 @@ namespace MoneyMaker.UI.Light
 
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
+            //ShowHudForm(e.FullPath);
             Action action = () => ShowHudForm(e.FullPath);
             Invoke(action);
         }

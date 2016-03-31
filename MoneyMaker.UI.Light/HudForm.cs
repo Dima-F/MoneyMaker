@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.IO.Pipes;
 using System.Linq;
 using System.Windows.Forms;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
-using HandHistories.SimpleParser;
 using MoneyMaker.BLL.Hud;
 using MoneyMaker.BLL.Stats;
 using MoneyMaker.UI.Light.BLL;
@@ -24,13 +21,13 @@ namespace MoneyMaker.UI.Light
             
             InitializeComponent();
             _keyPath = key;
-            Text = _keyPath;
+            Text = Path.GetFileNameWithoutExtension(_keyPath);
         }
 
         public void FillHud()
         {
             IStatOperator sOperator=new ConditionalStatOperator();
-            var hudInitializer = new HudInitializer(sOperator, _keyPath);
+            var hudInitializer = new HudTable(sOperator, _keyPath);
             hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
             DrawHeroCards(hudInitializer);
             DrawMuckCards(hudInitializer);
@@ -39,12 +36,12 @@ namespace MoneyMaker.UI.Light
             MinimizeGridWidth();
         }
 
-        private void DrawGraphic(HudInitializer hudInitializer)
+        private void DrawGraphic(HudTable hudTable)
         {
 
             profitChart.Series["Series1"].Points.Clear();
             profitChart.Series["Series1"].IsVisibleInLegend = false;
-            var profits = hudInitializer.GetHeroProfits().ToList();
+            var profits = hudTable.GetHeroProfits().ToList();
             var totalProfit = 0m;
             for (var i = 0; i < profits.Count(); i++)
             {
@@ -54,9 +51,9 @@ namespace MoneyMaker.UI.Light
             profitChart.Series["Series1"].LegendText = "Hero";
         }
 
-        private void DrawMuckCards(HudInitializer hudInitializer)
+        private void DrawMuckCards(HudTable hudTable)
         {
-            var muck = hudInitializer.GetMucking();
+            var muck = hudTable.GetMucking();
             if (muck != null)
             {
                 var cardsArray = muck.Cards.Split(',');
@@ -72,9 +69,9 @@ namespace MoneyMaker.UI.Light
             }
         }
 
-        private void DrawHeroCards(HudInitializer hudInitializer)
+        private void DrawHeroCards(HudTable hudTable)
         {
-            var heroCards = hudInitializer.GetHeroCards();
+            var heroCards = hudTable.GetHeroCards();
             if (!string.IsNullOrEmpty(heroCards))
             {
                 var heroArray = heroCards.Split(',');

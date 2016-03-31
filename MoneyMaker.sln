@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EAA6EA
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaker.UI", "HandHistories.Parser.MoneyMaker\MoneyMaker.UI.csproj", "{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaker.Objects", "HandHistories.SimpleObjects\MoneyMaker.Objects.csproj", "{C4245DCB-A5D5-4D0E-866A-AEDC60BB0F2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManeyMaker.Parser", "HandHistories.SimpleParser\ManeyMaker.Parser.csproj", "{6A5C8D3E-0213-49B6-84C7-59C4A91F29DA}"
@@ -45,34 +43,6 @@ Global
 		SingleImage|x86 = SingleImage|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.CD_ROM|Mixed Platforms.Build.0 = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.CD_ROM|x86.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.CD_ROM|x86.Build.0 = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.DVD-5|x86.ActiveCfg = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.DVD-5|x86.Build.0 = Debug|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.Release|x86.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.SingleImage|Any CPU.Build.0 = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.SingleImage|x86.ActiveCfg = Release|Any CPU
-		{3C3D1744-7EF0-4C22-A17F-B1F050C9D8AC}.SingleImage|x86.Build.0 = Release|Any CPU
 		{C4245DCB-A5D5-4D0E-866A-AEDC60BB0F2B}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
 		{C4245DCB-A5D5-4D0E-866A-AEDC60BB0F2B}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
 		{C4245DCB-A5D5-4D0E-866A-AEDC60BB0F2B}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU

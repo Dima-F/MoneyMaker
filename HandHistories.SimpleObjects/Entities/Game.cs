@@ -8,8 +8,6 @@ namespace HandHistories.SimpleObjects.Entities
     /// <summary>
     /// HandHistory
     /// Ф:Сущьность одной раздачи (игры, истории руки и т.д.)
-    /// Уже заранее подразумевается,что покер рум - 888, а тип игры - кеш на реальные деньги. Позже нужно разширить модель и 
-    /// внедрить в нее возможность вариации.
     /// </summary>
     public class Game
     {
@@ -22,7 +20,9 @@ namespace HandHistories.SimpleObjects.Entities
         [Required]
         public SeatType SeatType { get; set; }
         [Required]
-        public  GameType GameType { get; set; }
+        public  LimitType LimitType { get; set; }
+        [Required]
+        public MoneyType MoneyType { get; set; }
         [Required]
         public byte ButtonPosition { get; set; }
         [Required]

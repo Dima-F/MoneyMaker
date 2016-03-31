@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleParser;
+using HandHistories.SimpleParser.Poker888;
 
 namespace HandHistories.Parser.MoneyMaker.EntityFramework
 {

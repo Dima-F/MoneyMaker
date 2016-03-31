@@ -38,7 +38,7 @@ namespace MoneyMakerTests.Parsing
         {
             const string line = "0,01$/0,02$ Blinds No Limit Holdem - *** 18 11 2015 10:53:20";
             var gameType = line.FindGameType();
-            Assert.AreEqual(GameType.NoLimitHoldem, gameType);
+            Assert.AreEqual(LimitType.NoLimit, gameType);
         }
 
         [TestMethod]

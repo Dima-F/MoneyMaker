@@ -2,3 +2,4 @@ E:\Programs\Poker\MoneyMaker\HandHistories.SimpleObjects\bin\Debug\HandHistories
 E:\Programs\Poker\MoneyMaker\HandHistories.SimpleObjects\bin\Debug\HandHistories.SimpleObjects.pdb
 E:\Programs\Poker\MoneyMaker\HandHistories.SimpleObjects\obj\Debug\HandHistories.SimpleObjects.dll
 E:\Programs\Poker\MoneyMaker\HandHistories.SimpleObjects\obj\Debug\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\MoneyMaker\HandHistories.SimpleObjects\obj\Debug\MoneyMaker.Objects.csprojResolveAssemblyReference.cache
