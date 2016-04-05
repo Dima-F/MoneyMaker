@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleParser.dll" size="19968">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleParser.dll" size="20480">
       <assemblyIdentity name="HandHistories.SimpleParser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0mLL4EUbNR0CgI0iYXsSlb/NNHkZJj3itWIcRbrFSfI=</dsig:DigestValue>
+        <dsig:DigestValue>Ah7TKhcI3kkJNJg5OjGU2AtX+DGnyg/NYjNu3vdeVzM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -74,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>U9NQBEikmR4O2A4xGDCwKqu/iz04QwuHgaWu+GUZvh8=</dsig:DigestValue>
+        <dsig:DigestValue>WaonPojxZDeJnHp0rlky2dXsJhFF3oM9+s3AwnXX6yI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DOVr+g2p3feMo0pW1xpgcUJQNZ+l8+0kFNuQp+VtNco=</dsig:DigestValue>
+        <dsig:DigestValue>IGUnIxhT0M2LWJCXn1A7pW+xEk59gzIrwvyW8GzHFw4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

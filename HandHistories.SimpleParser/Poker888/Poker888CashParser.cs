@@ -1,9 +1,7 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using HandHistories.SimpleObjects.Entities;
 
 namespace HandHistories.SimpleParser.Poker888
@@ -25,7 +23,7 @@ namespace HandHistories.SimpleParser.Poker888
             dictionary["Date"] = DateTime.ParseExact(parts[0].Substring(parts[0].Length - 8), "yyyyMdd", null).ToShortDateString();
             dictionary["Table"] = parts[1];
             dictionary["Blinds"] = parts[2];
-            dictionary["Limit"] = string.Join(" ", parts.Skip(3).ToArray());
+            dictionary["Limit"] = string.Join(" ", parts.Skip(parts.Length - 3).ToArray());
             return dictionary;
         }
 

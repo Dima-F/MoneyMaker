@@ -16,7 +16,7 @@ namespace HandHistories.SimpleParser
                 p = System.IO.Path.GetFileNameWithoutExtension(p);
             if (p.Contains("888poker"))
             {
-                if(p.Contains("sit & go")||p.Contains("tournament"))
+                if(p.Contains("sit & go") || p.Contains("tournament"))
                     return new Poker888TournamentParser();
                 return new Poker888CashParser();
             }

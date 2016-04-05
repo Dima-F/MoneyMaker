@@ -27,12 +27,12 @@ namespace MoneyMaker.UI.Light
         public void FillHud()
         {
             IStatOperator sOperator=new ConditionalStatOperator();
-            var hudInitializer = new HudTable(sOperator, _keyPath);
-            hudInfoTxtBx.Text = hudInitializer.GetHudInfo();
-            DrawHeroCards(hudInitializer);
-            DrawMuckCards(hudInitializer);
-            DrawGraphic(hudInitializer);
-            hudGrdVw.DataSource = FillDataTable(hudInitializer.GetPlayerStatsList());
+            var hudTable = new HudTable(sOperator, _keyPath);
+            hudInfoTxtBx.Text = hudTable.GetHudInfo();
+            DrawHeroCards(hudTable);
+            DrawMuckCards(hudTable);
+            DrawGraphic(hudTable);
+            hudGrdVw.DataSource = FillDataTable(hudTable.GetPlayerStatsList());
             MinimizeGridWidth();
         }
 

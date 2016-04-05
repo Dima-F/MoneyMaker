@@ -134,12 +134,15 @@ namespace HandHistories.SimpleParser
 
         protected static SeatType ConvertSeatEnum(string seatTypeString)
         {
-            switch (seatTypeString.ToLower())
+            switch (seatTypeString.Trim().ToLower())
             {
-                case "9 max":
-                    return SeatType._FullRing_9Handed;
                 case "6 max":
                     return SeatType._6Max;
+                case "9 max":
+                    return SeatType._FullRing_9Handed;
+                case "10 max":
+                    return SeatType._FullRing_10Handed;
+
                 default:
                     return SeatType.Unknown;
             }
