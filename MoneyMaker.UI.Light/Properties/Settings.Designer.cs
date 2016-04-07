@@ -190,5 +190,17 @@ namespace MoneyMaker.UI.Light.Properties {
                 this["Stat_3B"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_BB {
+            get {
+                return ((bool)(this["Stat_BB"]));
+            }
+            set {
+                this["Stat_BB"] = value;
+            }
+        }
     }
 }

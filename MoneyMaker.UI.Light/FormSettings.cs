@@ -37,7 +37,8 @@ namespace MoneyMaker.UI.Light
             cbStatAts.Checked = Properties.Settings.Default.Stat_ATS;
             cbStatAf.Checked = Properties.Settings.Default.Stat_AF;
             cbStat3B.Checked = Properties.Settings.Default.Stat_3B;
-            
+            cbStatBB.Checked = Properties.Settings.Default.Stat_BB;
+
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -64,7 +65,8 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.Stat_PFR = cbStatPfr.Checked;
             Properties.Settings.Default.Stat_ATS = cbStatAts.Checked;
             Properties.Settings.Default.Stat_AF = cbStatAf.Checked;
-            Properties.Settings.Default.Stat_3B = cbStat3B.Checked; 
+            Properties.Settings.Default.Stat_3B = cbStat3B.Checked;
+            Properties.Settings.Default.Stat_BB = cbStatBB.Checked;
 
             Properties.Settings.Default.Save();
             Close();

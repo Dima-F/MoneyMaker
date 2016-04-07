@@ -6,6 +6,9 @@ using MoneyMaker.BLL.Tools;
 
 namespace MoneyMaker.UI.Light.BLL
 {
+    /// <summary>
+    /// Ф:Формирует коллекцию статов в зависимости от файла конфигурации.
+    /// </summary>
     public class ConditionalStatOperator:IStatOperator
     {
         public List<PlayerStats> GetPlayerStatsList(IEnumerable<Game> games)
@@ -46,6 +49,9 @@ namespace MoneyMaker.UI.Light.BLL
                 var atsPercent = playerGames.GetATSPercentForPlayer(playerName);
                 statCollection.Add(new Stat() { Name = "ATS", Value = decimal.Round(atsPercent, 2) });
             }
+            if(Properties.Settings.Default.Stat_BB)
+                statCollection.Add(new Stat() { Name = "BB", Value = decimal.Round(playerGames.Last().GetBBForPlayer(playerName)) });
+
             if (Properties.Settings.Default.Stat_AF) //AF
             {
                 var afpfPercent = playerGames.GetAFPercentForPlayer(playerName);

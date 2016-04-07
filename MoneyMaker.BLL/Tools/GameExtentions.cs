@@ -128,7 +128,7 @@ namespace MoneyMaker.BLL.Tools
                 if (playerPreflopHandActions.Any(ha => ha.HandActionType == HandActionType.RAISE))
                     atsRaiseCount++;//возможность стила и игрок сделал рейз
             }
-            return atsSituationCount == 0 ? 0 : (decimal)atsRaiseCount / (decimal)atsSituationCount * 100;
+            return atsSituationCount == 0 ? 0 : (decimal)atsRaiseCount / atsSituationCount * 100;
         }
 
         public static int Get3BCountForPlayer(this IEnumerable<Game> games, string player)
@@ -148,7 +148,12 @@ namespace MoneyMaker.BLL.Tools
                 }
             }
             return count;
+        }
 
+        public static decimal GetBBForPlayer(this Game game, string player)
+        {
+            var ph = game.PlayerHistories.Find(p => p.PlayerName == player);
+            return ph.StartingStack/game.BigBlind;
         }
         
         /// <summary>
@@ -160,8 +165,8 @@ namespace MoneyMaker.BLL.Tools
             var hero = lastGame.PlayerHistories.FirstOrDefault(ph => ph.PlayerName == lastGame.Hero);
             return hero != null ? hero.HoleCards : null;
         }
-        
-        //mucking
+
+        #region Mucking
         public static bool WasMucking(this Game game)
         {
             return game.HandActions.Find(ha => ha.HandActionType == HandActionType.MUCKS) != null;
@@ -174,6 +179,7 @@ namespace MoneyMaker.BLL.Tools
             var muck = new Muck() {PlayerName = player, Cards = cards};
             return muck;
         }
+        #endregion
 
         public static decimal CalculateTotalProfit(this IEnumerable<Game> games, string player)
         {
@@ -189,7 +195,11 @@ namespace MoneyMaker.BLL.Tools
         {
             return game.HandActions.Where(ha => ha.Source == game.Hero).Sum(ha => ha.Amount);
         }
-        
+
+
+
+
+        #region Workers
         private static byte DefineCutoffPosition(Game g)
         {
             byte buttonPosition = g.ButtonPosition;
@@ -215,5 +225,6 @@ namespace MoneyMaker.BLL.Tools
             }
             else return positions.Min();
         }
+        #endregion
     }
 }

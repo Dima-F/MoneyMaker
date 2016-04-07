@@ -30,6 +30,8 @@ namespace HandHistories.SimpleParser
                 game.HandText = concreteGame;
                 game.DateOfHand = FindDateOfGame(multipleLines);
                 game.TableName = FindTableName(multipleLines);
+                game.SmallBlind = FindSmallBlind(multipleLines);
+                game.BigBlind = FindBigBlind(multipleLines);
                 game.LimitType = FindGameType(multipleLines);
                 game.MoneyType = FindMoneyType(multipleLines);
                 game.SeatType = FindSeatType(multipleLines);
@@ -74,6 +76,10 @@ namespace HandHistories.SimpleParser
         protected abstract DateTime FindDateOfGame(IEnumerable<string> hand);
 
         protected abstract string FindTableName(IEnumerable<string> hand);
+
+        protected abstract decimal FindSmallBlind(IEnumerable<string> hand);
+
+        protected abstract decimal FindBigBlind(IEnumerable<string> hand);
 
         protected abstract LimitType FindGameType(IEnumerable<string> hand);
 

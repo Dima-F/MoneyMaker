@@ -32,6 +32,9 @@ namespace HandHistories.SimpleParser.Poker888
         private static readonly Regex ErrorRegex = new Regex(@"Seat\s\d{1,2}:\s+\(\s*\$.{1,5}\s\)|Seat\s\d{1,2}:\s+\(\s*.{1,5}\$\s\)");
         private static readonly Regex MoneyTypeRegex=new Regex(@"(?<=\().+(?=\))");
 
+        private static readonly Regex SmallBlindRegex = new Regex(@"(?<=).+(?=/)");
+        private static readonly Regex BigBlindRegex = new Regex(@"(?<=/).+(?=\sBlinds)");
+
         protected override byte StartPlayerRow
         {
             get { return 6; }
@@ -175,6 +178,26 @@ namespace HandHistories.SimpleParser.Poker888
             var line = hand.ToList()[0];
             var matchGameNumber = GameNumberRegex.Match(line).Value.Trim(' ');
             return Int32.Parse(matchGameNumber);
+        }
+
+        protected override decimal FindBigBlind(IEnumerable<string> hand)
+        {
+            var line = hand.ToList()[2];
+            var s = BigBlindRegex.Match(line).Value.Replace("$", "").Trim();
+            s = s.Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
+            var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            var d = Decimal.Parse(s, numberFormatInfo);
+            return d;
+        }
+
+        protected override decimal FindSmallBlind(IEnumerable<string> hand)
+        {
+            var line = hand.ToList()[2];
+            var s = SmallBlindRegex.Match(line).Value.Replace("$", "").Trim();
+            s = s.Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
+            var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            var d = Decimal.Parse(s, numberFormatInfo);
+            return d;
         }
 
         protected override DateTime FindDateOfGame(IEnumerable<string> hand)

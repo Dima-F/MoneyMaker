@@ -31,6 +31,7 @@ namespace MoneyMaker.BLL.Stats
             var preflopRaiseCount = playerGames.PFRCountForPlayer(playerName);
             statCollection.Add(new Stat() { Name = "PFR", Value = decimal.Round((decimal)preflopRaiseCount / (decimal)gamesCount * 100, 2) });
             var atsPercent = playerGames.GetATSPercentForPlayer(playerName);
+            statCollection.Add(new Stat() { Name = "BB", Value = decimal.Round(playerGames.Last().GetBBForPlayer(playerName)) });
             statCollection.Add(new Stat() { Name = "ATS", Value = decimal.Round(atsPercent, 2) });
             var afpfPercent = playerGames.GetAFPercentForPlayer(playerName);
             statCollection.Add(new Stat() { Name = "AF", Value = decimal.Round((decimal)afpfPercent, 2) });

@@ -32,7 +32,9 @@ namespace MoneyMaker.BLL.Files
         {
             if (PokerFileChanged == null) return;
             var lastWriteTime = File.GetLastWriteTime(e.FullPath);
-            if (lastWriteTime == _lastRead) return;
+            if (lastWriteTime == _lastRead) return;//double write filtering
+            if (e.FullPath.ToLower().Contains("summary.txt"))//filtering summary files
+                return;
             PokerFileChanged(sender, e);
             _lastRead = lastWriteTime;
         }

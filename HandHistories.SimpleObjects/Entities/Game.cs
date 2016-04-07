@@ -18,6 +18,10 @@ namespace HandHistories.SimpleObjects.Entities
         [Required]
         public string TableName { get; set; }
         [Required]
+        public decimal BigBlind { get; set; }
+        [Required]
+        public decimal SmallBlind { get; set; }
+        [Required]
         public SeatType SeatType { get; set; }
         [Required]
         public  LimitType LimitType { get; set; }
