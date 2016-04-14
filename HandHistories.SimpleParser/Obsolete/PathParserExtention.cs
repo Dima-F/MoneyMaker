@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HandHistories.SimpleParser
+namespace HandHistories.SimpleParser.Obsolete
 {
     /// <summary>
     /// Ф:Парсит основную инфу сессии из имени файла

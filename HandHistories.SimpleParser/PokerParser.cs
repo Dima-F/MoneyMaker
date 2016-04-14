@@ -15,7 +15,7 @@ namespace HandHistories.SimpleParser
         protected abstract byte StartPlayerRow { get; }
 
         protected abstract bool IsTournament { get; }
-
+        
         public List<Game> ParseGames(string allHandsText)
         {
             var games = new List<Game>();
@@ -32,11 +32,11 @@ namespace HandHistories.SimpleParser
                 game.TableName = FindTableName(multipleLines);
                 game.SmallBlind = FindSmallBlind(multipleLines);
                 game.BigBlind = FindBigBlind(multipleLines);
-                game.LimitType = FindGameType(multipleLines);
+                game.LimitType = FindLimitType(multipleLines);
                 game.MoneyType = FindMoneyType(multipleLines);
                 game.SeatType = FindSeatType(multipleLines);
                 game.ButtonPosition = FindButtonPosition(multipleLines);
-                game.NumberOfPlayers = FindNumberOfPlayers(multipleLines);
+                game.NumberOfPlayers = FindNumberOfPlayers(concreteGame);
                 game.PlayerHistories = ParsePlayers(game.GameNumber, game.NumberOfPlayers, multipleLines);
                 game.HandActions = ParseHandActions(game, multipleLines).ToList();
                 games.Add(game);
@@ -44,13 +44,9 @@ namespace HandHistories.SimpleParser
             return games;
         }
 
-        public abstract IDictionary<string, string> GetMainInfo(string path);
+        public abstract IDictionary<string, string> GetInfoFromPath(string path);
 
-        /// <summary>
-        /// Ф:Пока я не буду делать метод абстрактным и перемещать реализацию у Poker888Parser, а оставлю возможность переопределения потомками.
-        /// Возможно этот подход придется изменить в связи с новыми обстоятельствами, возникшими при анализе истории рук рума Покерстарс.
-        /// </summary>
-        public virtual  List<PlayerHistory> ParsePlayers(int gameNumber, byte numberOfPlayers, IReadOnlyList<string> multipleLines)
+        public virtual  List<PlayerHistory> ParsePlayers(ulong gameNumber, byte numberOfPlayers, IReadOnlyList<string> multipleLines)
         {
             var players = new List<PlayerHistory>();
             for (var i = 0; i < numberOfPlayers; i++)
@@ -71,7 +67,7 @@ namespace HandHistories.SimpleParser
 
         public  abstract  IEnumerable<HandAction> ParseHandActions(Game game, IReadOnlyList<string> multipleLines);
 
-        protected abstract int FindGameNumber(IEnumerable<string> hand);
+        protected abstract ulong FindGameNumber(IEnumerable<string> hand);
 
         protected abstract DateTime FindDateOfGame(IEnumerable<string> hand);
 
@@ -81,13 +77,13 @@ namespace HandHistories.SimpleParser
 
         protected abstract decimal FindBigBlind(IEnumerable<string> hand);
 
-        protected abstract LimitType FindGameType(IEnumerable<string> hand);
+        protected abstract LimitType FindLimitType(IEnumerable<string> hand);
 
         protected abstract MoneyType FindMoneyType(IEnumerable<string> hand);
 
         protected abstract SeatType FindSeatType(IEnumerable<string> hand);
 
-        protected abstract byte FindNumberOfPlayers(IEnumerable<string> hand);
+        protected abstract byte FindNumberOfPlayers(string hand);
 
         protected abstract byte FindButtonPosition(IEnumerable<string> hand);
 
@@ -98,10 +94,7 @@ namespace HandHistories.SimpleParser
         protected abstract decimal FindPlayerStartingStack(string line);
 
         protected abstract bool FindBadHand(string inputString);
-
-
-
-
+        
         private static IEnumerable<string> SplitAllTextInMultipleGames(string allHandsText)
         {
             return GameSplitRegex.Split(allHandsText)//разделить входную строку по шаблону регулярного выраж.
@@ -118,19 +111,19 @@ namespace HandHistories.SimpleParser
             }
             return text.ToList();
         }
-        
-        //todo:возможно нужно проверить ситуацию по олинам, когда один дает больше другого, тогда остаток тоже нужно нивелировать.
+
+        //todo:возможно нужно проверить ситуацию по олинам, когда один дает больше другого, тогда остаток тоже нужно нивелировать + изменения HandActionType.ALL_IN_RAISE
         protected static void CheckAllHandActionsForUncalled(IList<HandAction> handActions)
         {
             var count = handActions.Count;
             var lastAgrassiveAction =
-                handActions.LastOrDefault(
-                    ha => ha.HandActionType == HandActionType.BET || ha.HandActionType == HandActionType.RAISE || ha.HandActionType == HandActionType.ALL_IN);
+                handActions.LastOrDefault(ha => ha.HandActionType == HandActionType.BET || ha.HandActionType == HandActionType.RAISE 
+                || ha.HandActionType == HandActionType.ALL_IN_RAISE);
             if (lastAgrassiveAction == null) return;
             var index = handActions.IndexOf(lastAgrassiveAction);
             for (var i = index; i < count; i++)
             {
-                if (handActions[i].HandActionType == HandActionType.CALL || handActions[i].HandActionType == HandActionType.ALL_IN)
+                if (handActions[i].HandActionType == HandActionType.CALL || handActions[i].HandActionType == HandActionType.ALL_IN_CALL)
                     return;
             }
             //тип действия пока не меняем, чтобы не вызвать сбои в остальной части кода програмы.
@@ -143,10 +136,13 @@ namespace HandHistories.SimpleParser
             switch (seatTypeString.Trim().ToLower())
             {
                 case "6 max":
+                case "6-max":
                     return SeatType._6Max;
                 case "9 max":
+                case "9-max":
                     return SeatType._FullRing_9Handed;
                 case "10 max":
+                case "10-max":
                     return SeatType._FullRing_10Handed;
 
                 default:
@@ -154,15 +150,21 @@ namespace HandHistories.SimpleParser
             }
         }
 
-        protected static LimitType ConvertGameTypeEnum(string gameTypeString)
+        protected static LimitType ConvertLimitTypeEnum(string gameTypeString)
         {
             switch (gameTypeString.ToLower())
             {
-                case "no limit holdem":
+                case "no limit holdem"://888
+                case "hold'em no limit"://PokerStars
                     return LimitType.NoLimit;
                 default:
                     return LimitType.Any;
             }
+        }
+
+        protected static MoneyType ConvertMoneyTypeEnum(string moneyTypeString)
+        {
+            return moneyTypeString.ToLower().Contains("play") ? MoneyType.PlayMoney : MoneyType.RealMoney;
         }
     }
 }

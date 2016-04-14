@@ -61,7 +61,7 @@ namespace MoneyMaker.BLL.Hud
         public virtual string GetHudInfo()
         {
             var builder = new StringBuilder();
-            foreach (var row  in _parser.GetMainInfo(_shortPath))
+            foreach (var row  in _parser.GetInfoFromPath(_shortPath))
             {
                 builder.AppendLine(row.Key + " : " + row.Value);
             }

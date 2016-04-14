@@ -15,7 +15,7 @@ namespace HandHistories.SimpleParser.Poker888
         private static readonly Regex DateTimeRegex = new Regex(@"\d{2}\s\d{2}\s\d{4}\s\d{2}:\d{2}:\d{2}", RegexOptions.Compiled);
         private static readonly Regex DateRegex = new Regex(@"(\d+) (\d+) (\d+) ", RegexOptions.Compiled);
         
-        private static readonly Regex GameTypeRegex = new Regex(@"(?<=Blinds)[\w|\s]+(?=-\s\*{3})");
+        private static readonly Regex LimitTypeRegex = new Regex(@"(?<=Blinds)[\w|\s]+(?=-\s\*{3})");
         private static readonly Regex ButtonPositionRegex = new Regex(@"(?<=Seat\s)\d+(?=\sis the button)");
         private static readonly Regex NumberOfPlayersRegex = new Regex(@"(?<=Total number of players : )\d+");
         private static readonly Regex PlayerNameRegex = new Regex(@"(?<=Seat\s\d+:).+(?=\()");
@@ -88,21 +88,24 @@ namespace HandHistories.SimpleParser.Poker888
                         currentStreet = Street.Showdown;
                         continue;
                     }
-                    throw new Exception("No defined action");
-                }
+                    throw new Exception("No defined action with **");
+                }//end **
 
                 if (multipleLines[i].ToLower().StartsWith("dealt to"))
                 {
-                    ha.Source = ha.Source = multipleLines[i].Split(' ')[2].Trim();
+                    ha.Source  = multipleLines[i].Split(' ')[2].Trim();
                     ha.Street = currentStreet;
                     ha.HandActionType = HandActionType.DEALT_HERO_CARDS;
                     game.Hero = ha.Source;
                     game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(FindHeroCards(multipleLines[i]));
                     handActions.Add(ha);
+                    continue;
                 }
-
-
-                else//line don't starts with ** and "dealt to"
+                //line don't starts with ** and "dealt to"
+                //put new conditional in this place if some new statemants will apear
+                //.....
+                //.....
+                else
                 {
                     ha.Source = multipleLines[i].Split(' ')[0].Trim();
                     ha.Street = currentStreet;
@@ -173,11 +176,11 @@ namespace HandHistories.SimpleParser.Poker888
             return ErrorRegex.IsMatch(inputString);
         }
 
-        protected override int FindGameNumber(IEnumerable<string> hand)
+        protected override ulong FindGameNumber(IEnumerable<string> hand)
         {
             var line = hand.ToList()[0];
             var matchGameNumber = GameNumberRegex.Match(line).Value.Trim(' ');
-            return Int32.Parse(matchGameNumber);
+            return UInt64.Parse(matchGameNumber);
         }
 
         protected override decimal FindBigBlind(IEnumerable<string> hand)
@@ -209,29 +212,24 @@ namespace HandHistories.SimpleParser.Poker888
             return DateTime.Parse(correctDateOfHand);
         }
         
-        protected override LimitType FindGameType(IEnumerable<string> hand)
+        protected override LimitType FindLimitType(IEnumerable<string> hand)
         {
             var line = hand.ToList()[2];
-            var initialMatch = GameTypeRegex.Match(line).Value;
+            var initialMatch = LimitTypeRegex.Match(line).Value;
             string gameTypeString = initialMatch.Trim();
-            return ConvertGameTypeEnum(gameTypeString);
+            return ConvertLimitTypeEnum(gameTypeString);
         }
 
         protected override MoneyType FindMoneyType(IEnumerable<string> hand)
         {
             var line = hand.ToList()[3];
-            var initialMatch = MoneyTypeRegex.Match(line).Value.ToLower();
-            if (initialMatch.Contains("real"))
-                return MoneyType.RealMoney;
-            if (initialMatch.Contains("play"))
-                return MoneyType.PlayMoney;
-            throw new Exception("Something wrong with parsing hand's money type.");
+            var initialMatch = MoneyTypeRegex.Match(line).Value;
+            return ConvertMoneyTypeEnum(initialMatch);
         }
 
-        protected override byte FindNumberOfPlayers(IEnumerable<string> hand)
+        protected override byte FindNumberOfPlayers(string hand)
         {
-            var line = hand.ToList()[5];
-            return Byte.Parse(NumberOfPlayersRegex.Match(line).Value.Trim());
+            return Byte.Parse(NumberOfPlayersRegex.Match(hand).Value.Trim());
         }
 
         protected override byte FindButtonPosition(IEnumerable<string> hand)
@@ -337,13 +335,15 @@ namespace HandHistories.SimpleParser.Poker888
                 case HandActionType.BIG_BLIND:
                 case HandActionType.SMALL_BLIND:
                 case HandActionType.CALL:
-                case HandActionType.ALL_IN:
+                case HandActionType.ALL_IN_CALL:
+                case HandActionType.ALL_IN_RAISE:
                 case HandActionType.ANTE:
                 case HandActionType.RAISE:
                     return -amount;
                 case HandActionType.WINS:
                 case HandActionType.WINS_SIDE_POT:
-                case HandActionType.WINS_THE_LOW:
+                case HandActionType.WINS_MAIN_POT:
+                    
                     return amount;
             }
             throw new Exception("Undefined amount action!");

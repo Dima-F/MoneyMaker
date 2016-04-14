@@ -3,8 +3,6 @@ using System.IO;
 
 namespace MoneyMaker.BLL.Files
 {
-    public delegate void FileTrackingDelegate(string path);
-
     /// <summary>
     /// Ф:Обертка над FileSystemWatcher
     /// Пояснения до событийной модели:менеджер ловит событие FileSystemWatcher по изменению файла в директории

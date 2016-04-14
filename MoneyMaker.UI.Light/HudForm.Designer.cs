@@ -170,6 +170,9 @@
             // 
             // hudGrdVw
             // 
+            this.hudGrdVw.AllowUserToAddRows = false;
+            this.hudGrdVw.AllowUserToDeleteRows = false;
+            this.hudGrdVw.AllowUserToOrderColumns = true;
             this.hudGrdVw.BackgroundColor = System.Drawing.Color.Gray;
             this.hudGrdVw.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -180,6 +183,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.hudGrdVw.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.hudGrdVw.ColumnHeadersHeight = 20;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.DarkGray;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -191,6 +195,7 @@
             this.hudGrdVw.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hudGrdVw.Location = new System.Drawing.Point(3, 3);
             this.hudGrdVw.Name = "hudGrdVw";
+            this.hudGrdVw.ReadOnly = true;
             this.hudGrdVw.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.Gray;

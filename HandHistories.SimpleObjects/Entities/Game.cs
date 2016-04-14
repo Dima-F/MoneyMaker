@@ -12,7 +12,7 @@ namespace HandHistories.SimpleObjects.Entities
     public class Game
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int GameNumber { get; set; }
+        public ulong GameNumber { get; set; }
         [Required]
         public DateTime DateOfHand { get; set; }
         [Required]

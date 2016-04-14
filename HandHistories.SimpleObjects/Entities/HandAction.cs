@@ -9,7 +9,7 @@ namespace HandHistories.SimpleObjects.Entities
         public int Id { get; set; }
         //FK:
         [Required]
-        public int GameNumber { get; set; }
+        public ulong GameNumber { get; set; }
         [Required]
         public string Source { get; set; }
         [Required]

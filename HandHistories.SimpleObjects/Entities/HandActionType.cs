@@ -14,7 +14,7 @@ namespace HandHistories.SimpleObjects.Entities
         SHOW,
         SHOWS_FOR_LOW,
         WINS,
-        WINS_THE_LOW,
+        WINS_MAIN_POT,
         WINS_SIDE_POT,
         DEALT_HERO_CARDS,
         TIES, //ничья, вииграш части банка
@@ -41,7 +41,8 @@ namespace HandHistories.SimpleObjects.Entities
         SECONDS_TO_RECONNECT,
         CHAT,
         FEELING_CHANGE,
-        ALL_IN,
+        ALL_IN_RAISE,
+        ALL_IN_CALL,
         GAME_CANCELLED,
         RABBIT,
         JACKPOTCONTRIBUTION,

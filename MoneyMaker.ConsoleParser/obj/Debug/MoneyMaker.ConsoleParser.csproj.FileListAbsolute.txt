@@ -1,0 +1,10 @@
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\bin\Debug\MoneyMaker.ConsoleParser.exe.config
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\bin\Debug\MoneyMaker.ConsoleParser.exe
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\bin\Debug\MoneyMaker.ConsoleParser.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\bin\Debug\HandHistories.SimpleObjects.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\bin\Debug\HandHistories.SimpleParser.dll
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\bin\Debug\HandHistories.SimpleObjects.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\bin\Debug\HandHistories.SimpleParser.pdb
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\obj\Debug\MoneyMaker.ConsoleParser.csprojResolveAssemblyReference.cache
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\obj\Debug\MoneyMaker.ConsoleParser.exe
+E:\Programs\Poker\MoneyMaker\MoneyMaker.ConsoleParser\obj\Debug\MoneyMaker.ConsoleParser.pdb

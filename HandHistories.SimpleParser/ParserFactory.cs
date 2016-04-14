@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using HandHistories.SimpleParser.Poker888;
+using HandHistories.SimpleParser.PokerStars;
 
 namespace HandHistories.SimpleParser
 {
     /// <summary>
-    /// Ф:Фабрика парсеров. Реализована примитивно, нуждается в усовершенствовании.
+    /// Ф:Фабрика парсеров. На основании имени файла принимает решение, какой парсер создать.
     /// </summary>
     public static class ParserFactory
     {
@@ -20,11 +21,7 @@ namespace HandHistories.SimpleParser
                     return new Poker888TournamentParser();
                 return new Poker888CashParser();
             }
-            //if (p.Contains("pokerstars"))
-            //{
-            //    return new PokerStarsCashParser();
-            //}
-            throw new Exception("Unable to parse hand history file name");
+            return new PokerStarsParser();
         }
     }
 }
