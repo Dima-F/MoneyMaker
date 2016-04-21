@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleParser;
 
 namespace MoneyMaker.ConsoleParser
@@ -14,14 +15,32 @@ namespace MoneyMaker.ConsoleParser
     {
         static void Main(string[] args)
         {
-            var path = @"E:\TexasHoldem\PokerStars\VipNeborak\HH20160408 Aaltje III - 10-20 - Play Money No Limit Hold'em.txt";
-            var shortPath = Path.GetFileNameWithoutExtension(path);
-            var text = ReadFile(path);
-            var parser = ParserFactory.CreateParser(shortPath);
-            var games = parser.ParseGames(text);
-            Console.Write("Parsed {0} games.",games.Count);
+            var directory = @"E:\TexasHoldem\PokerStars\VipNeborak";
+            var files = Directory.GetFiles(directory, "*.txt").Where(s => !s.Contains("Summary")).ToArray();
+            var allGames = new List<Game>();
+            foreach (var file in files)
+            {
+                allGames.AddRange(ParseFile(file));
+            }
+            Console.WriteLine("\nParsed files:");
+            foreach (var file in files)
+            {
+                Console.WriteLine("\t*{0}",Path.GetFileNameWithoutExtension(file));
+            }
+            Console.Write("\nParsed {0} games.",allGames.Count);
             Console.Read();
         }
+
+        private static List<Game> ParseFile(string file)
+        {
+            var shortPath = Path.GetFileNameWithoutExtension(file);
+            var text = ReadFile(file);
+            var parser = ParserFactory.CreateParser(shortPath);
+            var games = parser.ParseGames(text);
+            Console.WriteLine("Parsing for {0} is completed...",shortPath);
+            return games;
+        }
+
         private static string ReadFile(string path)
         {
             var file = new FileInfo(path);

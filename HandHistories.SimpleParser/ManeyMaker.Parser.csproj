@@ -44,8 +44,10 @@
     <Compile Include="Poker888\Poker888Parser.cs" />
     <Compile Include="Poker888\Poker888TournamentParser.cs" />
     <Compile Include="PokerParser.cs" />
+    <Compile Include="PokerStars\PokerStarsCashParser.cs" />
     <Compile Include="PokerStars\PokerStarsParser.cs" />
     <Compile Include="ParserFactory.cs" />
+    <Compile Include="PokerStars\PokerStarsTournamentParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,8 +22,6 @@ namespace MoneyMaker.BLL.Hud
 
         private readonly IStatOperator _statOperator;
 
-        private readonly List<HandAction> _allHandActions;
-
         private readonly PokerParser _parser;
 
         private readonly string _shortPath;
@@ -34,23 +32,7 @@ namespace MoneyMaker.BLL.Hud
             var text = PokerFileReader.ReadFileWithWaiting(path);
             _parser = ParserFactory.CreateParser(_shortPath);
             _games = _parser.ParseGames(text);
-            _allHandActions = new List<HandAction>();
             _statOperator = statOperator;
-        }
-
-        //Lazy load pattern
-        public List<HandAction> AllHandActions
-        {
-            get
-            {
-                if (_allHandActions.Count != 0)
-                    return _allHandActions;
-                foreach (var game in _games)
-                {
-                    _allHandActions.AddRange(game.HandActions);
-                }
-                return _allHandActions;
-            }
         }
 
         public virtual List<PlayerStats> GetPlayerStatsList()
@@ -80,10 +62,10 @@ namespace MoneyMaker.BLL.Hud
         public Muck GetMucking()
         {
             var lastGame = _games.Last();
-            return lastGame.WasMucking() ? lastGame.GetMuck() : null;
+            return lastGame.GetMuck();
         }
 
-        public IEnumerable<decimal> GetHeroProfits()
+        public IEnumerable<double> GetHeroProfits()
         {
             return _games.Select(game => game.CalculateHeroProfit());
         }

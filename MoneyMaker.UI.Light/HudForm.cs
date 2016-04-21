@@ -42,7 +42,7 @@ namespace MoneyMaker.UI.Light
             profitChart.Series["Series1"].Points.Clear();
             profitChart.Series["Series1"].IsVisibleInLegend = false;
             var profits = hudTable.GetHeroProfits().ToList();
-            var totalProfit = 0m;
+            var totalProfit = 0d;
             for (var i = 0; i < profits.Count(); i++)
             {
                 totalProfit += profits[i];

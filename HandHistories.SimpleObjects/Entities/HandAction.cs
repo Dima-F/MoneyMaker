@@ -9,18 +9,19 @@ namespace HandHistories.SimpleObjects.Entities
         public int Id { get; set; }
         //FK:
         [Required]
-        public ulong GameNumber { get; set; }
+        public int PlayerHistoryId { get; set; }
         [Required]
-        public string Source { get; set; }
+        public byte Index { get; set; }//порядковый номер действия в конкретной игре
+        [Required]
+        public string Source { get; set; }//PlayerHistory.PlayerName or System name
         [Required]
         public HandActionType HandActionType { get; set; }
 
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         [Required]
         public Street Street { get; set; }
-
         //nav keys:
-        public virtual Game Game { get;set; }
+        public virtual PlayerHistory PlayerHistory { get;set; }
 
     }
 }

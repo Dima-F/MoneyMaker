@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleParser.PokerStars;
 
 namespace HandHistories.SimpleParser
 {
@@ -38,7 +40,12 @@ namespace HandHistories.SimpleParser
                 game.ButtonPosition = FindButtonPosition(multipleLines);
                 game.NumberOfPlayers = FindNumberOfPlayers(concreteGame);
                 game.PlayerHistories = ParsePlayers(game.GameNumber, game.NumberOfPlayers, multipleLines);
-                game.HandActions = ParseHandActions(game, multipleLines).ToList();
+                IEnumerable<HandAction> allHandActions = ParseHandActions(game, multipleLines).ToArray();
+                foreach (var playerHistory in game.PlayerHistories)
+                {
+                    var playerActions = allHandActions.Where(ha => ha.Source == playerHistory.PlayerName).ToArray();
+                    playerHistory.HandActions.AddRange(playerActions);
+                }
                 games.Add(game);
             }
             return games;
@@ -58,7 +65,8 @@ namespace HandHistories.SimpleParser
                     PlayerName = FindPlayerName(oneLine),
                     SeatNumber = FindSeatNumber(oneLine),
                     StartingStack = FindPlayerStartingStack(oneLine),
-                    HoleCards = new byte[2]
+                    HoleCards = new byte[2],
+                    HandActions = new List<HandAction>()
                 };
                 players.Add(player);
             }
@@ -73,9 +81,9 @@ namespace HandHistories.SimpleParser
 
         protected abstract string FindTableName(IEnumerable<string> hand);
 
-        protected abstract decimal FindSmallBlind(IEnumerable<string> hand);
+        protected abstract double FindSmallBlind(IEnumerable<string> hand);
 
-        protected abstract decimal FindBigBlind(IEnumerable<string> hand);
+        protected abstract double FindBigBlind(IEnumerable<string> hand);
 
         protected abstract LimitType FindLimitType(IEnumerable<string> hand);
 
@@ -91,7 +99,7 @@ namespace HandHistories.SimpleParser
 
         protected abstract byte FindSeatNumber(string line);
 
-        protected abstract decimal FindPlayerStartingStack(string line);
+        protected abstract double FindPlayerStartingStack(string line);
 
         protected abstract bool FindBadHand(string inputString);
         
@@ -112,7 +120,7 @@ namespace HandHistories.SimpleParser
             return text.ToList();
         }
 
-        //todo:возможно нужно проверить ситуацию по олинам, когда один дает больше другого, тогда остаток тоже нужно нивелировать + изменения HandActionType.ALL_IN_RAISE
+        //todo:need to refactoring and restructing
         protected static void CheckAllHandActionsForUncalled(IList<HandAction> handActions)
         {
             var count = handActions.Count;
@@ -126,9 +134,16 @@ namespace HandHistories.SimpleParser
                 if (handActions[i].HandActionType == HandActionType.CALL || handActions[i].HandActionType == HandActionType.ALL_IN_CALL)
                     return;
             }
-            //тип действия пока не меняем, чтобы не вызвать сбои в остальной части кода програмы.
-            //lastAgrassiveAction.HandActionType = HandActionType.UNCALLED_BET;
+            //need to refactoring
             lastAgrassiveAction.Amount = 0;
+            var uncalledBetHandAction = new HandAction
+            {
+                Source = lastAgrassiveAction.Source,
+                HandActionType = HandActionType.UNCALLED_BET,
+                Street = lastAgrassiveAction.Street,
+                Amount = -lastAgrassiveAction.Amount
+            };
+            handActions.Add(uncalledBetHandAction);
         }
 
         protected static SeatType ConvertSeatEnum(string seatTypeString)
@@ -158,13 +173,26 @@ namespace HandHistories.SimpleParser
                 case "hold'em no limit"://PokerStars
                     return LimitType.NoLimit;
                 default:
-                    return LimitType.Any;
+                    throw new NotImplementedException();
             }
         }
 
-        protected static MoneyType ConvertMoneyTypeEnum(string moneyTypeString)
+        protected MoneyType ConvertMoneyTypeEnum(string moneyTypeString)
         {
+            if(this is PokerStarsTournamentParser)
+                return moneyTypeString.Contains('$') ? MoneyType.RealMoney : MoneyType.PlayMoney;
             return moneyTypeString.ToLower().Contains("play") ? MoneyType.PlayMoney : MoneyType.RealMoney;
+            
+        }
+
+        protected double GetCleanAmount(string value)
+        {
+            var s = value.Replace("$", "").Replace(',', '.').Trim();
+            s = s.Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
+            if (!s.Contains("+"))
+                return double.Parse(s, new NumberFormatInfo { CurrencyDecimalSeparator = "." });
+            var parts = s.Split('+');
+            return parts.Sum(part => double.Parse(part, new NumberFormatInfo { CurrencyDecimalSeparator = "." }));
         }
     }
 }

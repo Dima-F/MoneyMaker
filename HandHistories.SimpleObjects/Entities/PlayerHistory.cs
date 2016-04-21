@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HandHistories.SimpleObjects.Entities
 {
@@ -16,14 +17,12 @@ namespace HandHistories.SimpleObjects.Entities
         [Required]
         public string PlayerName { get; set; }
         [Required]
-        public decimal StartingStack { get; set; }
-
+        public double StartingStack { get; set; }
         [Required]
         public byte SeatNumber { get; set; }
-
         public byte[] HoleCards { get; set; }
-
         //foreign keys
         public virtual Game Game { get; set; }
+        public virtual List<HandAction> HandActions { get; set; }
     }
 }

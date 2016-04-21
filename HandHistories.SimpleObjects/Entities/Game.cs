@@ -18,9 +18,9 @@ namespace HandHistories.SimpleObjects.Entities
         [Required]
         public string TableName { get; set; }
         [Required]
-        public decimal BigBlind { get; set; }
+        public double BigBlind { get; set; }
         [Required]
-        public decimal SmallBlind { get; set; }
+        public double SmallBlind { get; set; }
         [Required]
         public SeatType SeatType { get; set; }
         [Required]
@@ -39,8 +39,7 @@ namespace HandHistories.SimpleObjects.Entities
         public byte [] BoardCards { get; set; }
 
         public virtual List<PlayerHistory> PlayerHistories { get; set; } 
-
-        public virtual List<HandAction> HandActions { get; set; }
+        
  
     }
 }

@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Entities\Card.cs" />
     <Compile Include="Entities\Game.cs" />
-    <Compile Include="Entities\GameType.cs" />
+    <Compile Include="Entities\LimitType.cs" />
     <Compile Include="Entities\HandAction.cs" />
     <Compile Include="Entities\HandActionType.cs" />
     <Compile Include="Entities\MoneyType.cs" />

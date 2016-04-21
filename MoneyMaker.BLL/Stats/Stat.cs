@@ -11,7 +11,7 @@ namespace MoneyMaker.BLL.Stats
     public struct Stat
     {
         public string Name;
-        public decimal Value;
+        public double Value;
         public bool Enabled;
     }
 }

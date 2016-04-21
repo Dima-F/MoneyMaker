@@ -50,19 +50,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>c/F6GOWz/E7vRpi1oG80cBRoRx4yk+jlicv4jkLx7lc=</dsig:DigestValue>
+        <dsig:DigestValue>FITaV5za2GMmN6uHQeYbYcD71+ILaW1FP/tZJ/gg324=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleParser.dll" size="30208">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleParser.dll" size="30720">
       <assemblyIdentity name="HandHistories.SimpleParser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lUa5SwBGn/p/uq7ycRmA1+UKooJu6PthWt/bm/mTC+w=</dsig:DigestValue>
+        <dsig:DigestValue>B27VqWmdY8mqwhzD0nzgDHwPmlUD3rAnPgtuT70idjg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -74,19 +74,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>j1rHvFA3DiusvKPl94KBTPjv5csCc3lK9V+44jRctKo=</dsig:DigestValue>
+        <dsig:DigestValue>2JRnV9Hjh8t+c+bFzVTt4Ny7CYkTV1h6E8xrdl9USTg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="24064">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="22016">
       <assemblyIdentity name="MoneyMaker.BLL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>oefMAZ2/NImuLhe5axVs7GozOVFvnqtkJ7a30KUBtB4=</dsig:DigestValue>
+        <dsig:DigestValue>Mw0I7AogHSHX1InRIg7DxIRC7Oczv9hQBKOCAJNcvzM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

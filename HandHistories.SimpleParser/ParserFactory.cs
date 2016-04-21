@@ -21,7 +21,12 @@ namespace HandHistories.SimpleParser
                     return new Poker888TournamentParser();
                 return new Poker888CashParser();
             }
-            return new PokerStarsParser();
+            else
+            {
+                if(p.Contains('+'))
+                    return new PokerStarsTournamentParser();
+                else return new PokerStarsCashParser();
+            }
         }
     }
 }

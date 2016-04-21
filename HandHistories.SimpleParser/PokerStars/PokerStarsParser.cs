@@ -9,16 +9,13 @@ using HandHistories.SimpleObjects.Tools;
 
 namespace HandHistories.SimpleParser.PokerStars
 {
-    public  class PokerStarsParser:PokerParser
+    public abstract  class PokerStarsParser:PokerParser
     {
         private static readonly Regex GameNumberRegex = new Regex(@"(?<=\#)\d{6,}(?=\:)", RegexOptions.Compiled);
         private static readonly Regex DateTimeRegex = new Regex(@"(?<=-\s*)\d{4}\/\d{2}\/\d{2}\s+\d{2}:\d{2}:\d{2}(?=\s+EET)", RegexOptions.Compiled);
         private static readonly Regex DateRegex = new Regex(@"(\d+)/(\d+)/(\d+)", RegexOptions.Compiled);
         private static readonly Regex TableNameRegex = new Regex(@"(?<=').+(?=')", RegexOptions.Compiled);
         private static readonly Regex BlindsRegex = new Regex(@"(?<=\().+(?=\))", RegexOptions.Compiled);
-        private static readonly Regex LimitTypeRegex = new Regex(@"(?<=:).+(?=\()",RegexOptions.Compiled);
-        private static readonly Regex MoneyTypeRegex = new Regex(@"(?<=\().+(?=\))",RegexOptions.Compiled);
-        private static readonly Regex SeatTypeRegex = new Regex(@"(?<='\s+).+(?=\s+\()", RegexOptions.Compiled);
         private static readonly Regex ButtonPositionRegex = new Regex(@"(?<=#)\d{1,2}(?=\s*is)", RegexOptions.Compiled);
         private static readonly Regex NumberOfPlayersRegex = new Regex(@"Seat\s\d{1,2}:", RegexOptions.Compiled);
         private static readonly Regex PlayerNameRegex = new Regex(@"(?<=Seat\s\d{1,2}:\s*).+(?=\()");
@@ -27,6 +24,7 @@ namespace HandHistories.SimpleParser.PokerStars
 
         private static readonly Regex AllInCallAmountRegex = new Regex(@"(?<=:\s+calls\s+).+(?=\s+and\sis\sall-in)");
         private static readonly Regex AllInRaiseAmountRegex = new Regex(@"(?<=:\s+raises\s+).+(?=\sto\s.+\s+and\sis\sall-in)");
+        private static readonly Regex AllInBetAmountRegex = new Regex(@"(?<=:\s+bets\s+).+(?=\s+and\sis\sall-in)");
         private static readonly Regex FlopCardsRegex = new Regex(@"(?<=FLOP\s*\*\*\*\s*\[\s*).+(?=\s*\])");
         private static readonly Regex TurnCardRegex = new Regex(@"(?<=TURN.+]\s*\[).+(?=\s*\])");
         private static readonly Regex RiverCardRegex = new Regex(@"(?<=RIVER.+]\s*\[).+(?=\s*\])");
@@ -42,18 +40,8 @@ namespace HandHistories.SimpleParser.PokerStars
         private static readonly Regex ErrorRegex = new Regex(@"");
         
         protected override byte StartPlayerRow => 2;
-        protected override bool IsTournament => false;
 
-        public override IDictionary<string, string> GetInfoFromPath(string path)
-        {
-            var dictionary = new Dictionary<string, string>();
-            var parts = path.Split(' ');
-            dictionary["Date"] = DateTime.ParseExact(parts[0].Substring(parts[0].Length - 8), "yyyyMdd", null).ToShortDateString();
-            dictionary["Table"] = Regex.Match(path, @"(?<=\d{8}\s).+(?=\s-\s[0-9|$|,|/.]+-[0-9|$|,|/.]+)").Value;
-            dictionary["Blinds"] = Regex.Match(path, @"(?<=\s-\s).+(?=\s-\s)").Value;
-            dictionary["Limit"] = Regex.Match(path, @"(?<= Money\s).+(?=)").Value;
-            return dictionary; 
-        }
+        
 
         public override IEnumerable<HandAction> ParseHandActions(Game game, IReadOnlyList<string> multipleLines)
         {
@@ -61,33 +49,33 @@ namespace HandHistories.SimpleParser.PokerStars
             var currentStreet = Street.Preflop;
             for (var i = StartPlayerRow + game.NumberOfPlayers; i < multipleLines.Count; i++)
             {
-                var ha = new HandAction { GameNumber = game.GameNumber };
+                var ha = new HandAction();
                 if (multipleLines[i].StartsWith("***"))
                 {
                     if (multipleLines[i].ToLower().Contains("flop"))
                     {
-                        ha.Source = NameOfSystem;
-                        ha.HandActionType = HandActionType.DEALING_FLOP;
+                        //ha.Source = NameOfSystem;
+                        //ha.HandActionType = HandActionType.DEALING_FLOP;
                         game.BoardCards.InitializeNewCards(FindFlopCards(multipleLines[i]));
-                        handActions.Add(ha);
+                        //handActions.Add(ha);
                         currentStreet = Street.Flop;
                         continue;
                     }
                     if (multipleLines[i].ToLower().Contains("turn"))
                     {
-                        ha.Source = NameOfSystem;
-                        ha.HandActionType = HandActionType.DEALING_TURN;
+                        //ha.Source = NameOfSystem;
+                        //ha.HandActionType = HandActionType.DEALING_TURN;
                         game.BoardCards[3] = FindTurnCard(multipleLines[i]);
-                        handActions.Add(ha);
+                        //handActions.Add(ha);
                         currentStreet = Street.Turn;
                         continue;
                     }
                     if (multipleLines[i].ToLower().Contains("river"))
                     {
-                        ha.Source = NameOfSystem;
-                        ha.HandActionType = HandActionType.DEALING_RIVER;
+                        //ha.Source = NameOfSystem;
+                        //ha.HandActionType = HandActionType.DEALING_RIVER;
                         game.BoardCards[4] = FindRiverCard(multipleLines[i]);
-                        handActions.Add(ha);
+                        //handActions.Add(ha);
                         currentStreet = Street.River;
                         continue;
                     }
@@ -97,9 +85,9 @@ namespace HandHistories.SimpleParser.PokerStars
                     }
                     if (multipleLines[i].ToLower().Contains("show down"))
                     {
-                        ha.Source = NameOfSystem;
-                        ha.HandActionType = HandActionType.SUMMARY;
-                        handActions.Add(ha);
+                        //ha.Source = NameOfSystem;
+                        //ha.HandActionType = HandActionType.SUMMARY;
+                        //handActions.Add(ha);
                         currentStreet = Street.Showdown;
                         continue;
                     }
@@ -158,7 +146,7 @@ namespace HandHistories.SimpleParser.PokerStars
                             handActions.Add(ha);
                             continue;
                         case "bets":
-                            ha.HandActionType = HandActionType.BET;
+                            ha.HandActionType = multipleLines[i].Contains("all-in") ? HandActionType.ALL_IN_BET : HandActionType.BET;
                             ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                             handActions.Add(ha);
                             continue;
@@ -233,6 +221,26 @@ namespace HandHistories.SimpleParser.PokerStars
                 {
                     continue;
                 }
+                if (multipleLines[i].ToLower().Contains("finished the tournament"))
+                {
+                    continue;
+                }
+                if (multipleLines[i].ToLower().Contains("said,"))
+                {
+                    continue;
+                }
+                if (multipleLines[i].ToLower().Contains("has timed out"))
+                {
+                    continue;
+                }
+                if (multipleLines[i].ToLower().Contains("is connected"))
+                {
+                    continue;
+                }
+                if (multipleLines[i].ToLower().Contains("bounty for eliminating"))
+                {
+                    continue;
+                }
                 throw new NotImplementedException("not parsed string");
             }
             return handActions;
@@ -262,47 +270,19 @@ namespace HandHistories.SimpleParser.PokerStars
             return TableNameRegex.Match(line).Value;
         }
 
-        protected override decimal FindSmallBlind(IEnumerable<string> hand)
+        protected override double FindSmallBlind(IEnumerable<string> hand)
         {
             var line = hand.ToList()[0];
-            var s = BlindsRegex.Match(line).Value.Split('/')[0].Replace("$", "").Trim();
-            s = s.Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
-            var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
-            var d = Decimal.Parse(s, numberFormatInfo);
-            return d;
+            var s = BlindsRegex.Match(line).Value.Split('/')[0];
+            return GetCleanAmount(s);
         }
 
-        protected override decimal FindBigBlind(IEnumerable<string> hand)
+        protected override double FindBigBlind(IEnumerable<string> hand)
         {
             var line = hand.ToList()[0];
-            var s = BlindsRegex.Match(line).Value.Split('/')[1].Replace("$", "").Trim();
-            s = s.Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
-            var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
-            var d = Decimal.Parse(s, numberFormatInfo);
-            return d;
+            var s = BlindsRegex.Match(line).Value.Split('/')[1];
+            return GetCleanAmount(s);
         }
-
-        protected override LimitType FindLimitType(IEnumerable<string> hand)
-        {
-            var line = hand.ToList()[0];
-            var initialMatch = LimitTypeRegex.Match(line).Value.Trim();
-            return ConvertLimitTypeEnum(initialMatch);
-        }
-
-        protected override MoneyType FindMoneyType(IEnumerable<string> hand)
-        {
-            var line = hand.ToList()[1];
-            var initialMatch = MoneyTypeRegex.Match(line).Value;
-            return ConvertMoneyTypeEnum(initialMatch);
-        }
-
-        protected override SeatType FindSeatType(IEnumerable<string> hand)
-        {
-            var line = hand.ToList()[1];
-            string seatTypeString = SeatTypeRegex.Match(line).Value.Replace('-', ' ');
-            return ConvertSeatEnum(seatTypeString);
-        }
-
         protected override byte FindNumberOfPlayers(string hand)
         {
             return (byte)(NumberOfPlayersRegex.Matches(hand).Count/2);
@@ -323,12 +303,10 @@ namespace HandHistories.SimpleParser.PokerStars
             return byte.Parse(PlayerSeatRegex.Match(line).Value.Trim(), CultureInfo.InvariantCulture);
         }
 
-        protected override decimal FindPlayerStartingStack(string line)
+        protected override double FindPlayerStartingStack(string line)
         {
-            var s = PlayerStackRegex.Match(line).Value.Replace("$", "").Trim();
-            s = s.Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
-            var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
-            return Decimal.Parse(s, numberFormatInfo);
+            var s = PlayerStackRegex.Match(line).Value;
+            return GetCleanAmount(s);
         }
         //todo:need to finish
         protected override bool FindBadHand(string inputString)
@@ -383,7 +361,7 @@ namespace HandHistories.SimpleParser.PokerStars
         }
         protected virtual byte[] FindHeroCards(string inputString)
         {
-            string[] strCards = HeroCardsRegex.Match(inputString).Value.Replace(" ", "").Split(',');
+            string[] strCards = HeroCardsRegex.Match(inputString).Value.Trim().Split(' ');
             var byteArray = new byte[2];
             for (var i = 0; i < strCards.Length; i++)
             {
@@ -391,56 +369,45 @@ namespace HandHistories.SimpleParser.PokerStars
             }
             return byteArray;
         }
+
         //todo:need to test
-        protected virtual decimal DefineActionAmount(HandAction handAction, string inputLine)
+        protected virtual double DefineActionAmount(HandAction handAction, string inputLine)
         {
             string strAmout;
             switch (handAction.HandActionType)
             {
                 case HandActionType.ALL_IN_CALL:
-                    strAmout = AllInCallAmountRegex.Match(inputLine).Value.Replace("$", "").Replace(" ", "")
-                    .Replace(((char)160).ToString(), "");
+                    strAmout = AllInCallAmountRegex.Match(inputLine).Value;
                     break;
 
                 case HandActionType.ALL_IN_RAISE:
-                    strAmout = AllInRaiseAmountRegex.Match(inputLine).Value.Replace("$", "").Replace(" ", "")
-                    .Replace(((char)160).ToString(), "");
+                    strAmout = AllInRaiseAmountRegex.Match(inputLine).Value;
+                    break;
+                case HandActionType.ALL_IN_BET:
+                    strAmout = AllInBetAmountRegex.Match(inputLine).Value;
                     break;
 
                 case HandActionType.WINS:
-                    strAmout = CollectedPotRegex.Match(inputLine).Value.Replace("$", "").Replace(" ", "")
-                    .Replace(((char)160).ToString(), "");
+                    strAmout = CollectedPotRegex.Match(inputLine).Value;
                     break;
 
                 case HandActionType.WINS_MAIN_POT:
-                    strAmout = CollectedMainPotRegex.Match(inputLine).Value.Replace("$", "").Replace(" ", "")
-                    .Replace(((char)160).ToString(), "");
+                    strAmout = CollectedMainPotRegex.Match(inputLine).Value;
                     break;
 
                 case HandActionType.WINS_SIDE_POT:
-                    strAmout = CollectedSidePotRegex.Match(inputLine).Value.Replace("$", "").Replace(" ", "")
-                    .Replace(((char)160).ToString(), "");
+                    strAmout = CollectedSidePotRegex.Match(inputLine).Value;
                     break;
                 case HandActionType.UNCALLED_BET:
-                    strAmout = UncalledBetAmountRegex.Match(inputLine).Value.Replace("$", "").Replace(" ", "")
-                    .Replace(((char)160).ToString(), "");
+                    strAmout = UncalledBetAmountRegex.Match(inputLine).Value;
                     break;
 
                 default:
-                    strAmout = inputLine.Split(' ').Last().Replace("$", "").Replace(" ", "")
-                    .Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
+                    strAmout = inputLine.Split(' ').Last();
                     break;
             }
-            
-            var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
-            decimal amount;
-            if (!strAmout.Contains("+"))
-                amount = decimal.Parse(strAmout, numberFormatInfo);
-            else
-            {
-                var parts = strAmout.Split('+');
-                amount = parts.Sum(part => decimal.Parse(part, numberFormatInfo));
-            }
+
+            var amount = GetCleanAmount(strAmout);
             switch (handAction.HandActionType)
             {
                 case HandActionType.BET:
@@ -448,6 +415,7 @@ namespace HandHistories.SimpleParser.PokerStars
                 case HandActionType.SMALL_BLIND:
                 case HandActionType.CALL:
                 case HandActionType.ALL_IN_CALL:
+                case HandActionType.ALL_IN_BET:
                 case HandActionType.ALL_IN_RAISE:
                 case HandActionType.ANTE:
                 case HandActionType.RAISE:

@@ -41,6 +41,7 @@ namespace HandHistories.SimpleObjects.Entities
         SECONDS_TO_RECONNECT,
         CHAT,
         FEELING_CHANGE,
+        ALL_IN_BET,
         ALL_IN_RAISE,
         ALL_IN_CALL,
         GAME_CANCELLED,
