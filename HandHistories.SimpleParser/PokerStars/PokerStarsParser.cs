@@ -37,11 +37,15 @@ namespace HandHistories.SimpleParser.PokerStars
         private static readonly Regex CollectedSidePotRegex = new Regex(@"(?<=collected\s).+(?=\sfrom side pot)");
         private static readonly Regex UncalledBetAmountRegex = new Regex(@"(?<=Uncalled\sbet\s+\(\s*).+(?=\s*\)\sreturned\sto)");
         private static readonly Regex UncalledBetPlayerRegex = new Regex(@"(?<=returned\sto\s).+(?=)");
+        private static readonly Regex AnteAmountRegex = new Regex(@"(?<=the\sante\s).+(?=)");
         private static readonly Regex ErrorRegex = new Regex(@"");
         
         protected override byte StartPlayerRow => 2;
 
-        
+        protected override NumberFormatInfo Format => new NumberFormatInfo
+        {
+            CurrencyDecimalSeparator = "."
+        };
 
         public override IEnumerable<HandAction> ParseHandActions(Game game, IReadOnlyList<string> multipleLines)
         {
@@ -49,61 +53,50 @@ namespace HandHistories.SimpleParser.PokerStars
             var currentStreet = Street.Preflop;
             for (var i = StartPlayerRow + game.NumberOfPlayers; i < multipleLines.Count; i++)
             {
-                var ha = new HandAction();
+                var ha = new HandAction() { Index = i };
+                var lowerLine = multipleLines[i].ToLower();
                 if (multipleLines[i].StartsWith("***"))
                 {
-                    if (multipleLines[i].ToLower().Contains("flop"))
+                    if (lowerLine.Contains("flop"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.DEALING_FLOP;
                         game.BoardCards.InitializeNewCards(FindFlopCards(multipleLines[i]));
-                        //handActions.Add(ha);
                         currentStreet = Street.Flop;
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("turn"))
+                    if (lowerLine.Contains("turn"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.DEALING_TURN;
                         game.BoardCards[3] = FindTurnCard(multipleLines[i]);
-                        //handActions.Add(ha);
                         currentStreet = Street.Turn;
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("river"))
+                    if (lowerLine.Contains("river"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.DEALING_RIVER;
                         game.BoardCards[4] = FindRiverCard(multipleLines[i]);
-                        //handActions.Add(ha);
                         currentStreet = Street.River;
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("hole"))
+                    if (lowerLine.Contains("hole"))
                     {
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("show down"))
+                    if (lowerLine.Contains("show down"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.SUMMARY;
-                        //handActions.Add(ha);
                         currentStreet = Street.Showdown;
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("summary"))
+                    if (lowerLine.Contains("summary"))
                     {
                         break;//пока что summary строки не будем обрабатывать.
                     }
-                    throw new NotImplementedException("No defined action with ***");
+                    throw new ParserException($"No defined action with ***. Unnown line -> {multipleLines[i]}", DateTime.Now);
                 } //end ***
-                if (multipleLines[i].ToLower().StartsWith("dealt to"))
+                if (lowerLine.StartsWith("dealt to"))
                 {
-                    ha.Source = HeroNameRegex.Match(multipleLines[i]).Value.Trim();
+                    ha.PlayerName = HeroNameRegex.Match(multipleLines[i]).Value.Trim();
                     ha.Street = currentStreet;
                     ha.HandActionType = HandActionType.DEALT_HERO_CARDS;
-                    game.Hero = ha.Source;
-                    game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(FindHeroCards(multipleLines[i]));
+                    game.Hero = ha.PlayerName;
+                    game.PlayerHistories.Find(p => p.PlayerName == ha.PlayerName).HoleCards.InitializeNewCards(FindHeroCards(multipleLines[i]));
                     handActions.Add(ha);
                     continue;
                 }
@@ -113,23 +106,32 @@ namespace HandHistories.SimpleParser.PokerStars
                 if (multipleLines[i].Contains(':'))
                 {
                     var parts = multipleLines[i].Split(':');
-                    ha.Source = parts[0].Trim();
+                    ha.PlayerName = parts[0].Trim();
                     ha.Street = currentStreet;
-                    var action = parts[1].Trim().Split(' ')[0];
-                    switch (action)
+                    var actionParts = parts[1].Trim().Split(' ');
+                    switch (actionParts[0])
                     {
                         case "posts":
-                            if (parts[1].Trim().Split(' ')[1] == "big")
+                            var key = actionParts[1];
+                            switch (key)
                             {
-                                ha.HandActionType = HandActionType.BIG_BLIND;
-                                ha.Amount = DefineActionAmount(ha, multipleLines[i]);
-                                handActions.Add(ha);
-                            }
-                            else
-                            {
-                                ha.HandActionType = HandActionType.SMALL_BLIND;
-                                ha.Amount = DefineActionAmount(ha, multipleLines[i]);
-                                handActions.Add(ha);
+                                case "big":
+                                    ha.HandActionType = HandActionType.BIG_BLIND;
+                                    ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                                    handActions.Add(ha);
+                                    break;
+                                case "small":
+                                    ha.HandActionType = HandActionType.SMALL_BLIND;
+                                    ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                                    handActions.Add(ha);
+                                    break;
+                                case "the"://ante
+                                    ha.HandActionType = HandActionType.ANTE;
+                                    ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                                    handActions.Add(ha);
+                                    break;
+                                default:
+                                    throw new ParserException( $"No defined action that contains posts. Unnown line -> {multipleLines[i]}", DateTime.Now);
                             }
                             continue;
                         case "folds":
@@ -161,33 +163,33 @@ namespace HandHistories.SimpleParser.PokerStars
                             continue;
                         case "shows":
                             ha.HandActionType = HandActionType.SHOW;
-                            game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(FindShowdounCards(multipleLines[i]));
+                            game.PlayerHistories.Find(p => p.PlayerName == ha.PlayerName).HoleCards.InitializeNewCards(FindShowdounCards(multipleLines[i]));
                             handActions.Add(ha);
                             continue;
                         case "mucks":
                             ha.HandActionType = HandActionType.MUCKS;
-                            game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(FindMuckCards(multipleLines));
+                            game.PlayerHistories.Find(p => p.PlayerName == ha.PlayerName).HoleCards.InitializeNewCards(FindMuckCards(multipleLines));
                             handActions.Add(ha);
                             continue;
                         default:
-                            throw new NotImplementedException("Cann't parse string with ':' and unnown word");
+                            throw new ParserException( $"Cann't parse string with ':' and unnown word. Unnown line -> {multipleLines[i]}", DateTime.Now);
                     }
                 }
-                if (multipleLines[i].ToLower().Contains("uncalled bet"))
+                if (lowerLine.Contains("uncalled bet"))
                 {
                     ha.HandActionType = HandActionType.UNCALLED_BET;
-                    ha.Source = UncalledBetPlayerRegex.Match(multipleLines[i]).Value;
+                    ha.PlayerName = UncalledBetPlayerRegex.Match(multipleLines[i]).Value;
                     ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                     handActions.Add(ha);
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("collected"))
+                if (lowerLine.Contains("collected"))
                 {
-                    if (multipleLines[i].ToLower().Contains("main"))
+                    if (lowerLine.Contains("main"))
                     {
                         ha.HandActionType = HandActionType.WINS_MAIN_POT;
                     }
-                    else if (multipleLines[i].ToLower().Contains("side"))
+                    else if (lowerLine.Contains("side"))
                     {
                         ha.HandActionType = HandActionType.WINS_SIDE_POT;
                     }
@@ -201,47 +203,47 @@ namespace HandHistories.SimpleParser.PokerStars
                     continue;
                 }
                 //hand actions without tracking:
-                if (multipleLines[i].ToLower().Contains("leaves the table"))
+                if (lowerLine.Contains("leaves the table"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("joins the table"))
+                if (lowerLine.Contains("joins the table"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("will be allowed to play"))
+                if (lowerLine.Contains("will be allowed to play"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("is disconnected"))
+                if (lowerLine.Contains("is disconnected"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("was removed from the table"))
+                if (lowerLine.Contains("was removed from the table"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("finished the tournament"))
+                if (lowerLine.Contains("finished the tournament"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("said,"))
+                if (lowerLine.Contains("said,"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("has timed out"))
+                if (lowerLine.Contains("has timed out"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("is connected"))
+                if (lowerLine.Contains("is connected"))
                 {
                     continue;
                 }
-                if (multipleLines[i].ToLower().Contains("bounty for eliminating"))
+                if (lowerLine.Contains("bounty for eliminating"))
                 {
                     continue;
                 }
-                throw new NotImplementedException("not parsed string");
+                throw new ParserException($"Line with a new words -> {multipleLines[i]}", DateTime.Now);
             }
             return handActions;
         }
@@ -401,7 +403,9 @@ namespace HandHistories.SimpleParser.PokerStars
                 case HandActionType.UNCALLED_BET:
                     strAmout = UncalledBetAmountRegex.Match(inputLine).Value;
                     break;
-
+                    case HandActionType.ANTE:
+                    strAmout = AnteAmountRegex.Match(inputLine).Value;
+                    break;
                 default:
                     strAmout = inputLine.Split(' ').Last();
                     break;

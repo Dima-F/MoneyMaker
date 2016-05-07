@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Permissions;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
 using MoneyMaker.BLL.Hud;
@@ -118,60 +116,55 @@ namespace MoneyMaker.BLL.Tools
             }
             return Math.Round(passiveActCount == 0 ? agrassiveActCount : (double)agrassiveActCount /passiveActCount,2);
         }
-
+        
         public static double GetATSPercentForPlayer(this IEnumerable<Game> games, string player)
         {
-            //var atsSituationCount = 0;
-            //var atsRaiseCount = 0;
-            //foreach (var g in games)
-            //{
-            //    byte buttonPosition = g.ButtonPosition;
-            //    byte cutofPosition = DefineCutoffPosition(g);
-            //    byte smallBlindPosition = DefineSBPosition(g);
-            //    //сначала проверяем, на какой позиции находится игрок - нас интересует CO и BTN
-            //    byte playerSeatNumber = g.PlayerHistories.Find(p => p.PlayerName == player).SeatNumber;
-            //    if (!(playerSeatNumber == buttonPosition || playerSeatNumber == cutofPosition || playerSeatNumber==smallBlindPosition))
-            //        continue;
-            //    //кэшируем все действия игроков на префлопе
-            //    var allPlayersPreflopHandActions = g.HandActions.Where(ha => !string.IsNullOrEmpty(ha.Source) && ha.Street == Street.Preflop).ToList();
-            //    //действия игрока
-            //    var playerPreflopHandActions = allPlayersPreflopHandActions.Where(ha => ha.Source == player);
-            //    //действия всех остальных игроков до флопа кроме блайндов
-            //    var otherPlayersPreflopActions = allPlayersPreflopHandActions.Where(ha => ha.Source != player
-            //        && ha.HandActionType != HandActionType.BIG_BLIND
-            //        && ha.HandActionType != HandActionType.SMALL_BLIND);
-            //    //если кто-то из них сказал кол или рейз, это не стиллингова ситуация
-            //    if (otherPlayersPreflopActions.Any(ha => ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE))
-            //        continue;
-            //    //здесь стилинговая ситуация
-            //    atsSituationCount++;
-            //    if (playerPreflopHandActions.Any(ha => ha.HandActionType == HandActionType.RAISE))
-            //        atsRaiseCount++;//возможность стила и игрок сделал рейз
-            //}
-            //return atsSituationCount == 0 ? 0 : (decimal)atsRaiseCount / atsSituationCount * 100;
-            return 1;
+            var atsSituationCount = 0;
+            var atsRaiseCount = 0;
+            foreach (var g in games)
+            {
+                byte buttonPosition = g.ButtonPosition;
+                byte cutofPosition = DefineCutoffPosition(g);
+                byte smallBlindPosition = DefineSbPosition(g);
+                //сначала проверяем, на какой позиции находится игрок - нас интересует CO, BTN и SB
+                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
+                byte stealSeatNumber = stealPlayer.SeatNumber;
+                if (!(stealSeatNumber == buttonPosition || stealSeatNumber == cutofPosition || stealSeatNumber == smallBlindPosition))
+                    continue;
+                //действия игрока на префлопе кроме малого блайнда
+                var playerPreflopHandActions =
+                    stealPlayer.HandActions.Where(
+                        ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
+                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
+                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
+                //действия остальных игроков кроме блайндов на префлопе
+                var otherPlayersPreflopHandActions = new List<HandAction>();
+                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
+                {
+                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
+                        && ha.HandActionType != HandActionType.SMALL_BLIND));
+                }
+                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
+                if (otherPlayersPreflopHandActions.Where(ha=>ha.Index<minIndex).All(a=>a.HandActionType==HandActionType.FOLD || a.HandActionType==HandActionType.CHECK))
+                    atsSituationCount++;
+                //самое первое действие игрока, который сидит на позиции стилинга, должен быть рейз.
+                if (firstAction.HandActionType == HandActionType.RAISE)
+                    atsRaiseCount++;
+            }
+            return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
         }
-
-
-        //todo:work with index
+        
         public static int Get3BCountForPlayer(this IEnumerable<Game> games, string player)
         {
             var count = 0;
             foreach (Game g in games)
             {
-                
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
-                if (playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE))
-                {
-                    var rrAmount =
-                        playerHistory.HandActions.Find(
-                            ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE).Amount;
-                    if (g.PlayerHistories.Any(ph => ph.PlayerName != player && ph.HandActions.Any(
-                        a =>
-                            a.Street == Street.Preflop && a.HandActionType == HandActionType.RAISE &&
-                            a.Amount < rrAmount)))//игрок сделал рейз, теперь проверим, есть ли рейз на прейлопе из меньшим значением (т.е. он будет до нас)
-                        count++;
-                }
+                if (!playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE)) continue;
+                var rrIndex = playerHistory.HandActions.Find(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE).Index;
+                if (g.PlayerHistories.Any(ph => ph.PlayerName != player && ph.HandActions.Any( a =>
+                    a.Street == Street.Preflop && a.HandActionType == HandActionType.RAISE && a.Index < rrIndex)))
+                    count++;
             }
             return count;
         }
@@ -208,7 +201,6 @@ namespace MoneyMaker.BLL.Tools
             return null;
         }
         
-
         public static double CalculateTotalProfit(this IEnumerable<Game> games, string player)
         {
             double sum = 0;
@@ -238,15 +230,15 @@ namespace MoneyMaker.BLL.Tools
             byte buttonPosition = g.ButtonPosition;
             //позиции, на которых сидят игроки
             var positions = g.PlayerHistories.Select(player => player.SeatNumber).OrderBy(p => p).ToList();
-            if (positions.First() != buttonPosition)
-            {
-                var index = positions.IndexOf(buttonPosition) - 1;
-                return positions[index];
-            }
-            else return positions.Max();
+            var count = positions.Count;
+            if (positions.First() == buttonPosition) return positions[count - 1]; //max
+            var index = positions.IndexOf(buttonPosition);
+            return index!=-1 ? 
+                positions[index-1] : 
+                positions[count - 2];//max-1
         }
 
-        private static byte DefineSBPosition(Game g)
+        private static byte DefineSbPosition(Game g)
         {
             byte buttonPosition = g.ButtonPosition;
             //позиции, на которых сидят игроки

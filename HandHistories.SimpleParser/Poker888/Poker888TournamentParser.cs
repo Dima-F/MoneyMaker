@@ -10,11 +10,8 @@ namespace HandHistories.SimpleParser.Poker888
     {
         private static readonly Regex TableNameRegex = new Regex(@"(?<=Tournament\s+#\d{7,}\s).+(?=\s\d+\s)");
         private static readonly Regex SeatTypeRegex = new Regex(@"(?<=Table\s+#\d{1,}\s).+(?=\s\()");
-        protected override bool IsTournament
-        {
-            get { return true; }
-        }
-        
+        protected override bool IsTournament => true;
+
         public override IDictionary<string, string> GetInfoFromPath(string path)
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();

@@ -17,7 +17,7 @@ namespace MoneyMaker.BLL.Hud
     /// без сохранения в базе данных. Т.е. он использует только данные одного стола текущей сессии.
     /// </summary>
     public  class HudTable
-    {
+    { 
         private readonly List<Game> _games;
 
         private readonly IStatOperator _statOperator;

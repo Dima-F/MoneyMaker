@@ -11,9 +11,9 @@ namespace HandHistories.SimpleObjects.Entities
         [Required]
         public int PlayerHistoryId { get; set; }
         [Required]
-        public byte Index { get; set; }//порядковый номер действия в конкретной игре
+        public int Index { get; set; }//номер строки в конкретной истории, может использоваться для сортировки действий в порядке их следования.
         [Required]
-        public string Source { get; set; }//PlayerHistory.PlayerName or System name
+        public string PlayerName { get; set; }//PlayerHistory.PlayerName or System name
         [Required]
         public HandActionType HandActionType { get; set; }
 

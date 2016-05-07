@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleParser;
 
@@ -15,7 +12,7 @@ namespace MoneyMaker.ConsoleParser
     {
         static void Main(string[] args)
         {
-            var directory = @"E:\TexasHoldem\PokerStars\VipNeborak";
+            var directory = @"E:\TexasHoldem\888Poker\HandsHistory\VipNeborak";
             var files = Directory.GetFiles(directory, "*.txt").Where(s => !s.Contains("Summary")).ToArray();
             var allGames = new List<Game>();
             foreach (var file in files)

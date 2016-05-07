@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Obsolete\PathParserExtention.cs" />
+    <Compile Include="ParserException.cs" />
     <Compile Include="Poker888\Poker888CashParser.cs" />
     <Compile Include="Poker888\Poker888Parser.cs" />
     <Compile Include="Poker888\Poker888TournamentParser.cs" />

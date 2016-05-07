@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
@@ -10,10 +11,12 @@ using MoneyMaker.BLL.Hud;
 using MoneyMaker.BLL.Stats;
 using MoneyMaker.UI.Light.BLL;
 
+
 namespace MoneyMaker.UI.Light
 {
     public partial class HudForm : Form
     {
+
         private readonly string _keyPath;
 
         public HudForm(string key)
@@ -26,7 +29,7 @@ namespace MoneyMaker.UI.Light
 
         public void FillHud()
         {
-            IStatOperator sOperator=new ConditionalStatOperator();
+            IStatOperator sOperator = new ConditionalStatOperator();
             var hudTable = new HudTable(sOperator, _keyPath);
             hudInfoTxtBx.Text = hudTable.GetHudInfo();
             DrawHeroCards(hudTable);

@@ -41,6 +41,7 @@
             this.hhFolderTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageStat = new System.Windows.Forms.TabPage();
+            this.cbStatBB = new System.Windows.Forms.CheckBox();
             this.cbStat3B = new System.Windows.Forms.CheckBox();
             this.cbStatAf = new System.Windows.Forms.CheckBox();
             this.cbStatAts = new System.Windows.Forms.CheckBox();
@@ -58,7 +59,6 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbStatBB = new System.Windows.Forms.CheckBox();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -127,7 +127,7 @@
             // 
             // heroTextBox
             // 
-            this.heroTextBox.Location = new System.Drawing.Point(11, 104);
+            this.heroTextBox.Location = new System.Drawing.Point(20, 104);
             this.heroTextBox.Name = "heroTextBox";
             this.heroTextBox.Size = new System.Drawing.Size(309, 20);
             this.heroTextBox.TabIndex = 5;
@@ -164,6 +164,7 @@
             // 
             // hhFolderButton
             // 
+            this.hhFolderButton.Enabled = false;
             this.hhFolderButton.Location = new System.Drawing.Point(335, 24);
             this.hhFolderButton.Name = "hhFolderButton";
             this.hhFolderButton.Size = new System.Drawing.Size(31, 23);
@@ -174,6 +175,7 @@
             // 
             // hhFolderTextBox
             // 
+            this.hhFolderTextBox.Enabled = false;
             this.hhFolderTextBox.Location = new System.Drawing.Point(20, 26);
             this.hhFolderTextBox.Name = "hhFolderTextBox";
             this.hhFolderTextBox.Size = new System.Drawing.Size(309, 20);
@@ -207,6 +209,16 @@
             this.tabPageStat.TabIndex = 2;
             this.tabPageStat.Text = "Stats";
             this.tabPageStat.UseVisualStyleBackColor = true;
+            // 
+            // cbStatBB
+            // 
+            this.cbStatBB.AutoSize = true;
+            this.cbStatBB.Location = new System.Drawing.Point(8, 223);
+            this.cbStatBB.Name = "cbStatBB";
+            this.cbStatBB.Size = new System.Drawing.Size(40, 17);
+            this.cbStatBB.TabIndex = 10;
+            this.cbStatBB.Text = "BB";
+            this.cbStatBB.UseVisualStyleBackColor = true;
             // 
             // cbStat3B
             // 
@@ -388,16 +400,6 @@
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
-            // 
-            // cbStatBB
-            // 
-            this.cbStatBB.AutoSize = true;
-            this.cbStatBB.Location = new System.Drawing.Point(8, 223);
-            this.cbStatBB.Name = "cbStatBB";
-            this.cbStatBB.Size = new System.Drawing.Size(40, 17);
-            this.cbStatBB.TabIndex = 10;
-            this.cbStatBB.Text = "BB";
-            this.cbStatBB.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 

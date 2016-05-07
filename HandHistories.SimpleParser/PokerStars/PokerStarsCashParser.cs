@@ -8,7 +8,6 @@ namespace HandHistories.SimpleParser.PokerStars
 {
     public class PokerStarsCashParser:PokerStarsParser
     {
-
         private static readonly Regex LimitTypeRegex = new Regex(@"(?<=:).+(?=\()", RegexOptions.Compiled);
         private static readonly Regex MoneyTypeRegex = new Regex(@"(?<=\().+(?=\))", RegexOptions.Compiled);
         private static readonly Regex SeatTypeRegex = new Regex(@"(?<='\s+).+(?=\s+\()", RegexOptions.Compiled);

@@ -17,6 +17,8 @@ namespace HandHistories.SimpleParser
         protected abstract byte StartPlayerRow { get; }
 
         protected abstract bool IsTournament { get; }
+
+        protected abstract NumberFormatInfo Format { get; }
         
         public List<Game> ParseGames(string allHandsText)
         {
@@ -43,7 +45,7 @@ namespace HandHistories.SimpleParser
                 IEnumerable<HandAction> allHandActions = ParseHandActions(game, multipleLines).ToArray();
                 foreach (var playerHistory in game.PlayerHistories)
                 {
-                    var playerActions = allHandActions.Where(ha => ha.Source == playerHistory.PlayerName).ToArray();
+                    var playerActions = allHandActions.Where(ha => ha.PlayerName == playerHistory.PlayerName).ToArray();
                     playerHistory.HandActions.AddRange(playerActions);
                 }
                 games.Add(game);
@@ -138,7 +140,7 @@ namespace HandHistories.SimpleParser
             lastAgrassiveAction.Amount = 0;
             var uncalledBetHandAction = new HandAction
             {
-                Source = lastAgrassiveAction.Source,
+                PlayerName = lastAgrassiveAction.PlayerName,
                 HandActionType = HandActionType.UNCALLED_BET,
                 Street = lastAgrassiveAction.Street,
                 Amount = -lastAgrassiveAction.Amount
@@ -173,7 +175,7 @@ namespace HandHistories.SimpleParser
                 case "hold'em no limit"://PokerStars
                     return LimitType.NoLimit;
                 default:
-                    throw new NotImplementedException();
+                    throw new ParserException(string.Format("Unnown limit type -> {0}",gameTypeString.ToLower()),DateTime.Now);
             }
         }
 
@@ -187,12 +189,12 @@ namespace HandHistories.SimpleParser
 
         protected double GetCleanAmount(string value)
         {
-            var s = value.Replace("$", "").Replace(',', '.').Trim();
+            var s = value.Replace("$", "").Trim();
             s = s.Replace(((char)160).ToString(), "");//удалить все неразрывные пробелы nbsp (разделяет разряды)
             if (!s.Contains("+"))
-                return double.Parse(s, new NumberFormatInfo { CurrencyDecimalSeparator = "." });
+                return double.Parse(s,Format);
             var parts = s.Split('+');
-            return parts.Sum(part => double.Parse(part, new NumberFormatInfo { CurrencyDecimalSeparator = "." }));
+            return parts.Sum(part => double.Parse(part, Format));
         }
     }
 }

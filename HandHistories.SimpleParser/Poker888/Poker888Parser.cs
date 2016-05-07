@@ -35,10 +35,9 @@ namespace HandHistories.SimpleParser.Poker888
         private static readonly Regex SmallBlindRegex = new Regex(@"(?<=).+(?=/)");
         private static readonly Regex BigBlindRegex = new Regex(@"(?<=/).+(?=\sBlinds)");
 
-        protected override byte StartPlayerRow
-        {
-            get { return 6; }
-        }
+        protected override byte StartPlayerRow => 6;
+
+        protected override NumberFormatInfo Format => new NumberFormatInfo { CurrencyDecimalSeparator = ".", CurrencyGroupSeparator = "," };
 
         public  override IEnumerable<HandAction> ParseHandActions(Game game, IReadOnlyList<string> multipleLines)
         {
@@ -46,59 +45,48 @@ namespace HandHistories.SimpleParser.Poker888
             var currentStreet = Street.Preflop;
             for (var i = StartPlayerRow + game.NumberOfPlayers; i < multipleLines.Count; i++)
             {
-                var ha = new HandAction();
+                var ha = new HandAction() { Index = i };
+                var lowerLine = multipleLines[i].ToLower();
                 if (multipleLines[i].StartsWith("**"))
                 {
 
-                    if (multipleLines[i].ToLower().Contains("flop"))
+                    if (lowerLine.Contains("flop"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.DEALING_FLOP;
                         game.BoardCards.InitializeNewCards(FindFlopCards(multipleLines[i]));
-                        //handActions.Add(ha);
                         currentStreet = Street.Flop;
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("turn"))
+                    if (lowerLine.Contains("turn"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.DEALING_TURN;
                         game.BoardCards[3] = FindTurnCard(multipleLines[i]);
-                        //handActions.Add(ha);
                         currentStreet = Street.Turn;
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("river"))
+                    if (lowerLine.Contains("river"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.DEALING_RIVER;
                         game.BoardCards[4] = FindRiverCard(multipleLines[i]);
-                        //handActions.Add(ha);
                         currentStreet = Street.River;
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("down cards"))
+                    if (lowerLine.Contains("down cards"))
                     {
                         continue;
                     }
-                    if (multipleLines[i].ToLower().Contains("summary"))
+                    if (lowerLine.Contains("summary"))
                     {
-                        //ha.Source = NameOfSystem;
-                        //ha.HandActionType = HandActionType.SUMMARY;
-                        //handActions.Add(ha);
                         currentStreet = Street.Showdown;
                         continue;
                     }
-                    throw new Exception("No defined action with **");
+                    throw new ParserException($"No defined action with **. Unnown line -> {multipleLines[i]}", DateTime.Now);
                 }//end **
 
-                if (multipleLines[i].ToLower().StartsWith("dealt to"))
+                if (lowerLine.StartsWith("dealt to"))
                 {
-                    ha.Source  = multipleLines[i].Split(' ')[2].Trim();
+                    ha.PlayerName  = multipleLines[i].Split(' ')[2].Trim();
                     ha.Street = currentStreet;
                     ha.HandActionType = HandActionType.DEALT_HERO_CARDS;
-                    game.Hero = ha.Source;
-                    game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(FindHeroCards(multipleLines[i]));
+                    game.Hero = ha.PlayerName;
+                    game.PlayerHistories.Find(p => p.PlayerName == ha.PlayerName).HoleCards.InitializeNewCards(FindHeroCards(multipleLines[i]));
                     handActions.Add(ha);
                     continue;
                 }
@@ -106,66 +94,76 @@ namespace HandHistories.SimpleParser.Poker888
                 //put new conditional in this place if some new statemants will apear
                 //.....
                 //.....
-                else
+                var parts = multipleLines[i].Split(' ');
+                ha.PlayerName = parts[0].Trim();
+                ha.Street = currentStreet;
+                switch (parts[1].Trim())
                 {
-                    ha.Source = multipleLines[i].Split(' ')[0].Trim();
-                    ha.Street = currentStreet;
-                    var action = multipleLines[i].Split(' ')[1].Trim();
-                    switch (action)
-                    {
-                        case "posts":
-                            if (multipleLines[i].Split(' ')[2].Trim() == "big")
-                            {
+                    case "posts":
+                        switch (parts[2].Trim())
+                        {
+                            case "big":
                                 ha.HandActionType = HandActionType.BIG_BLIND;
                                 ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                                 handActions.Add(ha);
-                            }
-                            else
-                            {
+                                break;
+                            case "small":
                                 ha.HandActionType = HandActionType.SMALL_BLIND;
                                 ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                                 handActions.Add(ha);
-                            }
-                            continue;
-                        case "folds":
-                            ha.HandActionType = HandActionType.FOLD;
-                            handActions.Add(ha);
-                            continue;
-                        case "checks":
-                            ha.HandActionType = HandActionType.CHECK;
-                            handActions.Add(ha);
-                            continue;
-                        case "calls":
-                            ha.HandActionType = HandActionType.CALL;
-                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
-                            handActions.Add(ha);
-                            continue;
-                        case "bets":
-                            ha.HandActionType = HandActionType.BET;
-                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
-                            handActions.Add(ha);
-                            continue;
-                        case "raises":
-                            ha.HandActionType = HandActionType.RAISE;
-                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
-                            handActions.Add(ha);
-                            continue;
-                        case "shows":
-                            ha.HandActionType = HandActionType.SHOW;
-                            game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(FindShowdounCards(multipleLines[i]));
-                            handActions.Add(ha);
-                            continue;
-                        case "mucks":
-                            ha.HandActionType = HandActionType.MUCKS;
-                            game.PlayerHistories.Find(p => p.PlayerName == ha.Source).HoleCards.InitializeNewCards(FindMuckCards(multipleLines[i]));
-                            handActions.Add(ha);
-                            continue;
-                        case "collected":
-                            ha.HandActionType = HandActionType.WINS;
-                            ha.Amount = DefineActionAmount(ha, multipleLines[i]);
-                            handActions.Add(ha);
-                            continue;
-                    }
+                                break;
+                            case "ante":
+                                ha.HandActionType = HandActionType.ANTE;
+                                ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                                handActions.Add(ha);
+                                break;
+                            case "dead":
+                                ha.HandActionType = HandActionType.DEAD_BLIND;
+                                ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                                handActions.Add(ha);
+                                break;
+                            default:
+                                throw new ParserException($"Undefined action. Unnown line -> {multipleLines[i]}", DateTime.Now);
+                        }
+                        continue;
+                    case "folds":
+                        ha.HandActionType = HandActionType.FOLD;
+                        handActions.Add(ha);
+                        continue;
+                    case "checks":
+                        ha.HandActionType = HandActionType.CHECK;
+                        handActions.Add(ha);
+                        continue;
+                    case "calls":
+                        ha.HandActionType = HandActionType.CALL;
+                        ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                        handActions.Add(ha);
+                        continue;
+                    case "bets":
+                        ha.HandActionType = HandActionType.BET;
+                        ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                        handActions.Add(ha);
+                        continue;
+                    case "raises":
+                        ha.HandActionType = HandActionType.RAISE;
+                        ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                        handActions.Add(ha);
+                        continue;
+                    case "shows":
+                        ha.HandActionType = HandActionType.SHOW;
+                        game.PlayerHistories.Find(p => p.PlayerName == ha.PlayerName).HoleCards.InitializeNewCards(FindShowdounCards(multipleLines[i]));
+                        handActions.Add(ha);
+                        continue;
+                    case "mucks":
+                        ha.HandActionType = HandActionType.MUCKS;
+                        game.PlayerHistories.Find(p => p.PlayerName == ha.PlayerName).HoleCards.InitializeNewCards(FindMuckCards(multipleLines[i]));
+                        handActions.Add(ha);
+                        continue;
+                    case "collected":
+                        ha.HandActionType = HandActionType.WINS;
+                        ha.Amount = DefineActionAmount(ha, multipleLines[i]);
+                        handActions.Add(ha);
+                        continue;
                 }
             }
             CheckAllHandActionsForUncalled(handActions);
@@ -314,6 +312,7 @@ namespace HandHistories.SimpleParser.Poker888
                 case HandActionType.BET:
                 case HandActionType.BIG_BLIND:
                 case HandActionType.SMALL_BLIND:
+                case HandActionType.DEAD_BLIND:
                 case HandActionType.CALL:
                 case HandActionType.ALL_IN_CALL:
                 case HandActionType.ALL_IN_RAISE:
@@ -328,7 +327,6 @@ namespace HandHistories.SimpleParser.Poker888
             }
             throw new Exception("Undefined amount action!");
         }
-
         #endregion
         
 
