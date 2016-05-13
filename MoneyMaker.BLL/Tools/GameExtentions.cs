@@ -43,7 +43,6 @@ namespace MoneyMaker.BLL.Tools
             return games.Where(game => game.PlayerHistories.Any(ph =>ph.PlayerName == player));
         }
         
-
         public static int GetHandsWonCountForPlayerGames(this IEnumerable<Game> games, string player)
         {
             var count = 0;
@@ -60,10 +59,10 @@ namespace MoneyMaker.BLL.Tools
             return count;
         }
 
-        public static int VPIPCountForPlayer(this IEnumerable<Game> games, string player)
+        public static int VPIP_CountForPlayer(this IEnumerable<Game> playerGames, string player)
         {
             var count = 0;
-            foreach (Game g in games)
+            foreach (Game g in playerGames)
             {
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
                 if (playerHistory.HandActions.Any(
@@ -76,7 +75,61 @@ namespace MoneyMaker.BLL.Tools
             return count;
         }
 
-        public static int PFRCountForPlayer(this IEnumerable<Game> games, string player)
+        public static int VPIP_EP_CountForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var count = 0;
+            foreach (Game g in games)
+            {
+                var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
+                if (!playerHistory.IsEerlyPosition())
+                    continue;
+                if (playerHistory.HandActions.Any(
+                    ha => ha.Street == Street.Preflop
+                    && ha.HandActionType != HandActionType.BIG_BLIND
+                    && ha.HandActionType != HandActionType.SMALL_BLIND
+                    && (ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE)))
+                    count++;
+            }
+            return count;
+        }
+
+        public static int VPIP_MP_CountForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var count = 0;
+            foreach (Game g in games)
+            {
+                var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
+                if (!playerHistory.IsMiddlePosition())
+                    continue;
+                if (playerHistory.HandActions.Any(
+                    ha => ha.Street == Street.Preflop
+                    && ha.HandActionType != HandActionType.BIG_BLIND
+                    && ha.HandActionType != HandActionType.SMALL_BLIND
+                    && (ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE)))
+                    count++;
+            }
+            return count;
+        }
+
+        public static int VPIP_LP_CountForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var count = 0;
+            foreach (Game g in games)
+            {
+                var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
+                if (!playerHistory.IsLatePosition())
+                    continue;
+                if (playerHistory.HandActions.Any(
+                    ha => ha.Street == Street.Preflop
+                    && ha.HandActionType != HandActionType.BIG_BLIND
+                    && ha.HandActionType != HandActionType.SMALL_BLIND
+                    && (ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE)))
+                    count++;
+            }
+            return count;
+        }
+
+        public static int PFR_CountForPlayer(this IEnumerable<Game> games, string player)
         {
             var count = 0;
             foreach (Game g in games)
@@ -88,52 +141,167 @@ namespace MoneyMaker.BLL.Tools
             return count;
         }
 
-        public static double GetAfPostflopPercentForPlayer(this IEnumerable<Game> games, string player)
+        public static int PFR_EP_CountForPlayer(this IEnumerable<Game> games, string player)
         {
-            var passiveActCount = 0;
-            var agrassiveActCount = 0;
+            var count = 0;
+            foreach (Game g in games)
+            {
+                var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
+                if(!playerHistory.IsEerlyPosition())
+                    continue;
+                if (playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE))
+                    count++;
+            }
+            return count;
+        }
+
+        public static int PFR_MP_CountForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var count = 0;
+            foreach (Game g in games)
+            {
+                var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
+                if (!playerHistory.IsMiddlePosition())
+                    continue;
+                if (playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE))
+                    count++;
+            }
+            return count;
+        }
+
+        public static int PFR_LP_CountForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var count = 0;
+            foreach (Game g in games)
+            {
+                var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
+                if (!playerHistory.IsLatePosition())
+                    continue;
+                if (playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE))
+                    count++;
+            }
+            return count;
+        }
+
+        public static double AF_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var betOrRaiseCount = 0;
+            var callCount = 0;
             foreach (var game in games)
             {
-                var playerHistory = game.PlayerHistories.First(ph => ph.PlayerName == player);
-
-                foreach (var action in playerHistory.HandActions.Where(ha=>ha.Street != Street.Preflop && ha.Street != Street.Showdown && ha.Street != Street.Null))
+                var playerHistory = game.PlayerHistories.Find(ph => ph.PlayerName == player);
+                foreach (var action in playerHistory.HandActions)
                 {
                     switch (action.HandActionType)
                     {
                         case HandActionType.CALL:
                         case HandActionType.ALL_IN_CALL:
-                        case HandActionType.CHECK:
-                            passiveActCount++;
+                            callCount++;
                             break;
                          case HandActionType.ALL_IN_RAISE:
                          case HandActionType.BET:
                          case HandActionType.ALL_IN_BET:
                          case HandActionType.RAISE:
-                            agrassiveActCount++;
+                            betOrRaiseCount++;
                             break;
                     }
                 }
             }
-            return Math.Round(passiveActCount == 0 ? agrassiveActCount : (double)agrassiveActCount /passiveActCount,2);
+            return Math.Round(callCount == 0 ? betOrRaiseCount : (double)betOrRaiseCount / callCount,2);
         }
-        
-        public static double GetATSPercentForPlayer(this IEnumerable<Game> games, string player)
+
+        public static double AF_Flop_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var betOrRaiseCount = 0;
+            var callCount = 0;
+            foreach (var game in games)
+            {
+                var playerHistory = game.PlayerHistories.Find(ph => ph.PlayerName == player);
+                foreach (var action in playerHistory.HandActions.Where(ha=>ha.Street==Street.Flop))
+                {
+                    switch (action.HandActionType)
+                    {
+                        case HandActionType.CALL:
+                        case HandActionType.ALL_IN_CALL:
+                            callCount++;
+                            break;
+                        case HandActionType.ALL_IN_RAISE:
+                        case HandActionType.BET:
+                        case HandActionType.ALL_IN_BET:
+                        case HandActionType.RAISE:
+                            betOrRaiseCount++;
+                            break;
+                    }
+                }
+            }
+            return Math.Round(callCount == 0 ? betOrRaiseCount : (double)betOrRaiseCount / callCount, 2);
+        }
+
+        public static double AF_Turn_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var betOrRaiseCount = 0;
+            var callCount = 0;
+            foreach (var game in games)
+            {
+                var playerHistory = game.PlayerHistories.Find(ph => ph.PlayerName == player);
+                foreach (var action in playerHistory.HandActions.Where(ha => ha.Street == Street.Turn))
+                {
+                    switch (action.HandActionType)
+                    {
+                        case HandActionType.CALL:
+                        case HandActionType.ALL_IN_CALL:
+                            callCount++;
+                            break;
+                        case HandActionType.ALL_IN_RAISE:
+                        case HandActionType.BET:
+                        case HandActionType.ALL_IN_BET:
+                        case HandActionType.RAISE:
+                            betOrRaiseCount++;
+                            break;
+                    }
+                }
+            }
+            return Math.Round(callCount == 0 ? betOrRaiseCount : (double)betOrRaiseCount / callCount, 2);
+        }
+
+        public static double AF_River_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var betOrRaiseCount = 0;
+            var callCount = 0;
+            foreach (var game in games)
+            {
+                var playerHistory = game.PlayerHistories.Find(ph => ph.PlayerName == player);
+                foreach (var action in playerHistory.HandActions.Where(ha => ha.Street == Street.River))
+                {
+                    switch (action.HandActionType)
+                    {
+                        case HandActionType.CALL:
+                        case HandActionType.ALL_IN_CALL:
+                            callCount++;
+                            break;
+                        case HandActionType.ALL_IN_RAISE:
+                        case HandActionType.BET:
+                        case HandActionType.ALL_IN_BET:
+                        case HandActionType.RAISE:
+                            betOrRaiseCount++;
+                            break;
+                    }
+                }
+            }
+            return Math.Round(callCount == 0 ? betOrRaiseCount : (double)betOrRaiseCount / callCount, 2);
+        }
+
+        public static double ATS_PercentForPlayer(this IEnumerable<Game> games, string player)
         {
             var atsSituationCount = 0;
             var atsRaiseCount = 0;
             foreach (var g in games)
             {
-                byte buttonPosition = g.ButtonPosition;
-                byte cutofPosition = DefineCutoffPosition(g);
-                byte smallBlindPosition = DefineSbPosition(g);
-                //сначала проверяем, на какой позиции находится игрок - нас интересует CO, BTN и SB
                 var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
-                byte stealSeatNumber = stealPlayer.SeatNumber;
-                if (!(stealSeatNumber == buttonPosition || stealSeatNumber == cutofPosition || stealSeatNumber == smallBlindPosition))
+                if(!(stealPlayer.Position==PositionType.B || stealPlayer.Position == PositionType.CO || stealPlayer.Position == PositionType.SB))
                     continue;
                 //действия игрока на префлопе кроме малого блайнда
-                var playerPreflopHandActions =
-                    stealPlayer.HandActions.Where(
+                var playerPreflopHandActions = stealPlayer.HandActions.Where(
                         ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
                 var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
                 var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
@@ -142,19 +310,20 @@ namespace MoneyMaker.BLL.Tools
                 foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
                 {
                     otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
-                        && ha.HandActionType != HandActionType.SMALL_BLIND));
+                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType!=HandActionType.DEALT_HERO_CARDS && ha.HandActionType!=HandActionType.UNCALLED_BET));
                 }
                 //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
-                if (otherPlayersPreflopHandActions.Where(ha=>ha.Index<minIndex).All(a=>a.HandActionType==HandActionType.FOLD || a.HandActionType==HandActionType.CHECK))
-                    atsSituationCount++;
-                //самое первое действие игрока, который сидит на позиции стилинга, должен быть рейз.
+                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
+                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                    continue;
+                atsSituationCount++;
                 if (firstAction.HandActionType == HandActionType.RAISE)
                     atsRaiseCount++;
             }
             return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
         }
         
-        public static int Get3BCountForPlayer(this IEnumerable<Game> games, string player)
+        public static int ThreeBetCountForPlayer(this IEnumerable<Game> games, string player)
         {
             var count = 0;
             foreach (Game g in games)
@@ -169,7 +338,7 @@ namespace MoneyMaker.BLL.Tools
             return count;
         }
 
-        public static double GetBBForPlayer(this Game game, string player)
+        public static double BB_ForPlayer(this Game game, string player)
         {
             var ph = game.PlayerHistories.First(p => p.PlayerName == player);
             return ph.StartingStack/game.BigBlind;
@@ -220,36 +389,6 @@ namespace MoneyMaker.BLL.Tools
             sum += playerHistory.HandActions.Sum(ha => ha.Amount);
             return sum;
         }
-
-
-
-
-        #region Workers
-        private static byte DefineCutoffPosition(Game g)
-        {
-            byte buttonPosition = g.ButtonPosition;
-            //позиции, на которых сидят игроки
-            var positions = g.PlayerHistories.Select(player => player.SeatNumber).OrderBy(p => p).ToList();
-            var count = positions.Count;
-            if (positions.First() == buttonPosition) return positions[count - 1]; //max
-            var index = positions.IndexOf(buttonPosition);
-            return index!=-1 ? 
-                positions[index-1] : 
-                positions[count - 2];//max-1
-        }
-
-        private static byte DefineSbPosition(Game g)
-        {
-            byte buttonPosition = g.ButtonPosition;
-            //позиции, на которых сидят игроки
-            var positions = g.PlayerHistories.Select(player => player.SeatNumber).OrderBy(p => p).ToList();
-            if (positions.Last() != buttonPosition)
-            {
-                var index = positions.IndexOf(buttonPosition) + 1;
-                return positions[index];
-            }
-            else return positions.Min();
-        }
-        #endregion
+        
     }
 }

@@ -202,5 +202,113 @@ namespace MoneyMaker.UI.Light.Properties {
                 this["Stat_BB"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_EP_PFR {
+            get {
+                return ((bool)(this["Stat_EP_PFR"]));
+            }
+            set {
+                this["Stat_EP_PFR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_MP_PFR {
+            get {
+                return ((bool)(this["Stat_MP_PFR"]));
+            }
+            set {
+                this["Stat_MP_PFR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_LP_PFR {
+            get {
+                return ((bool)(this["Stat_LP_PFR"]));
+            }
+            set {
+                this["Stat_LP_PFR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_EP_VPIP {
+            get {
+                return ((bool)(this["Stat_EP_VPIP"]));
+            }
+            set {
+                this["Stat_EP_VPIP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_MP_VPIP {
+            get {
+                return ((bool)(this["Stat_MP_VPIP"]));
+            }
+            set {
+                this["Stat_MP_VPIP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_LP_VPIP {
+            get {
+                return ((bool)(this["Stat_LP_VPIP"]));
+            }
+            set {
+                this["Stat_LP_VPIP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_AF_Flop {
+            get {
+                return ((bool)(this["Stat_AF_Flop"]));
+            }
+            set {
+                this["Stat_AF_Flop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_AF_Turn {
+            get {
+                return ((bool)(this["Stat_AF_Turn"]));
+            }
+            set {
+                this["Stat_AF_Turn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_AF_River {
+            get {
+                return ((bool)(this["Stat_AF_River"]));
+            }
+            set {
+                this["Stat_AF_River"] = value;
+            }
+        }
     }
 }

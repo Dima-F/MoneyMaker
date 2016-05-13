@@ -39,6 +39,17 @@ namespace MoneyMaker.UI.Light
             cbStat3B.Checked = Properties.Settings.Default.Stat_3B;
             cbStatBB.Checked = Properties.Settings.Default.Stat_BB;
 
+            cbPfrEp.Checked = Properties.Settings.Default.Stat_EP_PFR;
+            cbPfrMp.Checked = Properties.Settings.Default.Stat_MP_PFR;
+            cbPfrLp.Checked = Properties.Settings.Default.Stat_LP_PFR;
+            cbVpipEp.Checked = Properties.Settings.Default.Stat_EP_VPIP;
+            cbVpipMp.Checked = Properties.Settings.Default.Stat_MP_VPIP;
+            cbVpipLp.Checked = Properties.Settings.Default.Stat_LP_VPIP;
+
+            cbAfFlop.Checked = Properties.Settings.Default.Stat_AF_Flop;
+            cbAfTurn.Checked = Properties.Settings.Default.Stat_AF_Turn;
+            cbAfRiver.Checked = Properties.Settings.Default.Stat_AF_River;
+
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -67,6 +78,18 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.Stat_AF = cbStatAf.Checked;
             Properties.Settings.Default.Stat_3B = cbStat3B.Checked;
             Properties.Settings.Default.Stat_BB = cbStatBB.Checked;
+
+            Properties.Settings.Default.Stat_EP_PFR =  cbPfrEp.Checked;
+            Properties.Settings.Default.Stat_MP_PFR = cbPfrMp.Checked;
+            Properties.Settings.Default.Stat_LP_PFR = cbPfrLp.Checked;
+            Properties.Settings.Default.Stat_EP_VPIP = cbVpipEp.Checked;
+            Properties.Settings.Default.Stat_MP_VPIP = cbVpipMp.Checked;
+            Properties.Settings.Default.Stat_LP_VPIP = cbVpipLp.Checked;
+
+            Properties.Settings.Default.Stat_AF_Flop = cbAfFlop.Checked;
+            Properties.Settings.Default.Stat_AF_Turn = cbAfTurn.Checked;
+            Properties.Settings.Default.Stat_AF_River = cbAfRiver.Checked;
+
 
             Properties.Settings.Default.Save();
             Close();

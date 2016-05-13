@@ -166,7 +166,7 @@ namespace HandHistories.SimpleParser.Poker888
                         continue;
                 }
             }
-            CheckAllHandActionsForUncalled(handActions);
+            CheckAllHandActionsForUncalled(handActions, multipleLines.Count);
             return handActions;
         }
 
@@ -238,7 +238,7 @@ namespace HandHistories.SimpleParser.Poker888
 
         protected override byte FindSeatNumber(string line)
         {
-            return byte.Parse(PlayerSeatRegex.Match(line).Value.Trim(), CultureInfo.InvariantCulture);
+            return Byte.Parse(PlayerSeatRegex.Match(line).Value.Trim(), CultureInfo.InvariantCulture);
         }
 
         protected override double FindPlayerStartingStack(string line)
@@ -329,6 +329,27 @@ namespace HandHistories.SimpleParser.Poker888
         }
         #endregion
         
-
+        private static void CheckAllHandActionsForUncalled(IList<HandAction> handActions, int index)
+        {
+            var lastAgrassiveAction =
+                handActions.LastOrDefault(ha => ha.HandActionType == HandActionType.BET || ha.HandActionType == HandActionType.RAISE
+                                                || ha.HandActionType == HandActionType.ALL_IN_RAISE);
+            if (lastAgrassiveAction == null) return;
+            var ind = handActions.IndexOf(lastAgrassiveAction);
+            for (var i = ind; i < handActions.Count; i++)
+            {
+                if (handActions[i].HandActionType == HandActionType.CALL || handActions[i].HandActionType == HandActionType.ALL_IN_CALL)
+                    return;
+            }
+            var uncalledBetHandAction = new HandAction
+            {
+                Index = index,
+                PlayerName = lastAgrassiveAction.PlayerName,
+                HandActionType = HandActionType.UNCALLED_BET,
+                Street = lastAgrassiveAction.Street,
+                Amount = -lastAgrassiveAction.Amount
+            };
+            handActions.Add(uncalledBetHandAction);
+        }
     }
 }

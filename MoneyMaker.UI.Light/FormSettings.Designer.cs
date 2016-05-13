@@ -41,6 +41,12 @@
             this.hhFolderTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageStat = new System.Windows.Forms.TabPage();
+            this.cbPfrLp = new System.Windows.Forms.CheckBox();
+            this.cbPfrMp = new System.Windows.Forms.CheckBox();
+            this.cbPfrEp = new System.Windows.Forms.CheckBox();
+            this.cbVpipLp = new System.Windows.Forms.CheckBox();
+            this.cbVpipMp = new System.Windows.Forms.CheckBox();
+            this.cbVpipEp = new System.Windows.Forms.CheckBox();
             this.cbStatBB = new System.Windows.Forms.CheckBox();
             this.cbStat3B = new System.Windows.Forms.CheckBox();
             this.cbStatAf = new System.Windows.Forms.CheckBox();
@@ -59,6 +65,9 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.cbAfFlop = new System.Windows.Forms.CheckBox();
+            this.cbAfTurn = new System.Windows.Forms.CheckBox();
+            this.cbAfRiver = new System.Windows.Forms.CheckBox();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -192,6 +201,15 @@
             // 
             // tabPageStat
             // 
+            this.tabPageStat.Controls.Add(this.cbAfRiver);
+            this.tabPageStat.Controls.Add(this.cbAfTurn);
+            this.tabPageStat.Controls.Add(this.cbAfFlop);
+            this.tabPageStat.Controls.Add(this.cbPfrLp);
+            this.tabPageStat.Controls.Add(this.cbPfrMp);
+            this.tabPageStat.Controls.Add(this.cbPfrEp);
+            this.tabPageStat.Controls.Add(this.cbVpipLp);
+            this.tabPageStat.Controls.Add(this.cbVpipMp);
+            this.tabPageStat.Controls.Add(this.cbVpipEp);
             this.tabPageStat.Controls.Add(this.cbStatBB);
             this.tabPageStat.Controls.Add(this.cbStat3B);
             this.tabPageStat.Controls.Add(this.cbStatAf);
@@ -209,6 +227,66 @@
             this.tabPageStat.TabIndex = 2;
             this.tabPageStat.Text = "Stats";
             this.tabPageStat.UseVisualStyleBackColor = true;
+            // 
+            // cbPfrLp
+            // 
+            this.cbPfrLp.AutoSize = true;
+            this.cbPfrLp.Location = new System.Drawing.Point(74, 154);
+            this.cbPfrLp.Name = "cbPfrLp";
+            this.cbPfrLp.Size = new System.Drawing.Size(63, 17);
+            this.cbPfrLp.TabIndex = 16;
+            this.cbPfrLp.Text = "LP PFR";
+            this.cbPfrLp.UseVisualStyleBackColor = true;
+            // 
+            // cbPfrMp
+            // 
+            this.cbPfrMp.AutoSize = true;
+            this.cbPfrMp.Location = new System.Drawing.Point(74, 131);
+            this.cbPfrMp.Name = "cbPfrMp";
+            this.cbPfrMp.Size = new System.Drawing.Size(66, 17);
+            this.cbPfrMp.TabIndex = 15;
+            this.cbPfrMp.Text = "MP PFR";
+            this.cbPfrMp.UseVisualStyleBackColor = true;
+            // 
+            // cbPfrEp
+            // 
+            this.cbPfrEp.AutoSize = true;
+            this.cbPfrEp.Location = new System.Drawing.Point(74, 108);
+            this.cbPfrEp.Name = "cbPfrEp";
+            this.cbPfrEp.Size = new System.Drawing.Size(64, 17);
+            this.cbPfrEp.TabIndex = 14;
+            this.cbPfrEp.Text = "EP PFR";
+            this.cbPfrEp.UseVisualStyleBackColor = true;
+            // 
+            // cbVpipLp
+            // 
+            this.cbVpipLp.AutoSize = true;
+            this.cbVpipLp.Location = new System.Drawing.Point(74, 85);
+            this.cbVpipLp.Name = "cbVpipLp";
+            this.cbVpipLp.Size = new System.Drawing.Size(66, 17);
+            this.cbVpipLp.TabIndex = 13;
+            this.cbVpipLp.Text = "LP VPIP";
+            this.cbVpipLp.UseVisualStyleBackColor = true;
+            // 
+            // cbVpipMp
+            // 
+            this.cbVpipMp.AutoSize = true;
+            this.cbVpipMp.Location = new System.Drawing.Point(74, 62);
+            this.cbVpipMp.Name = "cbVpipMp";
+            this.cbVpipMp.Size = new System.Drawing.Size(69, 17);
+            this.cbVpipMp.TabIndex = 12;
+            this.cbVpipMp.Text = "MP VPIP";
+            this.cbVpipMp.UseVisualStyleBackColor = true;
+            // 
+            // cbVpipEp
+            // 
+            this.cbVpipEp.AutoSize = true;
+            this.cbVpipEp.Location = new System.Drawing.Point(74, 39);
+            this.cbVpipEp.Name = "cbVpipEp";
+            this.cbVpipEp.Size = new System.Drawing.Size(67, 17);
+            this.cbVpipEp.TabIndex = 11;
+            this.cbVpipEp.Text = "EP VPIP";
+            this.cbVpipEp.UseVisualStyleBackColor = true;
             // 
             // cbStatBB
             // 
@@ -401,6 +479,36 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
+            // cbAfFlop
+            // 
+            this.cbAfFlop.AutoSize = true;
+            this.cbAfFlop.Location = new System.Drawing.Point(74, 177);
+            this.cbAfFlop.Name = "cbAfFlop";
+            this.cbAfFlop.Size = new System.Drawing.Size(62, 17);
+            this.cbAfFlop.TabIndex = 17;
+            this.cbAfFlop.Text = "AF Flop";
+            this.cbAfFlop.UseVisualStyleBackColor = true;
+            // 
+            // cbAfTurn
+            // 
+            this.cbAfTurn.AutoSize = true;
+            this.cbAfTurn.Location = new System.Drawing.Point(74, 200);
+            this.cbAfTurn.Name = "cbAfTurn";
+            this.cbAfTurn.Size = new System.Drawing.Size(64, 17);
+            this.cbAfTurn.TabIndex = 18;
+            this.cbAfTurn.Text = "AF Turn";
+            this.cbAfTurn.UseVisualStyleBackColor = true;
+            // 
+            // cbAfRiver
+            // 
+            this.cbAfRiver.AutoSize = true;
+            this.cbAfRiver.Location = new System.Drawing.Point(74, 223);
+            this.cbAfRiver.Name = "cbAfRiver";
+            this.cbAfRiver.Size = new System.Drawing.Size(67, 17);
+            this.cbAfRiver.TabIndex = 19;
+            this.cbAfRiver.Text = "AF River";
+            this.cbAfRiver.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -467,5 +575,14 @@
         private System.Windows.Forms.CheckBox cbStatHands;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox cbStatBB;
+        private System.Windows.Forms.CheckBox cbPfrLp;
+        private System.Windows.Forms.CheckBox cbPfrMp;
+        private System.Windows.Forms.CheckBox cbPfrEp;
+        private System.Windows.Forms.CheckBox cbVpipLp;
+        private System.Windows.Forms.CheckBox cbVpipMp;
+        private System.Windows.Forms.CheckBox cbVpipEp;
+        private System.Windows.Forms.CheckBox cbAfRiver;
+        private System.Windows.Forms.CheckBox cbAfTurn;
+        private System.Windows.Forms.CheckBox cbAfFlop;
     }
 }

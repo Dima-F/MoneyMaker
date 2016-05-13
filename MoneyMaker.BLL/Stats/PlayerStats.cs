@@ -7,7 +7,7 @@ namespace MoneyMaker.BLL.Stats
     /// </summary>
     public class PlayerStats : List<Stat>
     {
-        public string Player { get; private set; }
+        public string Player { get; }
         public PlayerStats(string name)
         {
             Player = name;

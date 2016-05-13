@@ -48,6 +48,7 @@
     <Compile Include="Entities\HandActionType.cs" />
     <Compile Include="Entities\MoneyType.cs" />
     <Compile Include="Entities\PlayerHistory.cs" />
+    <Compile Include="Entities\PositionType.cs" />
     <Compile Include="Entities\SeatType.cs" />
     <Compile Include="Entities\Street.cs" />
     <Compile Include="Tools\CardsHelper.cs" />

@@ -40,6 +40,5 @@ namespace HandHistories.SimpleObjects.Entities
 
         public virtual List<PlayerHistory> PlayerHistories { get; set; } 
         
- 
     }
 }

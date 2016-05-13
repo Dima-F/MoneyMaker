@@ -20,6 +20,8 @@ namespace HandHistories.SimpleObjects.Entities
         public double StartingStack { get; set; }
         [Required]
         public byte SeatNumber { get; set; }
+        [Required]
+        public PositionType Position { get; set; }
         public byte[] HoleCards { get; set; }
         //foreign keys
         public virtual Game Game { get; set; }

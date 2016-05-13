@@ -10,6 +10,20 @@ namespace HandHistories.SimpleParser
 {
     public abstract class PokerParser
     {
+        //коллекция - словарь, которая содержит в себе инф. о наименовании позиций в зависимости от количества игроков за столом (он же ключ словаря)
+        //принцип пропадания позиций с уменьшением стола может отличатся от общепринятого и выбран мною для последующего удобства вычисления статистики.
+        private readonly Dictionary<byte, List<PositionType>> _positionsDictionary = new Dictionary<byte, List<PositionType>>
+        {
+            {2, new List<PositionType>() {PositionType.B, PositionType.SB} },
+            {3, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB} },
+            {4, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB, PositionType.CO} },
+            {5, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB, PositionType.MP, PositionType.CO } },
+            {6, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB, PositionType.UTG, PositionType.MP, PositionType.CO } },
+            {7, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB, PositionType.UTG, PositionType.MP, PositionType.MP2, PositionType.CO } },
+            {8, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB, PositionType.UTG, PositionType.UTG2, PositionType.MP, PositionType.MP2, PositionType.CO } },
+            {9, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB, PositionType.UTG, PositionType.UTG2, PositionType.MP, PositionType.MP2, PositionType.MP3, PositionType.CO } },
+            {10, new List<PositionType>() {PositionType.B, PositionType.SB, PositionType.BB, PositionType.UTG, PositionType.UTG2, PositionType.UTG3, PositionType.MP, PositionType.MP2, PositionType.MP3, PositionType.CO } }
+        };
         protected const string NameOfSystem = "System";
 
         protected static readonly Regex GameSplitRegex = new Regex("(?:\r\n\r\n)|(?:\n{3,})", RegexOptions.Compiled);
@@ -41,7 +55,7 @@ namespace HandHistories.SimpleParser
                 game.SeatType = FindSeatType(multipleLines);
                 game.ButtonPosition = FindButtonPosition(multipleLines);
                 game.NumberOfPlayers = FindNumberOfPlayers(concreteGame);
-                game.PlayerHistories = ParsePlayers(game.GameNumber, game.NumberOfPlayers, multipleLines);
+                game.PlayerHistories = ParsePlayers(game, multipleLines);
                 IEnumerable<HandAction> allHandActions = ParseHandActions(game, multipleLines).ToArray();
                 foreach (var playerHistory in game.PlayerHistories)
                 {
@@ -55,23 +69,25 @@ namespace HandHistories.SimpleParser
 
         public abstract IDictionary<string, string> GetInfoFromPath(string path);
 
-        public virtual  List<PlayerHistory> ParsePlayers(ulong gameNumber, byte numberOfPlayers, IReadOnlyList<string> multipleLines)
+        public virtual  List<PlayerHistory> ParsePlayers(Game game, IReadOnlyList<string> multipleLines)
         {
             var players = new List<PlayerHistory>();
-            for (var i = 0; i < numberOfPlayers; i++)
+            for (var i = 0; i < game.NumberOfPlayers; i++)
             {
                 string oneLine = multipleLines[StartPlayerRow + i];
                 var player = new PlayerHistory
                 {
-                    GameNumber = gameNumber,
+                    GameNumber = game.GameNumber,
                     PlayerName = FindPlayerName(oneLine),
                     SeatNumber = FindSeatNumber(oneLine),
                     StartingStack = FindPlayerStartingStack(oneLine),
                     HoleCards = new byte[2],
-                    HandActions = new List<HandAction>()
+                    HandActions = new List<HandAction>(),
+                    Game = game
                 };
                 players.Add(player);
             }
+            InitializePositionsOfPlayers(players,game.ButtonPosition);
             return players;
         }
 
@@ -105,49 +121,6 @@ namespace HandHistories.SimpleParser
 
         protected abstract bool FindBadHand(string inputString);
         
-        private static IEnumerable<string> SplitAllTextInMultipleGames(string allHandsText)
-        {
-            return GameSplitRegex.Split(allHandsText)//разделить входную строку по шаблону регулярного выраж.
-                            .Where(s => !String.IsNullOrWhiteSpace(s))//откинуть пустые строки
-                            .Select(s => s.Trim('\r', '\n')).ToList();//удалить начальные и конечные управляющие символи
-        }
-
-        private static  List<string> SplitOneGameTextInMultipleLines(string gameText)
-        {
-            var text = gameText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < text.Length; i++)
-            {
-                text[i] = text[i].Trim();
-            }
-            return text.ToList();
-        }
-
-        //todo:need to refactoring and restructing
-        protected static void CheckAllHandActionsForUncalled(IList<HandAction> handActions)
-        {
-            var count = handActions.Count;
-            var lastAgrassiveAction =
-                handActions.LastOrDefault(ha => ha.HandActionType == HandActionType.BET || ha.HandActionType == HandActionType.RAISE 
-                || ha.HandActionType == HandActionType.ALL_IN_RAISE);
-            if (lastAgrassiveAction == null) return;
-            var index = handActions.IndexOf(lastAgrassiveAction);
-            for (var i = index; i < count; i++)
-            {
-                if (handActions[i].HandActionType == HandActionType.CALL || handActions[i].HandActionType == HandActionType.ALL_IN_CALL)
-                    return;
-            }
-            //need to refactoring
-            lastAgrassiveAction.Amount = 0;
-            var uncalledBetHandAction = new HandAction
-            {
-                PlayerName = lastAgrassiveAction.PlayerName,
-                HandActionType = HandActionType.UNCALLED_BET,
-                Street = lastAgrassiveAction.Street,
-                Amount = -lastAgrassiveAction.Amount
-            };
-            handActions.Add(uncalledBetHandAction);
-        }
-
         protected static SeatType ConvertSeatEnum(string seatTypeString)
         {
             switch (seatTypeString.Trim().ToLower())
@@ -175,7 +148,7 @@ namespace HandHistories.SimpleParser
                 case "hold'em no limit"://PokerStars
                     return LimitType.NoLimit;
                 default:
-                    throw new ParserException(string.Format("Unnown limit type -> {0}",gameTypeString.ToLower()),DateTime.Now);
+                    throw new ParserException($"Unnown limit type -> {gameTypeString.ToLower()}",DateTime.Now);
             }
         }
 
@@ -195,6 +168,62 @@ namespace HandHistories.SimpleParser
                 return double.Parse(s,Format);
             var parts = s.Split('+');
             return parts.Sum(part => double.Parse(part, Format));
+        }
+
+        
+        private static IEnumerable<string> SplitAllTextInMultipleGames(string allHandsText)
+        {
+            return GameSplitRegex.Split(allHandsText)//разделить входную строку по шаблону регулярного выраж.
+                            .Where(s => !String.IsNullOrWhiteSpace(s))//откинуть пустые строки
+                            .Select(s => s.Trim('\r', '\n')).ToList();//удалить начальные и конечные управляющие символи
+        }
+
+        private static List<string> SplitOneGameTextInMultipleLines(string gameText)
+        {
+            var text = gameText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < text.Length; i++)
+            {
+                text[i] = text[i].Trim();
+            }
+            return text.ToList();
+        }
+
+        private  void InitializePositionsOfPlayers(List<PlayerHistory> players, byte buttonPosition)
+        {
+            var buttonIndex = DefineButtonIndex(players, buttonPosition);
+            if(buttonIndex==-1)
+                throw new ParserException("Can't define button index");
+            var count = (byte)players.Count;
+            if(count<2||count>10)
+                    throw new ParserException($"Wrong players count:{players.Count}",DateTime.Now);
+            List<PositionType> positions = _positionsDictionary[count];
+            if(count!=positions.Count)
+                throw new ParserException("Players count and positions amount must be equal.", DateTime.Now);
+            for (var i = 0; i < count; i++)
+            {
+                if(i + buttonIndex>count-1)
+                    players[buttonIndex + i - count].Position = positions[i];
+                else
+                    players[i + buttonIndex].Position = positions[i];
+            }
+        }
+
+        private int DefineButtonIndex(List<PlayerHistory> players, int buttonPosition)
+        {
+            var buttonPlayer = players.Find(p => p.SeatNumber == buttonPosition);
+            var index =  players.IndexOf(buttonPlayer);
+            if (index != -1)
+                return index;
+            var minSeat = players.Select(p => p.SeatNumber).Min();
+            if (buttonPosition > minSeat)
+            {
+                var nearestPlayer = players.Last(p => p.SeatNumber < buttonPosition);
+                return players.IndexOf(nearestPlayer);
+            }
+            else
+            {
+                return players.Count - 1;
+            }
         }
     }
 }
