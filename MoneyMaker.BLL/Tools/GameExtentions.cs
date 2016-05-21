@@ -20,13 +20,23 @@ namespace MoneyMaker.BLL.Tools
             return lastGame.PlayerHistories.Where(ph => ph.GameNumber == lastGame.GameNumber).Select(p => p.PlayerName).Distinct();
         }
         
-        public static IEnumerable<string> GetLast3GamesPlayerNames(this IEnumerable<Game> games)
+        public static IEnumerable<string> GetLastGamesPlayerNames(this IEnumerable<Game> games, int lastGamesCount)
         {
             var enumerable = games as Game[] ?? games.ToArray();
             var gamesCount = enumerable.Length;
-            var last3Games = enumerable.Skip(gamesCount - 3);
+            var last3Games = enumerable.Skip(gamesCount - lastGamesCount);
             var playerHistories = new List<PlayerHistory>();
             foreach (var g in last3Games)
+            {
+                playerHistories.AddRange(g.PlayerHistories);
+            }
+            return playerHistories.Select(p => p.PlayerName).Distinct();
+        }
+
+        public static IEnumerable<string> GetAllPlayerNames(this IEnumerable<Game> games)
+        {
+            var playerHistories = new List<PlayerHistory>();
+            foreach (var g in games)
             {
                 playerHistories.AddRange(g.PlayerHistories);
             }
@@ -301,8 +311,7 @@ namespace MoneyMaker.BLL.Tools
                 if(!(stealPlayer.Position==PositionType.B || stealPlayer.Position == PositionType.CO || stealPlayer.Position == PositionType.SB))
                     continue;
                 //действия игрока на префлопе кроме малого блайнда
-                var playerPreflopHandActions = stealPlayer.HandActions.Where(
-                        ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
+                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
                 var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
                 var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
                 //действия остальных игроков кроме блайндов на префлопе
@@ -322,13 +331,106 @@ namespace MoneyMaker.BLL.Tools
             }
             return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
         }
-        
+
+        public static double ATS_CO_PercentForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var atsSituationCount = 0;
+            var atsRaiseCount = 0;
+            foreach (var g in games)
+            {
+                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if (stealPlayer.Position != PositionType.CO)
+                    continue;
+                //действия игрока на префлопе кроме малого блайнда
+                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
+                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
+                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
+                //действия остальных игроков кроме блайндов на префлопе
+                var otherPlayersPreflopHandActions = new List<HandAction>();
+                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
+                {
+                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
+                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType != HandActionType.DEALT_HERO_CARDS && ha.HandActionType != HandActionType.UNCALLED_BET));
+                }
+                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
+                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
+                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                    continue;
+                atsSituationCount++;
+                if (firstAction.HandActionType == HandActionType.RAISE)
+                    atsRaiseCount++;
+            }
+            return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
+        }
+
+        public static double ATS_B_PercentForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var atsSituationCount = 0;
+            var atsRaiseCount = 0;
+            foreach (var g in games)
+            {
+                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if (stealPlayer.Position != PositionType.B)
+                    continue;
+                //действия игрока на префлопе кроме малого блайнда
+                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
+                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
+                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
+                //действия остальных игроков кроме блайндов на префлопе
+                var otherPlayersPreflopHandActions = new List<HandAction>();
+                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
+                {
+                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
+                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType != HandActionType.DEALT_HERO_CARDS && ha.HandActionType != HandActionType.UNCALLED_BET));
+                }
+                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
+                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
+                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                    continue;
+                atsSituationCount++;
+                if (firstAction.HandActionType == HandActionType.RAISE)
+                    atsRaiseCount++;
+            }
+            return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
+        }
+
+        public static double ATS_SB_PercentForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var atsSituationCount = 0;
+            var atsRaiseCount = 0;
+            foreach (var g in games)
+            {
+                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if (stealPlayer.Position != PositionType.SB)
+                    continue;
+                //действия игрока на префлопе кроме малого блайнда
+                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
+                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
+                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
+                //действия остальных игроков кроме блайндов на префлопе
+                var otherPlayersPreflopHandActions = new List<HandAction>();
+                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
+                {
+                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
+                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType != HandActionType.DEALT_HERO_CARDS && ha.HandActionType != HandActionType.UNCALLED_BET));
+                }
+                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
+                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
+                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                    continue;
+                atsSituationCount++;
+                if (firstAction.HandActionType == HandActionType.RAISE)
+                    atsRaiseCount++;
+            }
+            return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
+        }
+
         public static int ThreeBetCountForPlayer(this IEnumerable<Game> games, string player)
         {
             var count = 0;
             foreach (Game g in games)
             {
-                var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
+                var playerHistory = g.PlayerHistories.Find(ph => ph.PlayerName == player);
                 if (!playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE)) continue;
                 var rrIndex = playerHistory.HandActions.Find(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE).Index;
                 if (g.PlayerHistories.Any(ph => ph.PlayerName != player && ph.HandActions.Any( a =>

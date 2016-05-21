@@ -166,7 +166,7 @@
             this.tabPgStats.Padding = new System.Windows.Forms.Padding(3);
             this.tabPgStats.Size = new System.Drawing.Size(500, 188);
             this.tabPgStats.TabIndex = 1;
-            this.tabPgStats.Text = "Stats";
+            this.tabPgStats.Text = "Live stats";
             // 
             // hudGrdVw
             // 

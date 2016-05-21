@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HandHistories.SimpleObjects.Entities
+﻿namespace HandHistories.SimpleObjects.Entities
 {
     /// <summary>
     /// Разширенное перечисление всех действий

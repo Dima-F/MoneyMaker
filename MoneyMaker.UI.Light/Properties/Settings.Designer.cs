@@ -86,18 +86,6 @@ namespace MoneyMaker.UI.Light.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MinimizeInTray {
-            get {
-                return ((bool)(this["MinimizeInTray"]));
-            }
-            set {
-                this["MinimizeInTray"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool Stat_Hands {
             get {
                 return ((bool)(this["Stat_Hands"]));
@@ -308,6 +296,42 @@ namespace MoneyMaker.UI.Light.Properties {
             }
             set {
                 this["Stat_AF_River"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_ATS_CO {
+            get {
+                return ((bool)(this["Stat_ATS_CO"]));
+            }
+            set {
+                this["Stat_ATS_CO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_ATS_B {
+            get {
+                return ((bool)(this["Stat_ATS_B"]));
+            }
+            set {
+                this["Stat_ATS_B"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_ATS_SB {
+            get {
+                return ((bool)(this["Stat_ATS_SB"]));
+            }
+            set {
+                this["Stat_ATS_SB"] = value;
             }
         }
     }

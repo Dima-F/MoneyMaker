@@ -8,14 +8,15 @@ using MoneyMaker.BLL.Tools;
 namespace MoneyMaker.UI.Light.BLL
 {
     /// <summary>
-    /// Ф:Формирует коллекцию статов в зависимости от файла конфигурации.
+    /// Ф:Формирует коллекцию статов в зависимости от файла конфигурации для игроков, которые участвовали по крайней мере в 
+    /// трьох последних играх
     /// </summary>
     public class ConditionalStatOperator:IStatOperator
     {
         public List<PlayerStats> GetPlayerStatsList(IEnumerable<Game> games)
         {
             var gs = games as Game[] ?? games.ToArray();
-            var last3GamesPlayerNames = gs.GetLast3GamesPlayerNames();
+            var last3GamesPlayerNames = gs.GetLastGamesPlayerNames(3);
             return last3GamesPlayerNames.Select(playerName => GetPlayerStats(playerName, gs)).ToList();
         }
 
@@ -81,6 +82,21 @@ namespace MoneyMaker.UI.Light.BLL
             {
                 var atsPercent = playerGames.ATS_PercentForPlayer(playerName);
                 statCollection.Add(new Stat() { Name = "ATS", Value = Math.Round(atsPercent, 2) });
+            }
+            if (Properties.Settings.Default.Stat_ATS_CO)//CO ATS
+            {
+                var atsPercent = playerGames.ATS_CO_PercentForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "CO ATS", Value = Math.Round(atsPercent, 2) });
+            }
+            if (Properties.Settings.Default.Stat_ATS_B)//B ATS
+            {
+                var atsPercent = playerGames.ATS_B_PercentForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "B ATS", Value = Math.Round(atsPercent, 2) });
+            }
+            if (Properties.Settings.Default.Stat_ATS_SB)//SB ATS
+            {
+                var atsPercent = playerGames.ATS_SB_PercentForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "SB ATS", Value = Math.Round(atsPercent, 2) });
             }
             if (Properties.Settings.Default.Stat_BB)
                 statCollection.Add(new Stat() { Name = "BB", Value = Math.Round(playerGames.Last().BB_ForPlayer(playerName)) });

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleObjects.Tools;
@@ -35,7 +34,7 @@ namespace MoneyMaker.UI.Light
             DrawHeroCards(hudTable);
             DrawMuckCards(hudTable);
             DrawGraphic(hudTable);
-            hudGrdVw.DataSource = FillDataTable(hudTable.GetPlayerStatsList());
+            hudGrdVw.DataSource = hudTable.GetPlayerStatsList().ToDataTable();
             MinimizeGridWidth();
         }
 
@@ -107,31 +106,5 @@ namespace MoneyMaker.UI.Light
                 hudGrdVw.Columns[i].Width = 48;
             }
         }
-
-        /// <summary>
-        /// Ф:Получает набор статов игроков и формирует таблицу DataTable, которую 
-        /// удобно привязывать к DataGridView
-        /// </summary>
-        private DataTable FillDataTable(List<PlayerStats> hudStatsCollection)
-        {
-            var table = new DataTable();
-            table.Columns.Add("Player");
-            foreach (var stat in hudStatsCollection.First())
-            {
-                table.Columns.Add(stat.Name);
-            }
-            foreach (var ps in hudStatsCollection)
-            {
-                var row = table.NewRow();
-                row[0] = ps.Player;
-                for (var j = 0; j < ps.Count; j++)
-                {
-                    row[j + 1] = ps[j].Value;
-                }
-                table.Rows.Add(row);
-            }
-            return table;
-        }
-        
     }
 }

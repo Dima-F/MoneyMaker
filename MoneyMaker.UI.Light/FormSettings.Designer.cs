@@ -36,11 +36,14 @@
             this.heroTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBoxTray = new System.Windows.Forms.CheckBox();
             this.hhFolderButton = new System.Windows.Forms.Button();
             this.hhFolderTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageStat = new System.Windows.Forms.TabPage();
+            this.cbAtsCo = new System.Windows.Forms.CheckBox();
+            this.cbAfRiver = new System.Windows.Forms.CheckBox();
+            this.cbAfTurn = new System.Windows.Forms.CheckBox();
+            this.cbAfFlop = new System.Windows.Forms.CheckBox();
             this.cbPfrLp = new System.Windows.Forms.CheckBox();
             this.cbPfrMp = new System.Windows.Forms.CheckBox();
             this.cbPfrEp = new System.Windows.Forms.CheckBox();
@@ -65,12 +68,10 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbAfFlop = new System.Windows.Forms.CheckBox();
-            this.cbAfTurn = new System.Windows.Forms.CheckBox();
-            this.cbAfRiver = new System.Windows.Forms.CheckBox();
+            this.cbAtsB = new System.Windows.Forms.CheckBox();
+            this.cbAtsSb = new System.Windows.Forms.CheckBox();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.tabPageStat.SuspendLayout();
             this.advancedTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComit)).BeginInit();
@@ -152,7 +153,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBoxTray);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox1.Location = new System.Drawing.Point(3, 130);
             this.groupBox1.Name = "groupBox1";
@@ -161,19 +161,8 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Other options";
             // 
-            // checkBoxTray
-            // 
-            this.checkBoxTray.AutoSize = true;
-            this.checkBoxTray.Location = new System.Drawing.Point(8, 30);
-            this.checkBoxTray.Name = "checkBoxTray";
-            this.checkBoxTray.Size = new System.Drawing.Size(168, 17);
-            this.checkBoxTray.TabIndex = 0;
-            this.checkBoxTray.Text = "Minimize to tray when tracking";
-            this.checkBoxTray.UseVisualStyleBackColor = true;
-            // 
             // hhFolderButton
             // 
-            this.hhFolderButton.Enabled = false;
             this.hhFolderButton.Location = new System.Drawing.Point(335, 24);
             this.hhFolderButton.Name = "hhFolderButton";
             this.hhFolderButton.Size = new System.Drawing.Size(31, 23);
@@ -184,7 +173,6 @@
             // 
             // hhFolderTextBox
             // 
-            this.hhFolderTextBox.Enabled = false;
             this.hhFolderTextBox.Location = new System.Drawing.Point(20, 26);
             this.hhFolderTextBox.Name = "hhFolderTextBox";
             this.hhFolderTextBox.Size = new System.Drawing.Size(309, 20);
@@ -201,6 +189,9 @@
             // 
             // tabPageStat
             // 
+            this.tabPageStat.Controls.Add(this.cbAtsSb);
+            this.tabPageStat.Controls.Add(this.cbAtsB);
+            this.tabPageStat.Controls.Add(this.cbAtsCo);
             this.tabPageStat.Controls.Add(this.cbAfRiver);
             this.tabPageStat.Controls.Add(this.cbAfTurn);
             this.tabPageStat.Controls.Add(this.cbAfFlop);
@@ -227,6 +218,46 @@
             this.tabPageStat.TabIndex = 2;
             this.tabPageStat.Text = "Stats";
             this.tabPageStat.UseVisualStyleBackColor = true;
+            // 
+            // cbAtsCo
+            // 
+            this.cbAtsCo.AutoSize = true;
+            this.cbAtsCo.Location = new System.Drawing.Point(158, 39);
+            this.cbAtsCo.Name = "cbAtsCo";
+            this.cbAtsCo.Size = new System.Drawing.Size(65, 17);
+            this.cbAtsCo.TabIndex = 20;
+            this.cbAtsCo.Text = "CO ATS";
+            this.cbAtsCo.UseVisualStyleBackColor = true;
+            // 
+            // cbAfRiver
+            // 
+            this.cbAfRiver.AutoSize = true;
+            this.cbAfRiver.Location = new System.Drawing.Point(74, 223);
+            this.cbAfRiver.Name = "cbAfRiver";
+            this.cbAfRiver.Size = new System.Drawing.Size(67, 17);
+            this.cbAfRiver.TabIndex = 19;
+            this.cbAfRiver.Text = "AF River";
+            this.cbAfRiver.UseVisualStyleBackColor = true;
+            // 
+            // cbAfTurn
+            // 
+            this.cbAfTurn.AutoSize = true;
+            this.cbAfTurn.Location = new System.Drawing.Point(74, 200);
+            this.cbAfTurn.Name = "cbAfTurn";
+            this.cbAfTurn.Size = new System.Drawing.Size(64, 17);
+            this.cbAfTurn.TabIndex = 18;
+            this.cbAfTurn.Text = "AF Turn";
+            this.cbAfTurn.UseVisualStyleBackColor = true;
+            // 
+            // cbAfFlop
+            // 
+            this.cbAfFlop.AutoSize = true;
+            this.cbAfFlop.Location = new System.Drawing.Point(74, 177);
+            this.cbAfFlop.Name = "cbAfFlop";
+            this.cbAfFlop.Size = new System.Drawing.Size(62, 17);
+            this.cbAfFlop.TabIndex = 17;
+            this.cbAfFlop.Text = "AF Flop";
+            this.cbAfFlop.UseVisualStyleBackColor = true;
             // 
             // cbPfrLp
             // 
@@ -479,35 +510,25 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // cbAfFlop
+            // cbAtsB
             // 
-            this.cbAfFlop.AutoSize = true;
-            this.cbAfFlop.Location = new System.Drawing.Point(74, 177);
-            this.cbAfFlop.Name = "cbAfFlop";
-            this.cbAfFlop.Size = new System.Drawing.Size(62, 17);
-            this.cbAfFlop.TabIndex = 17;
-            this.cbAfFlop.Text = "AF Flop";
-            this.cbAfFlop.UseVisualStyleBackColor = true;
+            this.cbAtsB.AutoSize = true;
+            this.cbAtsB.Location = new System.Drawing.Point(158, 62);
+            this.cbAtsB.Name = "cbAtsB";
+            this.cbAtsB.Size = new System.Drawing.Size(57, 17);
+            this.cbAtsB.TabIndex = 21;
+            this.cbAtsB.Text = "B ATS";
+            this.cbAtsB.UseVisualStyleBackColor = true;
             // 
-            // cbAfTurn
+            // cbAtsSb
             // 
-            this.cbAfTurn.AutoSize = true;
-            this.cbAfTurn.Location = new System.Drawing.Point(74, 200);
-            this.cbAfTurn.Name = "cbAfTurn";
-            this.cbAfTurn.Size = new System.Drawing.Size(64, 17);
-            this.cbAfTurn.TabIndex = 18;
-            this.cbAfTurn.Text = "AF Turn";
-            this.cbAfTurn.UseVisualStyleBackColor = true;
-            // 
-            // cbAfRiver
-            // 
-            this.cbAfRiver.AutoSize = true;
-            this.cbAfRiver.Location = new System.Drawing.Point(74, 223);
-            this.cbAfRiver.Name = "cbAfRiver";
-            this.cbAfRiver.Size = new System.Drawing.Size(67, 17);
-            this.cbAfRiver.TabIndex = 19;
-            this.cbAfRiver.Text = "AF River";
-            this.cbAfRiver.UseVisualStyleBackColor = true;
+            this.cbAtsSb.AutoSize = true;
+            this.cbAtsSb.Location = new System.Drawing.Point(158, 85);
+            this.cbAtsSb.Name = "cbAtsSb";
+            this.cbAtsSb.Size = new System.Drawing.Size(64, 17);
+            this.cbAtsSb.TabIndex = 22;
+            this.cbAtsSb.Text = "SB ATS";
+            this.cbAtsSb.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 
@@ -529,8 +550,6 @@
             this.settingsTab.ResumeLayout(false);
             this.commonTabPage.ResumeLayout(false);
             this.commonTabPage.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.tabPageStat.ResumeLayout(false);
             this.tabPageStat.PerformLayout();
             this.advancedTabPage.ResumeLayout(false);
@@ -563,7 +582,6 @@
         private System.Windows.Forms.TextBox fileTrackingTxtBx;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button fileTrackingBtn;
-        private System.Windows.Forms.CheckBox checkBoxTray;
         private System.Windows.Forms.TabPage tabPageStat;
         private System.Windows.Forms.CheckBox cbStat3B;
         private System.Windows.Forms.CheckBox cbStatAf;
@@ -584,5 +602,8 @@
         private System.Windows.Forms.CheckBox cbAfRiver;
         private System.Windows.Forms.CheckBox cbAfTurn;
         private System.Windows.Forms.CheckBox cbAfFlop;
+        private System.Windows.Forms.CheckBox cbAtsCo;
+        private System.Windows.Forms.CheckBox cbAtsSb;
+        private System.Windows.Forms.CheckBox cbAtsB;
     }
 }

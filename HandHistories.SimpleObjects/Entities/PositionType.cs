@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HandHistories.SimpleObjects.Entities
+﻿namespace HandHistories.SimpleObjects.Entities
 {
     /// <summary>
     /// Ф:Цифровая нумерация названий позиций, а также правила "урезания" могут отличаться от общепринятых

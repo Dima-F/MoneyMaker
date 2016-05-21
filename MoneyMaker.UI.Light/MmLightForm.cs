@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
+using HandHistories.SimpleObjects.Entities;
+using HandHistories.SimpleParser;
 using MoneyMaker.BLL.Files;
+using MoneyMaker.BLL.Stats;
+using MoneyMaker.BLL.Tools;
+using MoneyMaker.UI.Light.Properties;
 
 namespace MoneyMaker.UI.Light
 {
@@ -20,6 +28,9 @@ namespace MoneyMaker.UI.Light
 
         private readonly IDictionary<string, HudForm> _huds;
 
+        //buffer for simple parsing
+        private List<Game> _allGames; 
+
         public MmLightForm()
         {
             _huds=new Dictionary<string, HudForm>();
@@ -29,8 +40,9 @@ namespace MoneyMaker.UI.Light
             _aboutForm=new AboutForm();
             _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
-            _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Properties.Settings.Default.FileTrackingFolder);
-            Properties.Settings.Default.PropertyChanged += OnSettingsPropertyChanged;
+            _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Settings.Default.FileTrackingFolder);
+            Settings.Default.PropertyChanged += OnSettingsPropertyChanged;
+            _allGames=new List<Game>();
         }
 
         private void OnSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -51,9 +63,6 @@ namespace MoneyMaker.UI.Light
             _trackingState = !_trackingState;
             _fileTrackingManager.EnableTracking = _trackingState;
             ToggleTrackingButton(_trackingState);
-            if (Properties.Settings.Default.MinimizeInTray &&_trackingState)
-                WindowState = FormWindowState.Minimized;
-
         }
 
         private void ToggleTrackingButton(bool trackingState)
@@ -85,22 +94,54 @@ namespace MoneyMaker.UI.Light
                 _huds[fullPath].Show();
             }
         }
-
-        private void MmLightForm_Resize(object sender, EventArgs e)
-        {
-            if(WindowState==FormWindowState.Minimized)
-                Hide();
-        }
-
-        private void notifyIconTray_DoubleClick(object sender, EventArgs e)
-        {
-            Show();
-            WindowState = FormWindowState.Normal;
-        }
-
+        
         private void pictureBoxAbout_Click(object sender, EventArgs e)
         {
             _aboutForm.ShowDialog();
+        }
+
+        private void btnSimplePars_Click(object sender, EventArgs e)
+        {
+            _allGames.Clear();
+            textBoxSimpleParsing.Clear();
+            lblSimpPars.Text = "Parsed files:";
+            var directory = Settings.Default.HandHistoryFolder;
+            var files = Directory.GetFiles(directory, "*.txt").Where(s => !s.Contains("Summary")).ToArray();
+            progBarSimpleParsing.Value = 0;
+            progBarSimpleParsing.Minimum = 0;
+            progBarSimpleParsing.Maximum = files.Length;
+            var builder=new StringBuilder();
+            foreach (var file in files)
+            {
+                var shortPath = Path.GetFileNameWithoutExtension(file);
+                var text = PokerFileReader.ReadFile(file);
+                var parser = ParserFactory.CreateParser(shortPath);
+                var games = parser.ParseGames(text);
+                _allGames.AddRange(games);
+                builder.AppendLine($"***{shortPath}");
+                progBarSimpleParsing.Increment(1);
+            }
+            textBoxSimpleParsing.Text = builder.ToString();
+            lblSimpPars.Text = $"Parsed files: {_allGames.Count}";
+        }
+
+        private void btnAllStat_Click(object sender, EventArgs e)
+        {
+            if (_allGames.Count == 0)
+                btnSimplePars_Click(null, null);
+            comboBoxPlayers.DataSource = _allGames.GetAllPlayerNames().ToList();
+            var statOperator = new BaseStatOperator();
+            datGrViewAllStats.DataSource = statOperator.GetPlayerStatsList(_allGames).ToDataTable();
+            MinimizeGridWidth();
+        }
+
+        private void MinimizeGridWidth()
+        {
+            datGrViewAllStats.Columns[0].Width = 65;
+            for (int i = 1; i < datGrViewAllStats.Columns.Count; i++)
+            {
+                datGrViewAllStats.Columns[i].Width = 48;
+            }
         }
     }
 }

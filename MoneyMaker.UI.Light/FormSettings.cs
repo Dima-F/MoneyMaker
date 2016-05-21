@@ -27,7 +27,6 @@ namespace MoneyMaker.UI.Light
             fileTrackingTxtBx.Text = Properties.Settings.Default.FileTrackingFolder;
             heroTextBox.Text = Properties.Settings.Default.Hero;
             numericUpDownComit.Value = Properties.Settings.Default.CommitCount;
-            checkBoxTray.Checked = Properties.Settings.Default.MinimizeInTray;
 
             cbStatHands.Checked = Properties.Settings.Default.Stat_Hands;
             cbStatProfit.Checked = Properties.Settings.Default.Stat_Profit;
@@ -50,6 +49,10 @@ namespace MoneyMaker.UI.Light
             cbAfTurn.Checked = Properties.Settings.Default.Stat_AF_Turn;
             cbAfRiver.Checked = Properties.Settings.Default.Stat_AF_River;
 
+            cbAtsCo.Checked = Properties.Settings.Default.Stat_ATS_CO;
+            cbAtsB.Checked = Properties.Settings.Default.Stat_ATS_B;
+            cbAtsSb.Checked = Properties.Settings.Default.Stat_ATS_SB;
+
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -67,7 +70,6 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.FileTrackingFolder = fileTrackingTxtBx.Text;
             Properties.Settings.Default.Hero = heroTextBox.Text;
             Properties.Settings.Default.CommitCount = numericUpDownComit.Value;
-            Properties.Settings.Default.MinimizeInTray = checkBoxTray.Checked;
 
             Properties.Settings.Default.Stat_Hands=cbStatHands.Checked;
             Properties.Settings.Default.Stat_Profit = cbStatProfit.Checked;
@@ -90,6 +92,9 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.Stat_AF_Turn = cbAfTurn.Checked;
             Properties.Settings.Default.Stat_AF_River = cbAfRiver.Checked;
 
+            Properties.Settings.Default.Stat_ATS_CO = cbAtsCo.Checked;
+            Properties.Settings.Default.Stat_ATS_B = cbAtsB.Checked;
+            Properties.Settings.Default.Stat_ATS_SB = cbAtsSb.Checked;
 
             Properties.Settings.Default.Save();
             Close();
@@ -103,5 +108,6 @@ namespace MoneyMaker.UI.Light
                 fileTrackingTxtBx.Text = folderDialog.SelectedPath;
             }
         }
+        
     }
 }

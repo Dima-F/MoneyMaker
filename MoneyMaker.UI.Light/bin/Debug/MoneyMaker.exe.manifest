@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dHY8gOX7c1wX8PgdSUcS9MIDsKXRg5YFIQOk297SO2w=</dsig:DigestValue>
+        <dsig:DigestValue>E7PDNyQSH2uKu5g0gYuFhWHFkcTpIMr70eWSVxQiuz0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,31 +62,31 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GTVTh03gHQKfI9VZ92UISTQcKuXud7VUMnkq6GDLFBY=</dsig:DigestValue>
+        <dsig:DigestValue>3J7Ijell+vmKsAhGL8U63xqWYhnqsPNRzdtU3Tk9gCA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="312232">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="310184">
       <assemblyIdentity name="MoneyMaker" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+Am5zmvrVABoGb+4M0YdJs9KSjsDm+ottGlVubOXN/g=</dsig:DigestValue>
+        <dsig:DigestValue>MxigEzzP7q3szySUSZgQZVw9KIwEpB3wu3M8aW0yO1M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="27136">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="34304">
       <assemblyIdentity name="MoneyMaker.BLL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mX9gxMKUm8Y8QgcKtI/7GgKaHSxqdpkH8n0bKTHpVPs=</dsig:DigestValue>
+        <dsig:DigestValue>jww/qGh1sNJT0C3pgl7E+ECUmFiANJqe68akAmMGiLY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -99,13 +99,13 @@
       <dsig:DigestValue>BxcomBN1bSxJpcY0NkP+BsfsGv64NNxbu5QXErn1LTo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="MoneyMaker.exe.config" size="3400">
+  <file name="MoneyMaker.exe.config" size="3604">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>8ZMeBAyfRSbn6USp1EUT5aFWjCmtX+jBTDQuQ/Bj3Sk=</dsig:DigestValue>
+      <dsig:DigestValue>dJT2lSz/p/PKe7IsI9dpCBNQzA/75gV5Dm51TSltZPI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="NLog.config" size="1651">

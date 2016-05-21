@@ -39,5 +39,22 @@ namespace MoneyMaker.BLL.Files
             fs.Close();
             return builder.ToString();
         }
+
+        public  static string ReadFile(string path)
+        {
+            var file = new FileInfo(path);
+            var builder = new StringBuilder();
+            var fs = file.Open(FileMode.Open, FileAccess.ReadWrite);
+            using (var reader = new StreamReader(fs, Encoding.UTF8))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    builder.AppendLine(line);
+                }
+            }
+            fs.Close();
+            return builder.ToString();
+        }
     }
 }
