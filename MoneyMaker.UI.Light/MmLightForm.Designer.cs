@@ -35,6 +35,8 @@
             this.pictureBoxSkin = new System.Windows.Forms.PictureBox();
             this.tabControlGeneral = new System.Windows.Forms.TabControl();
             this.tabPageAllStats = new System.Windows.Forms.TabPage();
+            this.comboBoxPlayers = new System.Windows.Forms.ComboBox();
+            this.checkBoxLive = new System.Windows.Forms.CheckBox();
             this.datGrViewAllStats = new System.Windows.Forms.DataGridView();
             this.btnAllStat = new System.Windows.Forms.Button();
             this.tabPageSimpleParsing = new System.Windows.Forms.TabPage();
@@ -42,8 +44,6 @@
             this.progBarSimpleParsing = new System.Windows.Forms.ProgressBar();
             this.textBoxSimpleParsing = new System.Windows.Forms.TextBox();
             this.btnSimplePars = new System.Windows.Forms.Button();
-            this.checkBoxLive = new System.Windows.Forms.CheckBox();
-            this.comboBoxPlayers = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
@@ -123,6 +123,24 @@
             this.tabPageAllStats.Text = "All stats";
             this.tabPageAllStats.UseVisualStyleBackColor = true;
             // 
+            // comboBoxPlayers
+            // 
+            this.comboBoxPlayers.FormattingEnabled = true;
+            this.comboBoxPlayers.Location = new System.Drawing.Point(231, 8);
+            this.comboBoxPlayers.Name = "comboBoxPlayers";
+            this.comboBoxPlayers.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPlayers.TabIndex = 3;
+            // 
+            // checkBoxLive
+            // 
+            this.checkBoxLive.AutoSize = true;
+            this.checkBoxLive.Location = new System.Drawing.Point(130, 10);
+            this.checkBoxLive.Name = "checkBoxLive";
+            this.checkBoxLive.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxLive.TabIndex = 2;
+            this.checkBoxLive.Text = "Live players";
+            this.checkBoxLive.UseVisualStyleBackColor = true;
+            // 
             // datGrViewAllStats
             // 
             this.datGrViewAllStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -191,24 +209,6 @@
             this.btnSimplePars.Text = "Try";
             this.btnSimplePars.UseVisualStyleBackColor = true;
             this.btnSimplePars.Click += new System.EventHandler(this.btnSimplePars_Click);
-            // 
-            // checkBoxLive
-            // 
-            this.checkBoxLive.AutoSize = true;
-            this.checkBoxLive.Location = new System.Drawing.Point(130, 10);
-            this.checkBoxLive.Name = "checkBoxLive";
-            this.checkBoxLive.Size = new System.Drawing.Size(82, 17);
-            this.checkBoxLive.TabIndex = 2;
-            this.checkBoxLive.Text = "Live players";
-            this.checkBoxLive.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxPlayers
-            // 
-            this.comboBoxPlayers.FormattingEnabled = true;
-            this.comboBoxPlayers.Location = new System.Drawing.Point(231, 8);
-            this.comboBoxPlayers.Name = "comboBoxPlayers";
-            this.comboBoxPlayers.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPlayers.TabIndex = 3;
             // 
             // MmLightForm
             // 

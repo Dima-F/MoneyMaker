@@ -169,7 +169,6 @@ namespace HandHistories.SimpleParser
             var parts = s.Split('+');
             return parts.Sum(part => double.Parse(part, Format));
         }
-
         
         private static IEnumerable<string> SplitAllTextInMultipleGames(string allHandsText)
         {

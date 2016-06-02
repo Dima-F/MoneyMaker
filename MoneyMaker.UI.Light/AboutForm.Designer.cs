@@ -73,21 +73,21 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.DarkGreen;
-            this.label2.Location = new System.Drawing.Point(182, 44);
+            this.label2.Location = new System.Drawing.Point(195, 44);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 13);
+            this.label2.Size = new System.Drawing.Size(97, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Version : 1.0 January 2016";
+            this.label2.Text = "Coded : June 2016";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.DarkGreen;
-            this.label3.Location = new System.Drawing.Point(175, 57);
+            this.label3.Location = new System.Drawing.Point(194, 57);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(146, 13);
+            this.label3.Size = new System.Drawing.Size(98, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Copyright 2016 by Dima Fiialo";
+            this.label3.Text = "Author : Dima Fiialo";
             // 
             // linkLabel1
             // 
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gray;
+            this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(362, 145);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabel1);

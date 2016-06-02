@@ -11,13 +11,14 @@ namespace HandHistories.SimpleParser.PokerStars
 {
     public abstract  class PokerStarsParser:PokerParser
     {
-        private static readonly Regex GameNumberRegex = new Regex(@"(?<=\#)\d{6,}(?=\:)", RegexOptions.Compiled);
-        private static readonly Regex DateTimeRegex = new Regex(@"(?<=-\s*)\d{4}\/\d{2}\/\d{2}\s+\d{2}:\d{2}:\d{2}(?=\s+EET)", RegexOptions.Compiled);
-        private static readonly Regex DateRegex = new Regex(@"(\d+)/(\d+)/(\d+)", RegexOptions.Compiled);
-        private static readonly Regex TableNameRegex = new Regex(@"(?<=').+(?=')", RegexOptions.Compiled);
-        private static readonly Regex BlindsRegex = new Regex(@"(?<=\().+(?=\))", RegexOptions.Compiled);
-        private static readonly Regex ButtonPositionRegex = new Regex(@"(?<=#)\d{1,2}(?=\s*is)", RegexOptions.Compiled);
-        private static readonly Regex NumberOfPlayersRegex = new Regex(@"Seat\s\d{1,2}:", RegexOptions.Compiled);
+        private static readonly Regex GameNumberRegex = new Regex(@"(?<=\#)\d{6,}(?=\:)");
+        private static readonly Regex DateTimeRegex = new Regex(@"(?<=-\s*)\d{4}\/\d{2}\/\d{2}\s+\d{2}:\d{2}:\d{2}(?=\s+EET)");
+        private static readonly Regex DateRegex = new Regex(@"(\d+)/(\d+)/(\d+)");
+        private static readonly Regex TableNameRegex = new Regex(@"(?<=').+(?=')");
+        private static readonly Regex BlindsInTopRegex = new Regex(@"(?<=\().+(?=\))");
+
+        private static readonly Regex ButtonPositionRegex = new Regex(@"(?<=#)\d{1,2}(?=\s*is)");
+        private static readonly Regex NumberOfPlayersRegex = new Regex(@"Seat\s\d{1,2}:");
         private static readonly Regex PlayerNameRegex = new Regex(@"(?<=Seat\s\d{1,2}:\s*).+(?=\()");
         private static readonly Regex PlayerSeatRegex = new Regex(@"(?<=Seat\s)\d+(?=:)");
         private static readonly Regex PlayerStackRegex = new Regex(@"(?<=Seat.+\().+(?=\sin)");
@@ -25,6 +26,7 @@ namespace HandHistories.SimpleParser.PokerStars
         private static readonly Regex AllInCallAmountRegex = new Regex(@"(?<=:\s+calls\s+).+(?=\s+and\sis\sall-in)");
         private static readonly Regex AllInRaiseAmountRegex = new Regex(@"(?<=:\s+raises\s+).+(?=\sto\s.+\s+and\sis\sall-in)");
         private static readonly Regex AllInBetAmountRegex = new Regex(@"(?<=:\s+bets\s+).+(?=\s+and\sis\sall-in)");
+        private static readonly Regex AllInBlindsAmountRegex = new Regex(@"(?<=blind\s+).+(?=\s+and\sis\sall-in)");
         private static readonly Regex FlopCardsRegex = new Regex(@"(?<=FLOP\s*\*\*\*\s*\[\s*).+(?=\s*\])");
         private static readonly Regex TurnCardRegex = new Regex(@"(?<=TURN.+]\s*\[).+(?=\s*\])");
         private static readonly Regex RiverCardRegex = new Regex(@"(?<=RIVER.+]\s*\[).+(?=\s*\])");
@@ -116,12 +118,12 @@ namespace HandHistories.SimpleParser.PokerStars
                             switch (key)
                             {
                                 case "big":
-                                    ha.HandActionType = HandActionType.BIG_BLIND;
+                                    ha.HandActionType = multipleLines[i].Contains("all-in") ? HandActionType.All_IN_BB : HandActionType.BIG_BLIND;
                                     ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                                     handActions.Add(ha);
                                     break;
                                 case "small":
-                                    ha.HandActionType = HandActionType.SMALL_BLIND;
+                                    ha.HandActionType = multipleLines[i].Contains("all-in") ? HandActionType.All_IN_SB : HandActionType.SMALL_BLIND;
                                     ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                                     handActions.Add(ha);
                                     break;
@@ -275,14 +277,14 @@ namespace HandHistories.SimpleParser.PokerStars
         protected override double FindSmallBlind(IEnumerable<string> hand)
         {
             var line = hand.ToList()[0];
-            var s = BlindsRegex.Match(line).Value.Split('/')[0];
+            var s = BlindsInTopRegex.Match(line).Value.Split('/')[0];
             return GetCleanAmount(s);
         }
 
         protected override double FindBigBlind(IEnumerable<string> hand)
         {
             var line = hand.ToList()[0];
-            var s = BlindsRegex.Match(line).Value.Split('/')[1];
+            var s = BlindsInTopRegex.Match(line).Value.Split('/')[1];
             return GetCleanAmount(s);
         }
         protected override byte FindNumberOfPlayers(string hand)
@@ -406,6 +408,10 @@ namespace HandHistories.SimpleParser.PokerStars
                     case HandActionType.ANTE:
                     strAmout = AnteAmountRegex.Match(inputLine).Value;
                     break;
+                case HandActionType.All_IN_BB:
+                case HandActionType.All_IN_SB:
+                    strAmout = AllInBlindsAmountRegex.Match(inputLine).Value;
+                    break;
                 default:
                     strAmout = inputLine.Split(' ').Last();
                     break;
@@ -421,6 +427,8 @@ namespace HandHistories.SimpleParser.PokerStars
                 case HandActionType.ALL_IN_CALL:
                 case HandActionType.ALL_IN_BET:
                 case HandActionType.ALL_IN_RAISE:
+                case HandActionType.All_IN_BB:
+                case HandActionType.All_IN_SB:
                 case HandActionType.ANTE:
                 case HandActionType.RAISE:
                     return -amount;

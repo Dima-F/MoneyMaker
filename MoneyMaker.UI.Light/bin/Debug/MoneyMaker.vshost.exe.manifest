@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleObjects.dll" size="4723712">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HandHistories.SimpleObjects.dll" size="4724224">
       <assemblyIdentity name="HandHistories.SimpleObjects" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>E7PDNyQSH2uKu5g0gYuFhWHFkcTpIMr70eWSVxQiuz0=</dsig:DigestValue>
+        <dsig:DigestValue>EyZNvAH2hos/Qvz61bJBqN5zR5EsSAcwBi8Lin31slQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,19 +62,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3J7Ijell+vmKsAhGL8U63xqWYhnqsPNRzdtU3Tk9gCA=</dsig:DigestValue>
+        <dsig:DigestValue>UZC8jgeW5+DzICtwFmYuSlM9PKj9VP9sOBDKqyNTpsQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="310184">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="310696">
       <assemblyIdentity name="MoneyMaker" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MxigEzzP7q3szySUSZgQZVw9KIwEpB3wu3M8aW0yO1M=</dsig:DigestValue>
+        <dsig:DigestValue>9mE2/kTpeqLRQj2yBRYHwsxc7JuDtpAJD6E5ho+StkQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>jww/qGh1sNJT0C3pgl7E+ECUmFiANJqe68akAmMGiLY=</dsig:DigestValue>
+        <dsig:DigestValue>pBgNEb+LzYru15i5OdFJeZwrgc9ZfbHacL9koHmXEjg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -38,6 +38,8 @@
         ALL_IN_BET,
         ALL_IN_RAISE,
         ALL_IN_CALL,
+        All_IN_BB,
+        All_IN_SB,
         GAME_CANCELLED,
         DIDNT_SHOW_HAND,
         DEALING_FLOP,

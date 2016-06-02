@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -104,7 +106,7 @@ namespace MoneyMaker.UI.Light
         {
             _allGames.Clear();
             textBoxSimpleParsing.Clear();
-            lblSimpPars.Text = "Parsed files:";
+            lblSimpPars.Text = "Parsed games:";
             var directory = Settings.Default.HandHistoryFolder;
             var files = Directory.GetFiles(directory, "*.txt").Where(s => !s.Contains("Summary")).ToArray();
             progBarSimpleParsing.Value = 0;
@@ -122,7 +124,7 @@ namespace MoneyMaker.UI.Light
                 progBarSimpleParsing.Increment(1);
             }
             textBoxSimpleParsing.Text = builder.ToString();
-            lblSimpPars.Text = $"Parsed files: {_allGames.Count}";
+            lblSimpPars.Text = $"Parsed games: {_allGames.Count}";
         }
 
         private void btnAllStat_Click(object sender, EventArgs e)
@@ -130,9 +132,7 @@ namespace MoneyMaker.UI.Light
             if (_allGames.Count == 0)
                 btnSimplePars_Click(null, null);
             comboBoxPlayers.DataSource = _allGames.GetAllPlayerNames().ToList();
-            var statOperator = new BaseStatOperator();
-            datGrViewAllStats.DataSource = statOperator.GetPlayerStatsList(_allGames).ToDataTable();
-            MinimizeGridWidth();
+            (new GetStatsDelegate(GetStats)).BeginInvoke(_allGames, new AsyncCallback(GetStatsComplete), null);//async call
         }
 
         private void MinimizeGridWidth()
@@ -143,5 +143,30 @@ namespace MoneyMaker.UI.Light
                 datGrViewAllStats.Columns[i].Width = 48;
             }
         }
+        
+        #region Asynchronous
+        //delegate to call method GetStats asynchroniously
+        private delegate DataTable GetStatsDelegate(IEnumerable<Game> games);
+        private  DataTable GetStats(IEnumerable<Game> games)
+        {
+            var statOperator = new BaseStatOperator();
+            //Thread.Sleep(5000);
+            return statOperator.GetPlayerStatsList(games).ToDataTable();
+        }
+        private  void GetStatsComplete(IAsyncResult res)
+        {
+            AsyncResult ar = (AsyncResult)res;
+            GetStatsDelegate gsd = (GetStatsDelegate)ar.AsyncDelegate;
+            Action a = () => Fill(gsd.EndInvoke(res));
+            Invoke(a);
+            //datGrViewAllStats.DataSource = gsd.EndInvoke(res);
+        }
+        private void Fill(DataTable dt)
+        {
+            datGrViewAllStats.DataSource = dt;
+            MinimizeGridWidth();
+        }
+        #endregion
+        
     }
 }

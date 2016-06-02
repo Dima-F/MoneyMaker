@@ -11,9 +11,9 @@ namespace HandHistories.SimpleParser.Poker888
     public abstract  class Poker888Parser:PokerParser
     {
         //шаблон рег. выраж.
-        private static readonly Regex GameNumberRegex = new Regex(@"\d{9}", RegexOptions.Compiled);
-        private static readonly Regex DateTimeRegex = new Regex(@"\d{2}\s\d{2}\s\d{4}\s\d{2}:\d{2}:\d{2}", RegexOptions.Compiled);
-        private static readonly Regex DateRegex = new Regex(@"(\d+) (\d+) (\d+) ", RegexOptions.Compiled);
+        private static readonly Regex GameNumberRegex = new Regex(@"\d{9}");
+        private static readonly Regex DateTimeRegex = new Regex(@"\d{2}\s\d{2}\s\d{4}\s\d{2}:\d{2}:\d{2}");
+        private static readonly Regex DateRegex = new Regex(@"(\d+) (\d+) (\d+) ");
         
         private static readonly Regex LimitTypeRegex = new Regex(@"(?<=Blinds)[\w|\s]+(?=-\s\*{3})");
         private static readonly Regex ButtonPositionRegex = new Regex(@"(?<=Seat\s)\d+(?=\sis the button)");
@@ -316,6 +316,8 @@ namespace HandHistories.SimpleParser.Poker888
                 case HandActionType.CALL:
                 case HandActionType.ALL_IN_CALL:
                 case HandActionType.ALL_IN_RAISE:
+                case HandActionType.All_IN_BB:
+                case HandActionType.All_IN_SB:
                 case HandActionType.ANTE:
                 case HandActionType.RAISE:
                     return -amount;
