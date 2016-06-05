@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="310696">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="311720">
       <assemblyIdentity name="MoneyMaker" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>9mE2/kTpeqLRQj2yBRYHwsxc7JuDtpAJD6E5ho+StkQ=</dsig:DigestValue>
+        <dsig:DigestValue>a5ooALTlSwhknAVYDzx/Du77dvgWZwuxHEKDikKoy1I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

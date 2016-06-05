@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using HandHistories.SimpleObjects.Entities;
 using HandHistories.SimpleParser;
@@ -22,7 +24,7 @@ namespace MoneyMaker.UI.Light
         //forms...
         private readonly FormSettings _formSettings;
 
-        private readonly AboutForm _aboutForm; 
+        private readonly AboutForm _aboutForm;
 
         private readonly FileTrackingManager _fileTrackingManager;
 
@@ -31,20 +33,20 @@ namespace MoneyMaker.UI.Light
         private readonly IDictionary<string, HudForm> _huds;
 
         //buffer for simple parsing
-        private List<Game> _allGames; 
+        private List<Game> _allGames;
 
         public MmLightForm()
         {
-            _huds=new Dictionary<string, HudForm>();
+            _huds = new Dictionary<string, HudForm>();
             _trackingState = false;
             InitializeComponent();
             _formSettings = new FormSettings();
-            _aboutForm=new AboutForm();
+            _aboutForm = new AboutForm();
             _fileTrackingManager = new FileTrackingManager();
             _fileTrackingManager.PokerFileChanged += OnPokerFileChanged;
             _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Settings.Default.FileTrackingFolder);
             Settings.Default.PropertyChanged += OnSettingsPropertyChanged;
-            _allGames=new List<Game>();
+            _allGames = new List<Game>();
         }
 
         private void OnSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -86,9 +88,9 @@ namespace MoneyMaker.UI.Light
         {
             if (!_huds.ContainsKey(fullPath))
             {
-                var hudForm=new HudForm(fullPath);
+                var hudForm = new HudForm(fullPath);
                 hudForm.Show();
-                _huds.Add(fullPath,hudForm);
+                _huds.Add(fullPath, hudForm);
             }
             else
             {
@@ -96,7 +98,7 @@ namespace MoneyMaker.UI.Light
                 _huds[fullPath].Show();
             }
         }
-        
+
         private void pictureBoxAbout_Click(object sender, EventArgs e)
         {
             _aboutForm.ShowDialog();
@@ -106,13 +108,12 @@ namespace MoneyMaker.UI.Light
         {
             _allGames.Clear();
             textBoxSimpleParsing.Clear();
-            lblSimpPars.Text = "Parsed games:";
+            progBarSimpleParsing.Value = 0;
+            lblGamesCount.Text = "0";
             var directory = Settings.Default.HandHistoryFolder;
             var files = Directory.GetFiles(directory, "*.txt").Where(s => !s.Contains("Summary")).ToArray();
-            progBarSimpleParsing.Value = 0;
-            progBarSimpleParsing.Minimum = 0;
             progBarSimpleParsing.Maximum = files.Length;
-            var builder=new StringBuilder();
+            var builder = new StringBuilder();
             foreach (var file in files)
             {
                 var shortPath = Path.GetFileNameWithoutExtension(file);
@@ -120,19 +121,32 @@ namespace MoneyMaker.UI.Light
                 var parser = ParserFactory.CreateParser(shortPath);
                 var games = parser.ParseGames(text);
                 _allGames.AddRange(games);
+                Thread.Sleep(100);
                 builder.AppendLine($"***{shortPath}");
                 progBarSimpleParsing.Increment(1);
+                lblGamesCount.Text = _allGames.Count.ToString();
             }
             textBoxSimpleParsing.Text = builder.ToString();
-            lblSimpPars.Text = $"Parsed games: {_allGames.Count}";
         }
 
-        private void btnAllStat_Click(object sender, EventArgs e)
+        private async void btnAllStat_Click(object sender, EventArgs e)
         {
             if (_allGames.Count == 0)
                 btnSimplePars_Click(null, null);
             comboBoxPlayers.DataSource = _allGames.GetAllPlayerNames().ToList();
-            (new GetStatsDelegate(GetStats)).BeginInvoke(_allGames, new AsyncCallback(GetStatsComplete), null);//async call
+            //Debug.WriteLine("Current thread ID - {0}",Thread.CurrentThread.ManagedThreadId);
+            await Task.Run(() =>
+            {
+                var statOperator = new BaseStatOperator();
+                //Thread.Sleep(5000);
+                var table = statOperator.GetPlayerStatsList(_allGames).ToDataTable();
+                //Debug.WriteLine("Current thread ID - {0}", Thread.CurrentThread.ManagedThreadId);
+                Invoke((Action)delegate
+                {
+                    datGrViewAllStats.DataSource = table;
+                    MinimizeGridWidth();
+                });
+            });
         }
 
         private void MinimizeGridWidth()
@@ -143,30 +157,5 @@ namespace MoneyMaker.UI.Light
                 datGrViewAllStats.Columns[i].Width = 48;
             }
         }
-        
-        #region Asynchronous
-        //delegate to call method GetStats asynchroniously
-        private delegate DataTable GetStatsDelegate(IEnumerable<Game> games);
-        private  DataTable GetStats(IEnumerable<Game> games)
-        {
-            var statOperator = new BaseStatOperator();
-            //Thread.Sleep(5000);
-            return statOperator.GetPlayerStatsList(games).ToDataTable();
-        }
-        private  void GetStatsComplete(IAsyncResult res)
-        {
-            AsyncResult ar = (AsyncResult)res;
-            GetStatsDelegate gsd = (GetStatsDelegate)ar.AsyncDelegate;
-            Action a = () => Fill(gsd.EndInvoke(res));
-            Invoke(a);
-            //datGrViewAllStats.DataSource = gsd.EndInvoke(res);
-        }
-        private void Fill(DataTable dt)
-        {
-            datGrViewAllStats.DataSource = dt;
-            MinimizeGridWidth();
-        }
-        #endregion
-        
     }
 }

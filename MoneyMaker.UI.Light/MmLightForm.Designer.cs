@@ -44,6 +44,7 @@
             this.progBarSimpleParsing = new System.Windows.Forms.ProgressBar();
             this.textBoxSimpleParsing = new System.Windows.Forms.TextBox();
             this.btnSimplePars = new System.Windows.Forms.Button();
+            this.lblGamesCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
@@ -162,6 +163,7 @@
             // 
             // tabPageSimpleParsing
             // 
+            this.tabPageSimpleParsing.Controls.Add(this.lblGamesCount);
             this.tabPageSimpleParsing.Controls.Add(this.lblSimpPars);
             this.tabPageSimpleParsing.Controls.Add(this.progBarSimpleParsing);
             this.tabPageSimpleParsing.Controls.Add(this.textBoxSimpleParsing);
@@ -177,6 +179,7 @@
             // lblSimpPars
             // 
             this.lblSimpPars.AutoSize = true;
+            this.lblSimpPars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblSimpPars.Location = new System.Drawing.Point(53, 13);
             this.lblSimpPars.Name = "lblSimpPars";
             this.lblSimpPars.Size = new System.Drawing.Size(77, 13);
@@ -209,6 +212,16 @@
             this.btnSimplePars.Text = "Try";
             this.btnSimplePars.UseVisualStyleBackColor = true;
             this.btnSimplePars.Click += new System.EventHandler(this.btnSimplePars_Click);
+            // 
+            // lblGamesCount
+            // 
+            this.lblGamesCount.AutoSize = true;
+            this.lblGamesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblGamesCount.Location = new System.Drawing.Point(136, 11);
+            this.lblGamesCount.Name = "lblGamesCount";
+            this.lblGamesCount.Size = new System.Drawing.Size(16, 17);
+            this.lblGamesCount.TabIndex = 5;
+            this.lblGamesCount.Text = "0";
             // 
             // MmLightForm
             // 
@@ -258,6 +271,7 @@
         private System.Windows.Forms.DataGridView datGrViewAllStats;
         private System.Windows.Forms.CheckBox checkBoxLive;
         private System.Windows.Forms.ComboBox comboBoxPlayers;
+        private System.Windows.Forms.Label lblGamesCount;
     }
 }
 
