@@ -334,5 +334,41 @@ namespace MoneyMaker.UI.Light.Properties {
                 this["Stat_ATS_SB"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int LiveGamesCount {
+            get {
+                return ((int)(this["LiveGamesCount"]));
+            }
+            set {
+                this["LiveGamesCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_Fold_SB_ToSteal {
+            get {
+                return ((bool)(this["Stat_Fold_SB_ToSteal"]));
+            }
+            set {
+                this["Stat_Fold_SB_ToSteal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_Fold_BB_ToSteal {
+            get {
+                return ((bool)(this["Stat_Fold_BB_ToSteal"]));
+            }
+            set {
+                this["Stat_Fold_BB_ToSteal"] = value;
+            }
+        }
     }
 }

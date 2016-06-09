@@ -19,8 +19,15 @@ namespace MoneyMaker.BLL.Tools
             var lastGame = games.Last();
             return lastGame.PlayerHistories.Where(ph => ph.GameNumber == lastGame.GameNumber).Select(p => p.PlayerName).Distinct();
         }
-        
-        public static IEnumerable<string> GetLastGamesPlayerNames(this IEnumerable<Game> games, int lastGamesCount)
+
+        public static IEnumerable<Game> GetLive(this IEnumerable<Game> games, int liveGamesCount)
+        {
+            var enumerable = games as Game[] ?? games.ToArray();
+            var gamesCount = enumerable.Length;
+            return enumerable.Skip(gamesCount - liveGamesCount);
+        }
+
+        public static IEnumerable<string> GetLivePlayerNames(this IEnumerable<Game> games, int lastGamesCount)
         {
             var enumerable = games as Game[] ?? games.ToArray();
             var gamesCount = enumerable.Length;
@@ -59,11 +66,7 @@ namespace MoneyMaker.BLL.Tools
             foreach (Game g in games)
             {
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
-                if (playerHistory.HandActions.Any(
-                    ha =>
-                        ha.HandActionType == HandActionType.WINS ||
-                        ha.HandActionType == HandActionType.WINS_SIDE_POT ||
-                        ha.HandActionType == HandActionType.WINS_MAIN_POT))
+                if (playerHistory.HandActions.Any(ha =>ha.IsWinAction()))
                     count++;
             }
             return count;
@@ -75,11 +78,8 @@ namespace MoneyMaker.BLL.Tools
             foreach (Game g in playerGames)
             {
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
-                if (playerHistory.HandActions.Any(
-                    ha=>ha.Street == Street.Preflop
-                    && ha.HandActionType != HandActionType.BIG_BLIND
-                    && ha.HandActionType != HandActionType.SMALL_BLIND
-                    && (ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE)))
+                if (playerHistory.HandActions.PreflopHandActions().NotBlinds().Any(ha=>
+                    ha.IsCallAction() || ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -93,11 +93,8 @@ namespace MoneyMaker.BLL.Tools
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
                 if (!playerHistory.IsEerlyPosition())
                     continue;
-                if (playerHistory.HandActions.Any(
-                    ha => ha.Street == Street.Preflop
-                    && ha.HandActionType != HandActionType.BIG_BLIND
-                    && ha.HandActionType != HandActionType.SMALL_BLIND
-                    && (ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE)))
+                if (playerHistory.HandActions.PreflopHandActions().NotBlinds().Any(ha =>
+                    ha.IsCallAction() || ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -111,11 +108,8 @@ namespace MoneyMaker.BLL.Tools
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
                 if (!playerHistory.IsMiddlePosition())
                     continue;
-                if (playerHistory.HandActions.Any(
-                    ha => ha.Street == Street.Preflop
-                    && ha.HandActionType != HandActionType.BIG_BLIND
-                    && ha.HandActionType != HandActionType.SMALL_BLIND
-                    && (ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE)))
+                if (playerHistory.HandActions.PreflopHandActions().NotBlinds().Any(ha =>
+                    ha.IsCallAction() || ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -129,11 +123,8 @@ namespace MoneyMaker.BLL.Tools
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
                 if (!playerHistory.IsLatePosition())
                     continue;
-                if (playerHistory.HandActions.Any(
-                    ha => ha.Street == Street.Preflop
-                    && ha.HandActionType != HandActionType.BIG_BLIND
-                    && ha.HandActionType != HandActionType.SMALL_BLIND
-                    && (ha.HandActionType == HandActionType.CALL || ha.HandActionType == HandActionType.RAISE)))
+                if (playerHistory.HandActions.PreflopHandActions().NotBlinds().Any(ha =>
+                    ha.IsCallAction() || ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -145,7 +136,7 @@ namespace MoneyMaker.BLL.Tools
             foreach (Game g in games)
             {
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
-                if (playerHistory.HandActions.Any(ha=>ha.Street == Street.Preflop  && ha.HandActionType == HandActionType.RAISE))
+                if (playerHistory.HandActions.PreflopHandActions().RealActions().Any(ha=>ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -159,7 +150,7 @@ namespace MoneyMaker.BLL.Tools
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
                 if(!playerHistory.IsEerlyPosition())
                     continue;
-                if (playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE))
+                if (playerHistory.HandActions.PreflopHandActions().RealActions().Any(ha => ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -173,7 +164,7 @@ namespace MoneyMaker.BLL.Tools
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
                 if (!playerHistory.IsMiddlePosition())
                     continue;
-                if (playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE))
+                if (playerHistory.HandActions.PreflopHandActions().RealActions().Any(ha => ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -187,7 +178,7 @@ namespace MoneyMaker.BLL.Tools
                 var playerHistory = g.PlayerHistories.First(ph => ph.PlayerName == player);
                 if (!playerHistory.IsLatePosition())
                     continue;
-                if (playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE))
+                if (playerHistory.HandActions.PreflopHandActions().RealActions().Any(ha => ha.IsRaiseAction()))
                     count++;
             }
             return count;
@@ -301,32 +292,53 @@ namespace MoneyMaker.BLL.Tools
             return Math.Round(callCount == 0 ? betOrRaiseCount : (double)betOrRaiseCount / callCount, 2);
         }
 
+        public static double Fold_SB_To_Steal_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var toStealCount = 0;
+            var foldedWhenStealedCount = 0;
+            foreach (var g in games)
+            {
+                var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if(plr.Position!=PositionType.SB)
+                    continue;
+                if (!g.WasStealToPlayer(plr))
+                    continue;
+                toStealCount++;
+                if (plr.FirstRealAction().HandActionType == HandActionType.FOLD)
+                    foldedWhenStealedCount++;
+            }
+            return toStealCount == 0 ? 0 : (double)foldedWhenStealedCount / toStealCount * 100;
+        }
+
+        public static double Fold_BB_To_Steal_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var toStealCount = 0;
+            var foldedWhenStealedCount = 0;
+            foreach (var g in games)
+            {
+                var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if (plr.Position != PositionType.BB)
+                    continue;
+                if (!g.WasStealToPlayer(plr))
+                    continue;
+                toStealCount++;
+                if (plr.FirstRealAction().HandActionType == HandActionType.FOLD)
+                    foldedWhenStealedCount++;
+            }
+            return toStealCount == 0 ? 0 : (double)foldedWhenStealedCount / toStealCount * 100;
+        }
+
         public static double ATS_PercentForPlayer(this IEnumerable<Game> games, string player)
         {
             var atsSituationCount = 0;
             var atsRaiseCount = 0;
             foreach (var g in games)
             {
-                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
-                if(!(stealPlayer.Position==PositionType.B || stealPlayer.Position == PositionType.CO || stealPlayer.Position == PositionType.SB))
-                    continue;
-                //действия игрока на префлопе кроме малого блайнда
-                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
-                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
-                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
-                //действия остальных игроков кроме блайндов на префлопе
-                var otherPlayersPreflopHandActions = new List<HandAction>();
-                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
-                {
-                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
-                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType!=HandActionType.DEALT_HERO_CARDS && ha.HandActionType!=HandActionType.UNCALLED_BET));
-                }
-                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
-                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
-                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if(!g.IsStealSituationForPlayer(plr))
                     continue;
                 atsSituationCount++;
-                if (firstAction.HandActionType == HandActionType.RAISE)
+                if (plr.FirstRealAction().IsRaiseAction())
                     atsRaiseCount++;
             }
             return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
@@ -338,26 +350,13 @@ namespace MoneyMaker.BLL.Tools
             var atsRaiseCount = 0;
             foreach (var g in games)
             {
-                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
-                if (stealPlayer.Position != PositionType.CO)
+                var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if(plr.Position!=PositionType.CO)
                     continue;
-                //действия игрока на префлопе кроме малого блайнда
-                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
-                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
-                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
-                //действия остальных игроков кроме блайндов на префлопе
-                var otherPlayersPreflopHandActions = new List<HandAction>();
-                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
-                {
-                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
-                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType != HandActionType.DEALT_HERO_CARDS && ha.HandActionType != HandActionType.UNCALLED_BET));
-                }
-                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
-                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
-                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                if (!g.IsStealSituationForPlayer(plr))
                     continue;
                 atsSituationCount++;
-                if (firstAction.HandActionType == HandActionType.RAISE)
+                if (plr.FirstRealAction().IsRaiseAction())
                     atsRaiseCount++;
             }
             return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
@@ -369,26 +368,13 @@ namespace MoneyMaker.BLL.Tools
             var atsRaiseCount = 0;
             foreach (var g in games)
             {
-                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
-                if (stealPlayer.Position != PositionType.B)
+                var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if (plr.Position != PositionType.B)
                     continue;
-                //действия игрока на префлопе кроме малого блайнда
-                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
-                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
-                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
-                //действия остальных игроков кроме блайндов на префлопе
-                var otherPlayersPreflopHandActions = new List<HandAction>();
-                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
-                {
-                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
-                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType != HandActionType.DEALT_HERO_CARDS && ha.HandActionType != HandActionType.UNCALLED_BET));
-                }
-                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
-                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
-                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                if (!g.IsStealSituationForPlayer(plr))
                     continue;
                 atsSituationCount++;
-                if (firstAction.HandActionType == HandActionType.RAISE)
+                if (plr.FirstRealAction().IsRaiseAction())
                     atsRaiseCount++;
             }
             return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
@@ -400,26 +386,13 @@ namespace MoneyMaker.BLL.Tools
             var atsRaiseCount = 0;
             foreach (var g in games)
             {
-                var stealPlayer = g.PlayerHistories.Find(p => p.PlayerName == player);
-                if (stealPlayer.Position != PositionType.SB)
+                var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
+                if (plr.Position != PositionType.SB)
                     continue;
-                //действия игрока на префлопе кроме малого блайнда
-                var playerPreflopHandActions = stealPlayer.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.SMALL_BLIND).ToArray();
-                var minIndex = playerPreflopHandActions.Min(ha => ha.Index);
-                var firstAction = playerPreflopHandActions.First(ha => ha.Index == minIndex);
-                //действия остальных игроков кроме блайндов на префлопе
-                var otherPlayersPreflopHandActions = new List<HandAction>();
-                foreach (var ph in g.PlayerHistories.Where(ph => ph.PlayerName != player))
-                {
-                    otherPlayersPreflopHandActions.AddRange(ph.HandActions.Where(ha => ha.Street == Street.Preflop && ha.HandActionType != HandActionType.BIG_BLIND
-                        && ha.HandActionType != HandActionType.SMALL_BLIND && ha.HandActionType != HandActionType.DEALT_HERO_CARDS && ha.HandActionType != HandActionType.UNCALLED_BET));
-                }
-                //проверяем стилинговую ситуацию. Все игроки до стилера кроме блайндов должны упасть
-                if (!otherPlayersPreflopHandActions.Where(ha => ha.Index < minIndex)
-                    .All(a => a.HandActionType == HandActionType.FOLD || a.HandActionType == HandActionType.CHECK))
+                if (!g.IsStealSituationForPlayer(plr))
                     continue;
                 atsSituationCount++;
-                if (firstAction.HandActionType == HandActionType.RAISE)
+                if (plr.FirstRealAction().IsRaiseAction())
                     atsRaiseCount++;
             }
             return atsSituationCount == 0 ? 0 : (double)atsRaiseCount / atsSituationCount * 100;
@@ -431,10 +404,10 @@ namespace MoneyMaker.BLL.Tools
             foreach (Game g in games)
             {
                 var playerHistory = g.PlayerHistories.Find(ph => ph.PlayerName == player);
-                if (!playerHistory.HandActions.Any(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE)) continue;
-                var rrIndex = playerHistory.HandActions.Find(ha => ha.Street == Street.Preflop && ha.HandActionType == HandActionType.RAISE).Index;
-                if (g.PlayerHistories.Any(ph => ph.PlayerName != player && ph.HandActions.Any( a =>
-                    a.Street == Street.Preflop && a.HandActionType == HandActionType.RAISE && a.Index < rrIndex)))
+                if (!playerHistory.HandActions.PreflopHandActions().RaiseActions().Any()) continue;
+                var rrIndex = playerHistory.HandActions.PreflopHandActions().RaiseActions().First().Index;
+                if (g.PlayerHistories.Any(ph => ph.PlayerName != player && ph.HandActions.PreflopHandActions().Any( a =>
+                    a.IsRaiseAction() && a.Index < rrIndex)))
                     count++;
             }
             return count;
@@ -444,6 +417,51 @@ namespace MoneyMaker.BLL.Tools
         {
             var ph = game.PlayerHistories.First(p => p.PlayerName == player);
             return ph.StartingStack/game.BigBlind;
+        }
+
+        public static List<HandAction> PreflopHandActions(this Game game)
+        {
+            var has=new List<HandAction>();
+            foreach (var playerHistory in game.PlayerHistories)
+            {
+                has.AddRange(playerHistory.HandActions.Where(ha => ha.Street == Street.Preflop));
+            }
+            return has;
+        }
+
+        public static List<HandAction> FlopHandActions(this Game game)
+        {
+            var has = new List<HandAction>();
+            foreach (var playerHistory in game.PlayerHistories)
+            {
+                has.AddRange(playerHistory.HandActions.Where(ha => ha.Street == Street.Flop));
+            }
+            return has;
+        }
+
+        public static List<HandAction> TurnHandActions(this Game game)
+        {
+            var has = new List<HandAction>();
+            foreach (var playerHistory in game.PlayerHistories)
+            {
+                has.AddRange(playerHistory.HandActions.Where(ha => ha.Street == Street.Turn));
+            }
+            return has;
+        }
+
+        public static List<HandAction> RiverHandActions(this Game game)
+        {
+            var has = new List<HandAction>();
+            foreach (var playerHistory in game.PlayerHistories)
+            {
+                has.AddRange(playerHistory.HandActions.Where(ha => ha.Street == Street.River));
+            }
+            return has;
+        }
+
+        public static PlayerHistory GetPlayerHistoryForAction(this Game game, HandAction ha)
+        {
+            return game.PlayerHistories.FirstOrDefault(ph => ph.PlayerName== ha.PlayerName);
         }
         
         /// <summary>
@@ -491,6 +509,37 @@ namespace MoneyMaker.BLL.Tools
             sum += playerHistory.HandActions.Sum(ha => ha.Amount);
             return sum;
         }
+
+        /// <summary>
+        /// Ф:Проверяет ситуацию, когда кто-то сделал рейз из позней позиции в неоткрытом банке
+        /// </summary>
+        private static bool WasStealToPlayer (this Game game, PlayerHistory ph)
+        {
+            var playersInStealSituations =
+                game.PlayerHistories.Where(p => p.PlayerName != ph.PlayerName && game.IsStealSituationForPlayer(p));
+            return playersInStealSituations.Any(p=>p.HandActions.RealActions().First().IsRaiseAction());
+        }
+        /// <summary>
+        /// Ф:Проверяет стиллинговую ситуацию для игрока
+        /// </summary>
+        private static bool IsStealSituationForPlayer(this Game game, PlayerHistory playerHistory)
+        {
+            var playersCount = game.PlayerHistories.Count;
+            if (playersCount < 3)
+                return false;
+            if (!playerHistory.HandActions.PreflopHandActions().RealActions().Any())
+                return false;
+            if (!playerHistory.IsInStealPosition())
+                return false;
+            var allPreflopHandActions = game.PreflopHandActions().RealActions().ToList();
+            var positionAction = allPreflopHandActions.Where(ha => ha.PlayerName == playerHistory.PlayerName).OrderBy(ha => ha.Index).First();
+
+            if (!allPreflopHandActions.AllFoldedBeforeAction(positionAction))
+                return false;
+            return true;
+        }
+
+
         
     }
 }

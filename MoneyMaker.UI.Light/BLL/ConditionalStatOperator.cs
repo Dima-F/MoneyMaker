@@ -16,7 +16,7 @@ namespace MoneyMaker.UI.Light.BLL
         public List<PlayerStats> GetPlayerStatsList(IEnumerable<Game> games)
         {
             var gs = games as Game[] ?? games.ToArray();
-            var last3GamesPlayerNames = gs.GetLastGamesPlayerNames(3);
+            var last3GamesPlayerNames = gs.GetLivePlayerNames(Properties.Settings.Default.LiveGamesCount);
             return last3GamesPlayerNames.Select(playerName => GetPlayerStats(playerName, gs)).ToList();
         }
 
@@ -125,6 +125,16 @@ namespace MoneyMaker.UI.Light.BLL
             {
                 var preflop3BCount = playerGames.ThreeBetCountForPlayer(playerName);
                 statCollection.Add(new Stat() { Name = "3B", Value = Math.Round((double)preflop3BCount / gamesCount * 100, 2) });
+            }
+            if (Properties.Settings.Default.Stat_Fold_SB_ToSteal)//Stat Fb to Steal
+            {
+                var fSb = playerGames.Fold_SB_To_Steal_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "Fold SB to Stl", Value = Math.Round(fSb, 2) });
+            }
+            if (Properties.Settings.Default.Stat_Fold_BB_ToSteal)//Stat Bb to Steal
+            {
+                var fBb = playerGames.Fold_BB_To_Steal_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "Fold BB to Stl", Value = Math.Round(fBb, 2) });
             }
             return statCollection;
         }

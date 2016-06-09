@@ -123,6 +123,16 @@ namespace MoneyMaker.BLL.Stats
                 var preflop3BCount = playerGames.ThreeBetCountForPlayer(playerName);
                 statCollection.Add(new Stat() { Name = "3B", Value = Math.Round((double)preflop3BCount / gamesCount * 100, 2) });
             }
+            if (true)//Stat Fb to Steal
+            {
+                var fSb = playerGames.Fold_SB_To_Steal_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "Fold SB to Stl", Value = Math.Round(fSb, 2) });
+            }
+            if (true)//Stat Bb to Steal
+            {
+                var fBb = playerGames.Fold_BB_To_Steal_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "Fold BB to Stl", Value = Math.Round(fBb, 2) });
+            }
             return statCollection;
         }
     }

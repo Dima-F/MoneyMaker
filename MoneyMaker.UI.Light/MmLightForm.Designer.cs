@@ -40,11 +40,12 @@
             this.datGrViewAllStats = new System.Windows.Forms.DataGridView();
             this.btnAllStat = new System.Windows.Forms.Button();
             this.tabPageSimpleParsing = new System.Windows.Forms.TabPage();
+            this.lblGamesCount = new System.Windows.Forms.Label();
             this.lblSimpPars = new System.Windows.Forms.Label();
             this.progBarSimpleParsing = new System.Windows.Forms.ProgressBar();
             this.textBoxSimpleParsing = new System.Windows.Forms.TextBox();
             this.btnSimplePars = new System.Windows.Forms.Button();
-            this.lblGamesCount = new System.Windows.Forms.Label();
+            this.btnStatSyncron = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
@@ -112,6 +113,7 @@
             // 
             // tabPageAllStats
             // 
+            this.tabPageAllStats.Controls.Add(this.btnStatSyncron);
             this.tabPageAllStats.Controls.Add(this.comboBoxPlayers);
             this.tabPageAllStats.Controls.Add(this.checkBoxLive);
             this.tabPageAllStats.Controls.Add(this.datGrViewAllStats);
@@ -127,7 +129,7 @@
             // comboBoxPlayers
             // 
             this.comboBoxPlayers.FormattingEnabled = true;
-            this.comboBoxPlayers.Location = new System.Drawing.Point(231, 8);
+            this.comboBoxPlayers.Location = new System.Drawing.Point(342, 8);
             this.comboBoxPlayers.Name = "comboBoxPlayers";
             this.comboBoxPlayers.Size = new System.Drawing.Size(121, 21);
             this.comboBoxPlayers.TabIndex = 3;
@@ -135,7 +137,7 @@
             // checkBoxLive
             // 
             this.checkBoxLive.AutoSize = true;
-            this.checkBoxLive.Location = new System.Drawing.Point(130, 10);
+            this.checkBoxLive.Location = new System.Drawing.Point(241, 10);
             this.checkBoxLive.Name = "checkBoxLive";
             this.checkBoxLive.Size = new System.Drawing.Size(82, 17);
             this.checkBoxLive.TabIndex = 2;
@@ -157,7 +159,7 @@
             this.btnAllStat.Name = "btnAllStat";
             this.btnAllStat.Size = new System.Drawing.Size(108, 23);
             this.btnAllStat.TabIndex = 0;
-            this.btnAllStat.Text = "Calculate async";
+            this.btnAllStat.Text = "Asynchronously";
             this.btnAllStat.UseVisualStyleBackColor = true;
             this.btnAllStat.Click += new System.EventHandler(this.btnAllStat_Click);
             // 
@@ -175,6 +177,16 @@
             this.tabPageSimpleParsing.TabIndex = 1;
             this.tabPageSimpleParsing.Text = "Simple parsing";
             this.tabPageSimpleParsing.UseVisualStyleBackColor = true;
+            // 
+            // lblGamesCount
+            // 
+            this.lblGamesCount.AutoSize = true;
+            this.lblGamesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblGamesCount.Location = new System.Drawing.Point(136, 11);
+            this.lblGamesCount.Name = "lblGamesCount";
+            this.lblGamesCount.Size = new System.Drawing.Size(16, 17);
+            this.lblGamesCount.TabIndex = 5;
+            this.lblGamesCount.Text = "0";
             // 
             // lblSimpPars
             // 
@@ -213,15 +225,15 @@
             this.btnSimplePars.UseVisualStyleBackColor = true;
             this.btnSimplePars.Click += new System.EventHandler(this.btnSimplePars_Click);
             // 
-            // lblGamesCount
+            // btnStatSyncron
             // 
-            this.lblGamesCount.AutoSize = true;
-            this.lblGamesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblGamesCount.Location = new System.Drawing.Point(136, 11);
-            this.lblGamesCount.Name = "lblGamesCount";
-            this.lblGamesCount.Size = new System.Drawing.Size(16, 17);
-            this.lblGamesCount.TabIndex = 5;
-            this.lblGamesCount.Text = "0";
+            this.btnStatSyncron.Location = new System.Drawing.Point(120, 6);
+            this.btnStatSyncron.Name = "btnStatSyncron";
+            this.btnStatSyncron.Size = new System.Drawing.Size(108, 23);
+            this.btnStatSyncron.TabIndex = 4;
+            this.btnStatSyncron.Text = "Synchronously";
+            this.btnStatSyncron.UseVisualStyleBackColor = true;
+            this.btnStatSyncron.Click += new System.EventHandler(this.btnStatSyncron_Click);
             // 
             // MmLightForm
             // 
@@ -272,6 +284,7 @@
         private System.Windows.Forms.CheckBox checkBoxLive;
         private System.Windows.Forms.ComboBox comboBoxPlayers;
         private System.Windows.Forms.Label lblGamesCount;
+        private System.Windows.Forms.Button btnStatSyncron;
     }
 }
 

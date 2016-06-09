@@ -50,6 +50,7 @@
     <Compile Include="Stats\Stat.cs" />
     <Compile Include="Stats\StatsExtention.cs" />
     <Compile Include="Tools\GameExtentions.cs" />
+    <Compile Include="Tools\HandActionExtentions.cs" />
     <Compile Include="Tools\PlayerHistoryExtentions.cs" />
     <Compile Include="Tools\StringExtentions.cs" />
     <Compile Include="Hud\Muck.cs" />

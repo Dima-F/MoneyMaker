@@ -26,7 +26,7 @@ namespace MoneyMaker.UI.Light
             hhFolderTextBox.Text = Properties.Settings.Default.HandHistoryFolder;
             fileTrackingTxtBx.Text = Properties.Settings.Default.FileTrackingFolder;
             heroTextBox.Text = Properties.Settings.Default.Hero;
-            numericUpDownComit.Value = Properties.Settings.Default.CommitCount;
+            numericUpDownLiveCount.Value = Properties.Settings.Default.LiveGamesCount;
 
             cbStatHands.Checked = Properties.Settings.Default.Stat_Hands;
             cbStatProfit.Checked = Properties.Settings.Default.Stat_Profit;
@@ -52,7 +52,8 @@ namespace MoneyMaker.UI.Light
             cbAtsCo.Checked = Properties.Settings.Default.Stat_ATS_CO;
             cbAtsB.Checked = Properties.Settings.Default.Stat_ATS_B;
             cbAtsSb.Checked = Properties.Settings.Default.Stat_ATS_SB;
-
+            cbFoldSbToStl.Checked = Properties.Settings.Default.Stat_Fold_SB_ToSteal;
+            cbFoldBbToStl.Checked = Properties.Settings.Default.Stat_Fold_BB_ToSteal;
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -69,7 +70,7 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.HandHistoryFolder = hhFolderTextBox.Text;
             Properties.Settings.Default.FileTrackingFolder = fileTrackingTxtBx.Text;
             Properties.Settings.Default.Hero = heroTextBox.Text;
-            Properties.Settings.Default.CommitCount = numericUpDownComit.Value;
+            Properties.Settings.Default.LiveGamesCount = (int)numericUpDownLiveCount.Value;
 
             Properties.Settings.Default.Stat_Hands=cbStatHands.Checked;
             Properties.Settings.Default.Stat_Profit = cbStatProfit.Checked;
@@ -95,6 +96,9 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.Stat_ATS_CO = cbAtsCo.Checked;
             Properties.Settings.Default.Stat_ATS_B = cbAtsB.Checked;
             Properties.Settings.Default.Stat_ATS_SB = cbAtsSb.Checked;
+            Properties.Settings.Default.Stat_Fold_SB_ToSteal = cbFoldSbToStl.Checked;
+            Properties.Settings.Default.Stat_Fold_BB_ToSteal = cbFoldBbToStl.Checked;
+
 
             Properties.Settings.Default.Save();
             Close();

@@ -67,26 +67,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="311720">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="313768">
       <assemblyIdentity name="MoneyMaker" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>a5ooALTlSwhknAVYDzx/Du77dvgWZwuxHEKDikKoy1I=</dsig:DigestValue>
+        <dsig:DigestValue>5ljYXmEbVAdbEKE3VEqtSmYk1z+Fr6sDV2GD7RpZprw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="34304">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="35840">
       <assemblyIdentity name="MoneyMaker.BLL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>pBgNEb+LzYru15i5OdFJeZwrgc9ZfbHacL9koHmXEjg=</dsig:DigestValue>
+        <dsig:DigestValue>KmcYraOkPw9YuOI9TUeZgYf5V0wWPOaJM2Wpp+co6fY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -99,22 +99,13 @@
       <dsig:DigestValue>BxcomBN1bSxJpcY0NkP+BsfsGv64NNxbu5QXErn1LTo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="MoneyMaker.exe.config" size="3604">
+  <file name="MoneyMaker.exe.config" size="3934">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>dJT2lSz/p/PKe7IsI9dpCBNQzA/75gV5Dm51TSltZPI=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="NLog.config" size="1651">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>42T6AxWo4RyyxWQMEOTFUmH3qYjsNEJ4wfJQT3grF3g=</dsig:DigestValue>
+      <dsig:DigestValue>AVORJRZ3X6KauTBPvcxfSpwC0JPyma2wFs9KnQvOq1A=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

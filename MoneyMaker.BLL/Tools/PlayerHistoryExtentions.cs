@@ -1,4 +1,5 @@
-﻿using HandHistories.SimpleObjects.Entities;
+﻿using System.Linq;
+using HandHistories.SimpleObjects.Entities;
 
 namespace MoneyMaker.BLL.Tools
 {
@@ -29,6 +30,21 @@ namespace MoneyMaker.BLL.Tools
             return playerHistory.Position == PositionType.MP ||
                    playerHistory.Position == PositionType.MP2 ||
                    playerHistory.Position == PositionType.MP3;
+        }
+
+        /// <summary>
+        /// Is CO, Button or SB 
+        /// </summary>
+        public static bool IsInStealPosition(this PlayerHistory playerHistory)
+        {
+            return playerHistory.Position == PositionType.CO ||
+                   playerHistory.Position == PositionType.B ||
+                   playerHistory.Position == PositionType.SB;
+        }
+
+        public static HandAction FirstRealAction(this PlayerHistory playerHistory)
+        {
+            return playerHistory.HandActions.RealActions().First();
         }
     }
 }

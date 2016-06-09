@@ -58,8 +58,7 @@ namespace MoneyMaker.UI.Light
         private void OnPokerFileChanged(object sender, FileSystemEventArgs e)
         {
             //ShowHudForm(e.FullPath);
-            Action action = () => ShowHudForm(e.FullPath);
-            Invoke(action);
+            Invoke((Action)(()=>ShowHudForm(e.FullPath)));
         }
 
         private void pictureBoxTrack_Click(object sender, EventArgs e)
@@ -121,11 +120,10 @@ namespace MoneyMaker.UI.Light
                 var parser = ParserFactory.CreateParser(shortPath);
                 var games = parser.ParseGames(text);
                 _allGames.AddRange(games);
-                Thread.Sleep(100);
                 builder.AppendLine($"***{shortPath}");
                 progBarSimpleParsing.Increment(1);
-                lblGamesCount.Text = _allGames.Count.ToString();
             }
+            lblGamesCount.Text = _allGames.Count.ToString();
             textBoxSimpleParsing.Text = builder.ToString();
         }
 
@@ -133,13 +131,16 @@ namespace MoneyMaker.UI.Light
         {
             if (_allGames.Count == 0)
                 btnSimplePars_Click(null, null);
-            comboBoxPlayers.DataSource = _allGames.GetAllPlayerNames().ToList();
+            
+            List<Game> games = checkBoxLive.Checked ? _allGames.GetLive(Settings.Default.LiveGamesCount).ToList() : _allGames;
+
+            comboBoxPlayers.DataSource = games.GetAllPlayerNames().ToList();
             //Debug.WriteLine("Current thread ID - {0}",Thread.CurrentThread.ManagedThreadId);
             await Task.Run(() =>
             {
                 var statOperator = new BaseStatOperator();
                 //Thread.Sleep(5000);
-                var table = statOperator.GetPlayerStatsList(_allGames).ToDataTable();
+                var table = statOperator.GetPlayerStatsList(games).ToDataTable();
                 //Debug.WriteLine("Current thread ID - {0}", Thread.CurrentThread.ManagedThreadId);
                 Invoke((Action)delegate
                 {
@@ -156,6 +157,20 @@ namespace MoneyMaker.UI.Light
             {
                 datGrViewAllStats.Columns[i].Width = 48;
             }
+        }
+
+        private void btnStatSyncron_Click(object sender, EventArgs e)
+        {
+            if (_allGames.Count == 0)
+                btnSimplePars_Click(null, null);
+            List<Game> games = checkBoxLive.Checked
+                ? _allGames.GetLive(Settings.Default.LiveGamesCount).ToList()
+                : _allGames;
+            comboBoxPlayers.DataSource = games.GetAllPlayerNames().ToList();
+            var statOperator = new BaseStatOperator();
+            var table = statOperator.GetPlayerStatsList(games).ToDataTable();
+            datGrViewAllStats.DataSource = table;
+            MinimizeGridWidth();
         }
     }
 }
