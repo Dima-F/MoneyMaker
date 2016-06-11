@@ -40,6 +40,8 @@
             this.hhFolderTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageStat = new System.Windows.Forms.TabPage();
+            this.cbFoldBbToStl = new System.Windows.Forms.CheckBox();
+            this.cbFoldSbToStl = new System.Windows.Forms.CheckBox();
             this.cbAtsSb = new System.Windows.Forms.CheckBox();
             this.cbAtsB = new System.Windows.Forms.CheckBox();
             this.cbAtsCo = new System.Windows.Forms.CheckBox();
@@ -70,8 +72,8 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbFoldSbToStl = new System.Windows.Forms.CheckBox();
-            this.cbFoldBbToStl = new System.Windows.Forms.CheckBox();
+            this.cbWMWSF = new System.Windows.Forms.CheckBox();
+            this.cbWTSD = new System.Windows.Forms.CheckBox();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.tabPageStat.SuspendLayout();
@@ -191,6 +193,8 @@
             // 
             // tabPageStat
             // 
+            this.tabPageStat.Controls.Add(this.cbWTSD);
+            this.tabPageStat.Controls.Add(this.cbWMWSF);
             this.tabPageStat.Controls.Add(this.cbFoldBbToStl);
             this.tabPageStat.Controls.Add(this.cbFoldSbToStl);
             this.tabPageStat.Controls.Add(this.cbAtsSb);
@@ -222,6 +226,26 @@
             this.tabPageStat.TabIndex = 2;
             this.tabPageStat.Text = "Stats";
             this.tabPageStat.UseVisualStyleBackColor = true;
+            // 
+            // cbFoldBbToStl
+            // 
+            this.cbFoldBbToStl.AutoSize = true;
+            this.cbFoldBbToStl.Location = new System.Drawing.Point(158, 131);
+            this.cbFoldBbToStl.Name = "cbFoldBbToStl";
+            this.cbFoldBbToStl.Size = new System.Drawing.Size(105, 17);
+            this.cbFoldBbToStl.TabIndex = 24;
+            this.cbFoldBbToStl.Text = "Fold Bb To Steal";
+            this.cbFoldBbToStl.UseVisualStyleBackColor = true;
+            // 
+            // cbFoldSbToStl
+            // 
+            this.cbFoldSbToStl.AutoSize = true;
+            this.cbFoldSbToStl.Location = new System.Drawing.Point(158, 108);
+            this.cbFoldSbToStl.Name = "cbFoldSbToStl";
+            this.cbFoldSbToStl.Size = new System.Drawing.Size(105, 17);
+            this.cbFoldSbToStl.TabIndex = 23;
+            this.cbFoldSbToStl.Text = "Fold Sb To Steal";
+            this.cbFoldSbToStl.UseVisualStyleBackColor = true;
             // 
             // cbAtsSb
             // 
@@ -529,25 +553,25 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // cbFoldSbToStl
+            // cbWMWSF
             // 
-            this.cbFoldSbToStl.AutoSize = true;
-            this.cbFoldSbToStl.Location = new System.Drawing.Point(158, 108);
-            this.cbFoldSbToStl.Name = "cbFoldSbToStl";
-            this.cbFoldSbToStl.Size = new System.Drawing.Size(105, 17);
-            this.cbFoldSbToStl.TabIndex = 23;
-            this.cbFoldSbToStl.Text = "Fold Sb To Steal";
-            this.cbFoldSbToStl.UseVisualStyleBackColor = true;
+            this.cbWMWSF.AutoSize = true;
+            this.cbWMWSF.Location = new System.Drawing.Point(158, 154);
+            this.cbWMWSF.Name = "cbWMWSF";
+            this.cbWMWSF.Size = new System.Drawing.Size(67, 17);
+            this.cbWMWSF.TabIndex = 25;
+            this.cbWMWSF.Text = "W$WSF";
+            this.cbWMWSF.UseVisualStyleBackColor = true;
             // 
-            // cbFoldBbToStl
+            // cbWTSD
             // 
-            this.cbFoldBbToStl.AutoSize = true;
-            this.cbFoldBbToStl.Location = new System.Drawing.Point(158, 131);
-            this.cbFoldBbToStl.Name = "cbFoldBbToStl";
-            this.cbFoldBbToStl.Size = new System.Drawing.Size(105, 17);
-            this.cbFoldBbToStl.TabIndex = 24;
-            this.cbFoldBbToStl.Text = "Fold Bb To Steal";
-            this.cbFoldBbToStl.UseVisualStyleBackColor = true;
+            this.cbWTSD.AutoSize = true;
+            this.cbWTSD.Location = new System.Drawing.Point(158, 177);
+            this.cbWTSD.Name = "cbWTSD";
+            this.cbWTSD.Size = new System.Drawing.Size(59, 17);
+            this.cbWTSD.TabIndex = 26;
+            this.cbWTSD.Text = "WTSD";
+            this.cbWTSD.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 
@@ -626,5 +650,7 @@
         private System.Windows.Forms.CheckBox cbAtsB;
         private System.Windows.Forms.CheckBox cbFoldBbToStl;
         private System.Windows.Forms.CheckBox cbFoldSbToStl;
+        private System.Windows.Forms.CheckBox cbWTSD;
+        private System.Windows.Forms.CheckBox cbWMWSF;
     }
 }

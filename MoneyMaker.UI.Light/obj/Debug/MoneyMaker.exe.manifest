@@ -67,26 +67,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="313768">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.exe" size="314792">
       <assemblyIdentity name="MoneyMaker" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5ljYXmEbVAdbEKE3VEqtSmYk1z+Fr6sDV2GD7RpZprw=</dsig:DigestValue>
+        <dsig:DigestValue>loIyMrNYlVa+NQVdW97xxhNk3+CjQZrvBIE598KZJ9k=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="35840">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoneyMaker.BLL.dll" size="37376">
       <assemblyIdentity name="MoneyMaker.BLL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>KmcYraOkPw9YuOI9TUeZgYf5V0wWPOaJM2Wpp+co6fY=</dsig:DigestValue>
+        <dsig:DigestValue>HaHzcX0gMAtToAmkeEhymUEkfJZXp3eNvaWDIv6W8k0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -99,13 +99,13 @@
       <dsig:DigestValue>BxcomBN1bSxJpcY0NkP+BsfsGv64NNxbu5QXErn1LTo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="MoneyMaker.exe.config" size="3934">
+  <file name="MoneyMaker.exe.config" size="4139">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>AVORJRZ3X6KauTBPvcxfSpwC0JPyma2wFs9KnQvOq1A=</dsig:DigestValue>
+      <dsig:DigestValue>7IU2F5qEPqm0qL8/JZ4NCS2jzcfGdIu3aNFygkJGD0A=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

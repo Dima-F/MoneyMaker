@@ -136,6 +136,16 @@ namespace MoneyMaker.UI.Light.BLL
                 var fBb = playerGames.Fold_BB_To_Steal_ForPlayer(playerName);
                 statCollection.Add(new Stat() { Name = "Fold BB to Stl", Value = Math.Round(fBb, 2) });
             }
+            if (Properties.Settings.Default.Stat_WMWSF)
+            {
+                var wmwsf = playerGames.WMWSF_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "W$WSF", Value = Math.Round(wmwsf, 2) });
+            }
+            if (Properties.Settings.Default.Stat_WTSD)
+            {
+                var wtsd = playerGames.WTSD_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "WTSD", Value = Math.Round(wtsd, 2) });
+            }
             return statCollection;
         }
     }

@@ -294,8 +294,8 @@ namespace MoneyMaker.BLL.Tools
 
         public static double Fold_SB_To_Steal_ForPlayer(this IEnumerable<Game> games, string player)
         {
-            var toStealCount = 0;
-            var foldedWhenStealedCount = 0;
+            var stealed = 0;
+            var foldedAfterStealing = 0;
             foreach (var g in games)
             {
                 var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
@@ -303,17 +303,17 @@ namespace MoneyMaker.BLL.Tools
                     continue;
                 if (!g.WasStealToPlayer(plr))
                     continue;
-                toStealCount++;
+                stealed++;
                 if (plr.FirstRealAction().HandActionType == HandActionType.FOLD)
-                    foldedWhenStealedCount++;
+                    foldedAfterStealing++;
             }
-            return toStealCount == 0 ? 0 : (double)foldedWhenStealedCount / toStealCount * 100;
+            return stealed == 0 ? 0 : (double)foldedAfterStealing / stealed * 100;
         }
 
         public static double Fold_BB_To_Steal_ForPlayer(this IEnumerable<Game> games, string player)
         {
-            var toStealCount = 0;
-            var foldedWhenStealedCount = 0;
+            var stealed = 0;
+            var foldedAfterStealing = 0;
             foreach (var g in games)
             {
                 var plr = g.PlayerHistories.Find(p => p.PlayerName == player);
@@ -321,11 +321,11 @@ namespace MoneyMaker.BLL.Tools
                     continue;
                 if (!g.WasStealToPlayer(plr))
                     continue;
-                toStealCount++;
+                stealed++;
                 if (plr.FirstRealAction().HandActionType == HandActionType.FOLD)
-                    foldedWhenStealedCount++;
+                    foldedAfterStealing++;
             }
-            return toStealCount == 0 ? 0 : (double)foldedWhenStealedCount / toStealCount * 100;
+            return stealed == 0 ? 0 : (double)foldedAfterStealing / stealed * 100;
         }
 
         public static double ATS_PercentForPlayer(this IEnumerable<Game> games, string player)
@@ -419,7 +419,36 @@ namespace MoneyMaker.BLL.Tools
             return ph.StartingStack/game.BigBlind;
         }
 
-        public static List<HandAction> PreflopHandActions(this Game game)
+        /// <summary>
+        /// Win money when saw flop
+        /// </summary>
+        public static double WMWSF_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var sawFlopCount = 0;
+            var winWherSawFlop = 0;
+            foreach (var g in games)
+            {
+                if(g.SawFlopForPlayer(player))
+                    sawFlopCount++;
+                else continue;
+                if (g.WinGameForPlayer(player))
+                    winWherSawFlop++;
+            }
+            return sawFlopCount == 0 ? 0 : (double)winWherSawFlop / sawFlopCount * 100;
+        }
+
+        /// <summary>
+        /// Went to showdown
+        /// </summary>
+        public static double WTSD_ForPlayer(this IEnumerable<Game> games, string player)
+        {
+            var enumGames = games as Game[] ?? games.ToArray();
+            var sawFlopCount = enumGames.Select(g => g.PlayerHistories.First(p => p.PlayerName == player)).
+                Count(ph => ph.HandActions.Any(ha => ha.HandActionType == HandActionType.SHOW));
+            return sawFlopCount == 0 ? 0 : (double)sawFlopCount / enumGames.Count() * 100;
+        }
+
+        public static List<HandAction> AllPreflopHandActions(this Game game)
         {
             var has=new List<HandAction>();
             foreach (var playerHistory in game.PlayerHistories)
@@ -429,7 +458,7 @@ namespace MoneyMaker.BLL.Tools
             return has;
         }
 
-        public static List<HandAction> FlopHandActions(this Game game)
+        public static List<HandAction> AllFlopHandActions(this Game game)
         {
             var has = new List<HandAction>();
             foreach (var playerHistory in game.PlayerHistories)
@@ -439,7 +468,7 @@ namespace MoneyMaker.BLL.Tools
             return has;
         }
 
-        public static List<HandAction> TurnHandActions(this Game game)
+        public static List<HandAction> AllTurnHandActions(this Game game)
         {
             var has = new List<HandAction>();
             foreach (var playerHistory in game.PlayerHistories)
@@ -449,7 +478,7 @@ namespace MoneyMaker.BLL.Tools
             return has;
         }
 
-        public static List<HandAction> RiverHandActions(this Game game)
+        public static List<HandAction> AllRiverHandActions(this Game game)
         {
             var has = new List<HandAction>();
             foreach (var playerHistory in game.PlayerHistories)
@@ -457,6 +486,20 @@ namespace MoneyMaker.BLL.Tools
                 has.AddRange(playerHistory.HandActions.Where(ha => ha.Street == Street.River));
             }
             return has;
+        }
+
+        public static bool SawFlopForPlayer(this Game game, string player)
+        {
+            var ph = game.PlayerHistories.First(p => p.PlayerName == player);
+            return
+                ph.HandActions.RealActions()
+                    .Any(ha => ha.Street == Street.Flop || ha.HandActionType == HandActionType.SHOW);
+        }
+
+        public static bool WinGameForPlayer(this Game game, string player)
+        {
+            var ph = game.PlayerHistories.First(p => p.PlayerName == player);
+            return ph.HandActions.Any(ha => ha.IsWinAction());
         }
 
         public static PlayerHistory GetPlayerHistoryForAction(this Game game, HandAction ha)
@@ -531,7 +574,7 @@ namespace MoneyMaker.BLL.Tools
                 return false;
             if (!playerHistory.IsInStealPosition())
                 return false;
-            var allPreflopHandActions = game.PreflopHandActions().RealActions().ToList();
+            var allPreflopHandActions = game.AllPreflopHandActions().RealActions().ToList();
             var positionAction = allPreflopHandActions.Where(ha => ha.PlayerName == playerHistory.PlayerName).OrderBy(ha => ha.Index).First();
 
             if (!allPreflopHandActions.AllFoldedBeforeAction(positionAction))

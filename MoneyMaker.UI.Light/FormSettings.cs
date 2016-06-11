@@ -54,6 +54,8 @@ namespace MoneyMaker.UI.Light
             cbAtsSb.Checked = Properties.Settings.Default.Stat_ATS_SB;
             cbFoldSbToStl.Checked = Properties.Settings.Default.Stat_Fold_SB_ToSteal;
             cbFoldBbToStl.Checked = Properties.Settings.Default.Stat_Fold_BB_ToSteal;
+            cbWMWSF.Checked = Properties.Settings.Default.Stat_WMWSF;
+            cbWTSD.Checked = Properties.Settings.Default.Stat_WTSD;
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -98,7 +100,8 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.Stat_ATS_SB = cbAtsSb.Checked;
             Properties.Settings.Default.Stat_Fold_SB_ToSteal = cbFoldSbToStl.Checked;
             Properties.Settings.Default.Stat_Fold_BB_ToSteal = cbFoldBbToStl.Checked;
-
+            Properties.Settings.Default.Stat_WMWSF = cbWMWSF.Checked;
+            Properties.Settings.Default.Stat_WTSD = cbWTSD.Checked;
 
             Properties.Settings.Default.Save();
             Close();

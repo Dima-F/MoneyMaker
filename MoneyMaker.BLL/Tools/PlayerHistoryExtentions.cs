@@ -14,6 +14,7 @@ namespace MoneyMaker.BLL.Tools
                    playerHistory.Position == PositionType.UTG2 ||
                    playerHistory.Position == PositionType.UTG3;
         }
+
         /// <summary>
         /// Is CO or Button
         /// </summary>
@@ -22,6 +23,7 @@ namespace MoneyMaker.BLL.Tools
             return playerHistory.Position == PositionType.CO ||
                    playerHistory.Position == PositionType.B ;
         }
+
         /// <summary>
         /// Is MP or MP2 or MP3
         /// </summary>

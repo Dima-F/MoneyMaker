@@ -370,5 +370,29 @@ namespace MoneyMaker.UI.Light.Properties {
                 this["Stat_Fold_BB_ToSteal"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_WMWSF {
+            get {
+                return ((bool)(this["Stat_WMWSF"]));
+            }
+            set {
+                this["Stat_WMWSF"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_WTSD {
+            get {
+                return ((bool)(this["Stat_WTSD"]));
+            }
+            set {
+                this["Stat_WTSD"] = value;
+            }
+        }
     }
 }
