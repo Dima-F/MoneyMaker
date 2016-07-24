@@ -394,5 +394,41 @@ namespace MoneyMaker.UI.Light.Properties {
                 this["Stat_WTSD"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_CallOpen {
+            get {
+                return ((bool)(this["Stat_CallOpen"]));
+            }
+            set {
+                this["Stat_CallOpen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Stat_FlopCB {
+            get {
+                return ((bool)(this["Stat_FlopCB"]));
+            }
+            set {
+                this["Stat_FlopCB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int LiveHours {
+            get {
+                return ((int)(this["LiveHours"]));
+            }
+            set {
+                this["LiveHours"] = value;
+            }
+        }
     }
 }

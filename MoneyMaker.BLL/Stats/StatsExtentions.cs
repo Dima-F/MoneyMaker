@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MoneyMaker.BLL.Stats
 {
-    public static class StatsExtention
+    public static class StatsExtentions
     {
         /// <summary>
         /// Ф:Получает набор статов игроков и формирует таблицу DataTable, которую 
@@ -13,6 +13,8 @@ namespace MoneyMaker.BLL.Stats
         public static  DataTable ToDataTable(this List<PlayerStats> hudStatsCollection)
         {
             var table = new DataTable();
+            if (hudStatsCollection.Count == 0)
+                return table;
             table.Columns.Add("Player");
             foreach (var stat in hudStatsCollection.First())
             {

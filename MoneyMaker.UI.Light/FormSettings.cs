@@ -27,6 +27,7 @@ namespace MoneyMaker.UI.Light
             fileTrackingTxtBx.Text = Properties.Settings.Default.FileTrackingFolder;
             heroTextBox.Text = Properties.Settings.Default.Hero;
             numericUpDownLiveCount.Value = Properties.Settings.Default.LiveGamesCount;
+            numUpDownLiveHours.Value = Properties.Settings.Default.LiveHours;
 
             cbStatHands.Checked = Properties.Settings.Default.Stat_Hands;
             cbStatProfit.Checked = Properties.Settings.Default.Stat_Profit;
@@ -56,6 +57,8 @@ namespace MoneyMaker.UI.Light
             cbFoldBbToStl.Checked = Properties.Settings.Default.Stat_Fold_BB_ToSteal;
             cbWMWSF.Checked = Properties.Settings.Default.Stat_WMWSF;
             cbWTSD.Checked = Properties.Settings.Default.Stat_WTSD;
+            cbCallOpen.Checked = Properties.Settings.Default.Stat_CallOpen;
+            cbFlopCB.Checked = Properties.Settings.Default.Stat_FlopCB;
         }
 
         private void hhFolderButton_Click(object sender, EventArgs e)
@@ -73,6 +76,7 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.FileTrackingFolder = fileTrackingTxtBx.Text;
             Properties.Settings.Default.Hero = heroTextBox.Text;
             Properties.Settings.Default.LiveGamesCount = (int)numericUpDownLiveCount.Value;
+            Properties.Settings.Default.LiveHours = (int) numUpDownLiveHours.Value;
 
             Properties.Settings.Default.Stat_Hands=cbStatHands.Checked;
             Properties.Settings.Default.Stat_Profit = cbStatProfit.Checked;
@@ -102,6 +106,8 @@ namespace MoneyMaker.UI.Light
             Properties.Settings.Default.Stat_Fold_BB_ToSteal = cbFoldBbToStl.Checked;
             Properties.Settings.Default.Stat_WMWSF = cbWMWSF.Checked;
             Properties.Settings.Default.Stat_WTSD = cbWTSD.Checked;
+            Properties.Settings.Default.Stat_CallOpen = cbCallOpen.Checked;
+            Properties.Settings.Default.Stat_FlopCB = cbFlopCB.Checked;
 
             Properties.Settings.Default.Save();
             Close();

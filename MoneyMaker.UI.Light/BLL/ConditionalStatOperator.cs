@@ -11,47 +11,41 @@ namespace MoneyMaker.UI.Light.BLL
     /// Ф:Формирует коллекцию статов в зависимости от файла конфигурации для игроков, которые участвовали по крайней мере в 
     /// трьох последних играх
     /// </summary>
-    public class ConditionalStatOperator:IStatOperator
+    public class ConditionalStatOperator:StatOperator
     {
-        public List<PlayerStats> GetPlayerStatsList(IEnumerable<Game> games)
-        {
-            var gs = games as Game[] ?? games.ToArray();
-            var last3GamesPlayerNames = gs.GetLivePlayerNames(Properties.Settings.Default.LiveGamesCount);
-            return last3GamesPlayerNames.Select(playerName => GetPlayerStats(playerName, gs)).ToList();
-        }
+        public ConditionalStatOperator(bool useOnlyLive) : base(useOnlyLive, Properties.Settings.Default.LiveGamesCount) { }
 
-        private PlayerStats GetPlayerStats(string playerName, IEnumerable<Game> games)
+        protected override PlayerStats GetPlayerStats(string playerName, IEnumerable<Game> games)
         {
             var statCollection = new PlayerStats(playerName);
             var playerGames = games.GetGamesForPlayer(playerName).ToList();
-            var gamesCount = playerGames.Count();
             if (Properties.Settings.Default.Stat_Win)//win % stat
             {
-                var handsWon = playerGames.GetHandsWonCountForPlayerGames(playerName);
-                statCollection.Add(new Stat() { Name = "Win %", Value = Math.Round((double)handsWon / gamesCount * 100, 2) });
+                var wp = playerGames.GetHandsWonPercentForPlayerGames(playerName);
+                statCollection.Add(new Stat() { Name = "Win %", Value = Math.Round(wp, 2) });
             }
             if (Properties.Settings.Default.Stat_Hands)//hands
-                statCollection.Add(new Stat() { Name = "Hands", Value = gamesCount });
+                statCollection.Add(new Stat() { Name = "Hands", Value = playerGames.Count() });
 
             if (Properties.Settings.Default.Stat_VPIP)//VPIP
             {
-                var valPutCount = playerGames.VPIP_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "VPIP", Value = Math.Round((double)valPutCount / gamesCount * 100, 2) });
+                var vpip = playerGames.VPIP_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "VPIP", Value = Math.Round(vpip, 2) });
             }
             if (Properties.Settings.Default.Stat_EP_VPIP)//EP VPIP
             {
-                var valPutCount = playerGames.VPIP_EP_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "EP VPIP", Value = Math.Round((double)valPutCount / gamesCount * 100, 2) });
+                var vpip = playerGames.VPIP_EP_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "EP VPIP", Value = Math.Round(vpip, 2) });
             }
             if (Properties.Settings.Default.Stat_MP_VPIP)//MP VPIP
             {
-                var valPutCount = playerGames.VPIP_MP_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "MP VPIP", Value = Math.Round((double)valPutCount / gamesCount * 100, 2) });
+                var vpip = playerGames.VPIP_MP_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "MP VPIP", Value = Math.Round(vpip, 2) });
             }
             if (Properties.Settings.Default.Stat_LP_VPIP)//LP VPIP
             {
-                var valPutCount = playerGames.VPIP_LP_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "LP VPIP", Value = Math.Round((double)valPutCount / gamesCount * 100, 2) });
+                var vpip = playerGames.VPIP_LP_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "LP VPIP", Value = Math.Round(vpip, 2) });
             }
             if (Properties.Settings.Default.Stat_Profit)//Profit
             {
@@ -60,23 +54,23 @@ namespace MoneyMaker.UI.Light.BLL
             }
             if (Properties.Settings.Default.Stat_PFR)//PFR
             {
-                var preflopRaiseCount = playerGames.PFR_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "PFR", Value = Math.Round((double)preflopRaiseCount / gamesCount * 100, 2) });
+                var prc = playerGames.PFR_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "PFR", Value = Math.Round(prc, 2) });
             }
             if (Properties.Settings.Default.Stat_EP_PFR)//EP PFR
             {
-                var preflopRaiseCount = playerGames.PFR_EP_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "EP PFR", Value = Math.Round((double)preflopRaiseCount / gamesCount * 100, 2) });
+                var prc = playerGames.PFR_EP_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "EP PFR", Value = Math.Round(prc, 2) });
             }
             if (Properties.Settings.Default.Stat_MP_PFR)//MP PFR
             {
-                var preflopRaiseCount = playerGames.PFR_MP_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "MP PFR", Value = Math.Round((double)preflopRaiseCount / gamesCount * 100, 2) });
+                var prc = playerGames.PFR_MP_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "MP PFR", Value = Math.Round(prc, 2) });
             }
             if (Properties.Settings.Default.Stat_LP_PFR)//LP PFR
             {
-                var preflopRaiseCount = playerGames.PFR_LP_CountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "LP PFR", Value = Math.Round((double)preflopRaiseCount / gamesCount * 100, 2) });
+                var prc = playerGames.PFR_LP_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "LP PFR", Value = Math.Round(prc, 2) });
             }
             if (Properties.Settings.Default.Stat_ATS)//ATS
             {
@@ -123,8 +117,8 @@ namespace MoneyMaker.UI.Light.BLL
             }
             if (Properties.Settings.Default.Stat_3B)//3B
             {
-                var preflop3BCount = playerGames.ThreeBetCountForPlayer(playerName);
-                statCollection.Add(new Stat() { Name = "3B", Value = Math.Round((double)preflop3BCount / gamesCount * 100, 2) });
+                var thbc = playerGames.ThreeBet_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "3B", Value = Math.Round(thbc, 2) });
             }
             if (Properties.Settings.Default.Stat_Fold_SB_ToSteal)//Stat Fb to Steal
             {
@@ -145,6 +139,16 @@ namespace MoneyMaker.UI.Light.BLL
             {
                 var wtsd = playerGames.WTSD_ForPlayer(playerName);
                 statCollection.Add(new Stat() { Name = "WTSD", Value = Math.Round(wtsd, 2) });
+            }
+            if (Properties.Settings.Default.Stat_CallOpen)
+            {
+                var co = playerGames.CallOpen_ForPlayer(playerName);
+                statCollection.Add(new Stat() { Name = "Call Open" , Value = Math.Round(co, 2) });
+            }
+            if (Properties.Settings.Default.Stat_FlopCB)
+            {
+                var cb = playerGames.Flop_CB(playerName);
+                statCollection.Add(new Stat() { Name = "Flop CB", Value = Math.Round(cb, 2) });
             }
             return statCollection;
         }

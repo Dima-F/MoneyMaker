@@ -35,6 +35,8 @@
             this.pictureBoxSkin = new System.Windows.Forms.PictureBox();
             this.tabControlGeneral = new System.Windows.Forms.TabControl();
             this.tabPageAllStats = new System.Windows.Forms.TabPage();
+            this.cbAllStats = new System.Windows.Forms.CheckBox();
+            this.btnStatSyncron = new System.Windows.Forms.Button();
             this.comboBoxPlayers = new System.Windows.Forms.ComboBox();
             this.checkBoxLive = new System.Windows.Forms.CheckBox();
             this.datGrViewAllStats = new System.Windows.Forms.DataGridView();
@@ -45,7 +47,6 @@
             this.progBarSimpleParsing = new System.Windows.Forms.ProgressBar();
             this.textBoxSimpleParsing = new System.Windows.Forms.TextBox();
             this.btnSimplePars = new System.Windows.Forms.Button();
-            this.btnStatSyncron = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
@@ -113,6 +114,7 @@
             // 
             // tabPageAllStats
             // 
+            this.tabPageAllStats.Controls.Add(this.cbAllStats);
             this.tabPageAllStats.Controls.Add(this.btnStatSyncron);
             this.tabPageAllStats.Controls.Add(this.comboBoxPlayers);
             this.tabPageAllStats.Controls.Add(this.checkBoxLive);
@@ -126,10 +128,32 @@
             this.tabPageAllStats.Text = "All stats";
             this.tabPageAllStats.UseVisualStyleBackColor = true;
             // 
+            // cbAllStats
+            // 
+            this.cbAllStats.AutoSize = true;
+            this.cbAllStats.Checked = true;
+            this.cbAllStats.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbAllStats.Location = new System.Drawing.Point(329, 10);
+            this.cbAllStats.Name = "cbAllStats";
+            this.cbAllStats.Size = new System.Drawing.Size(62, 17);
+            this.cbAllStats.TabIndex = 5;
+            this.cbAllStats.Text = "All stats";
+            this.cbAllStats.UseVisualStyleBackColor = true;
+            // 
+            // btnStatSyncron
+            // 
+            this.btnStatSyncron.Location = new System.Drawing.Point(120, 6);
+            this.btnStatSyncron.Name = "btnStatSyncron";
+            this.btnStatSyncron.Size = new System.Drawing.Size(108, 23);
+            this.btnStatSyncron.TabIndex = 4;
+            this.btnStatSyncron.Text = "Synchronously";
+            this.btnStatSyncron.UseVisualStyleBackColor = true;
+            this.btnStatSyncron.Click += new System.EventHandler(this.btnStatSyncron_Click);
+            // 
             // comboBoxPlayers
             // 
             this.comboBoxPlayers.FormattingEnabled = true;
-            this.comboBoxPlayers.Location = new System.Drawing.Point(342, 8);
+            this.comboBoxPlayers.Location = new System.Drawing.Point(397, 8);
             this.comboBoxPlayers.Name = "comboBoxPlayers";
             this.comboBoxPlayers.Size = new System.Drawing.Size(121, 21);
             this.comboBoxPlayers.TabIndex = 3;
@@ -225,16 +249,6 @@
             this.btnSimplePars.UseVisualStyleBackColor = true;
             this.btnSimplePars.Click += new System.EventHandler(this.btnSimplePars_Click);
             // 
-            // btnStatSyncron
-            // 
-            this.btnStatSyncron.Location = new System.Drawing.Point(120, 6);
-            this.btnStatSyncron.Name = "btnStatSyncron";
-            this.btnStatSyncron.Size = new System.Drawing.Size(108, 23);
-            this.btnStatSyncron.TabIndex = 4;
-            this.btnStatSyncron.Text = "Synchronously";
-            this.btnStatSyncron.UseVisualStyleBackColor = true;
-            this.btnStatSyncron.Click += new System.EventHandler(this.btnStatSyncron_Click);
-            // 
             // MmLightForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -285,6 +299,7 @@
         private System.Windows.Forms.ComboBox comboBoxPlayers;
         private System.Windows.Forms.Label lblGamesCount;
         private System.Windows.Forms.Button btnStatSyncron;
+        private System.Windows.Forms.CheckBox cbAllStats;
     }
 }
 

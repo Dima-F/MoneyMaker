@@ -44,9 +44,22 @@ namespace MoneyMaker.BLL.Tools
                    playerHistory.Position == PositionType.SB;
         }
 
-        public static HandAction FirstRealAction(this PlayerHistory playerHistory)
+        public static HandAction FirstRealActionOnPreflop(this PlayerHistory playerHistory)
         {
-            return playerHistory.HandActions.RealActions().First();
+            return playerHistory.HandActions.PreflopHandActions().RealActions().First();
+        }
+
+        public static HandAction FirstRealActionOnFlop(this PlayerHistory playerHistory)
+        {
+            var has = playerHistory.HandActions;
+            var flopHas = has.FlopHandActions();
+            var realHas = flopHas.RealActions();
+            return realHas.First();
+        }
+        
+        public static HandAction LastRealActionOnPreflop(this PlayerHistory playerHistory)
+        {
+            return playerHistory.HandActions.PreflopHandActions().RealActions().Last();
         }
     }
 }

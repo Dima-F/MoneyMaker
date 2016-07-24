@@ -40,6 +40,10 @@
             this.hhFolderTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageStat = new System.Windows.Forms.TabPage();
+            this.cbFlopCB = new System.Windows.Forms.CheckBox();
+            this.cbCallOpen = new System.Windows.Forms.CheckBox();
+            this.cbWTSD = new System.Windows.Forms.CheckBox();
+            this.cbWMWSF = new System.Windows.Forms.CheckBox();
             this.cbFoldBbToStl = new System.Windows.Forms.CheckBox();
             this.cbFoldSbToStl = new System.Windows.Forms.CheckBox();
             this.cbAtsSb = new System.Windows.Forms.CheckBox();
@@ -72,14 +76,15 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbWMWSF = new System.Windows.Forms.CheckBox();
-            this.cbWTSD = new System.Windows.Forms.CheckBox();
+            this.numUpDownLiveHours = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
             this.settingsTab.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.tabPageStat.SuspendLayout();
             this.advancedTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLiveCount)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownLiveHours)).BeginInit();
             this.SuspendLayout();
             // 
             // settingsTab
@@ -193,6 +198,8 @@
             // 
             // tabPageStat
             // 
+            this.tabPageStat.Controls.Add(this.cbFlopCB);
+            this.tabPageStat.Controls.Add(this.cbCallOpen);
             this.tabPageStat.Controls.Add(this.cbWTSD);
             this.tabPageStat.Controls.Add(this.cbWMWSF);
             this.tabPageStat.Controls.Add(this.cbFoldBbToStl);
@@ -226,6 +233,46 @@
             this.tabPageStat.TabIndex = 2;
             this.tabPageStat.Text = "Stats";
             this.tabPageStat.UseVisualStyleBackColor = true;
+            // 
+            // cbFlopCB
+            // 
+            this.cbFlopCB.AutoSize = true;
+            this.cbFlopCB.Location = new System.Drawing.Point(156, 223);
+            this.cbFlopCB.Name = "cbFlopCB";
+            this.cbFlopCB.Size = new System.Drawing.Size(63, 17);
+            this.cbFlopCB.TabIndex = 28;
+            this.cbFlopCB.Text = "Fold CB";
+            this.cbFlopCB.UseVisualStyleBackColor = true;
+            // 
+            // cbCallOpen
+            // 
+            this.cbCallOpen.AutoSize = true;
+            this.cbCallOpen.Location = new System.Drawing.Point(156, 200);
+            this.cbCallOpen.Name = "cbCallOpen";
+            this.cbCallOpen.Size = new System.Drawing.Size(72, 17);
+            this.cbCallOpen.TabIndex = 27;
+            this.cbCallOpen.Text = "Call Open";
+            this.cbCallOpen.UseVisualStyleBackColor = true;
+            // 
+            // cbWTSD
+            // 
+            this.cbWTSD.AutoSize = true;
+            this.cbWTSD.Location = new System.Drawing.Point(158, 177);
+            this.cbWTSD.Name = "cbWTSD";
+            this.cbWTSD.Size = new System.Drawing.Size(59, 17);
+            this.cbWTSD.TabIndex = 26;
+            this.cbWTSD.Text = "WTSD";
+            this.cbWTSD.UseVisualStyleBackColor = true;
+            // 
+            // cbWMWSF
+            // 
+            this.cbWMWSF.AutoSize = true;
+            this.cbWMWSF.Location = new System.Drawing.Point(158, 154);
+            this.cbWMWSF.Name = "cbWMWSF";
+            this.cbWMWSF.Size = new System.Drawing.Size(67, 17);
+            this.cbWMWSF.TabIndex = 25;
+            this.cbWMWSF.Text = "W$WSF";
+            this.cbWMWSF.UseVisualStyleBackColor = true;
             // 
             // cbFoldBbToStl
             // 
@@ -470,6 +517,8 @@
             // 
             // advancedTabPage
             // 
+            this.advancedTabPage.Controls.Add(this.numUpDownLiveHours);
+            this.advancedTabPage.Controls.Add(this.label6);
             this.advancedTabPage.Controls.Add(this.numericUpDownLiveCount);
             this.advancedTabPage.Controls.Add(this.groupBox2);
             this.advancedTabPage.Controls.Add(this.label3);
@@ -553,25 +602,36 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // cbWMWSF
+            // numUpDownLiveHours
             // 
-            this.cbWMWSF.AutoSize = true;
-            this.cbWMWSF.Location = new System.Drawing.Point(158, 154);
-            this.cbWMWSF.Name = "cbWMWSF";
-            this.cbWMWSF.Size = new System.Drawing.Size(67, 17);
-            this.cbWMWSF.TabIndex = 25;
-            this.cbWMWSF.Text = "W$WSF";
-            this.cbWMWSF.UseVisualStyleBackColor = true;
+            this.numUpDownLiveHours.Location = new System.Drawing.Point(112, 36);
+            this.numUpDownLiveHours.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numUpDownLiveHours.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numUpDownLiveHours.Name = "numUpDownLiveHours";
+            this.numUpDownLiveHours.Size = new System.Drawing.Size(59, 20);
+            this.numUpDownLiveHours.TabIndex = 6;
+            this.numUpDownLiveHours.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
-            // cbWTSD
+            // label6
             // 
-            this.cbWTSD.AutoSize = true;
-            this.cbWTSD.Location = new System.Drawing.Point(158, 177);
-            this.cbWTSD.Name = "cbWTSD";
-            this.cbWTSD.Size = new System.Drawing.Size(59, 17);
-            this.cbWTSD.TabIndex = 26;
-            this.cbWTSD.Text = "WTSD";
-            this.cbWTSD.UseVisualStyleBackColor = true;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 38);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(62, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Live hours :";
             // 
             // FormSettings
             // 
@@ -600,6 +660,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLiveCount)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownLiveHours)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -652,5 +713,9 @@
         private System.Windows.Forms.CheckBox cbFoldSbToStl;
         private System.Windows.Forms.CheckBox cbWTSD;
         private System.Windows.Forms.CheckBox cbWMWSF;
+        private System.Windows.Forms.CheckBox cbFlopCB;
+        private System.Windows.Forms.CheckBox cbCallOpen;
+        private System.Windows.Forms.NumericUpDown numUpDownLiveHours;
+        private System.Windows.Forms.Label label6;
     }
 }

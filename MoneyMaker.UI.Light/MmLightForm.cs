@@ -15,6 +15,7 @@ using HandHistories.SimpleParser;
 using MoneyMaker.BLL.Files;
 using MoneyMaker.BLL.Stats;
 using MoneyMaker.BLL.Tools;
+using MoneyMaker.UI.Light.BLL;
 using MoneyMaker.UI.Light.Properties;
 
 namespace MoneyMaker.UI.Light
@@ -35,6 +36,8 @@ namespace MoneyMaker.UI.Light
         //buffer for simple parsing
         private List<Game> _allGames;
 
+        private List<Game> _liveGames;
+        
         public MmLightForm()
         {
             _huds = new Dictionary<string, HudForm>();
@@ -47,6 +50,7 @@ namespace MoneyMaker.UI.Light
             _fileTrackingManager.Initialize("*.txt", NotifyFilters.LastWrite | NotifyFilters.FileName, Settings.Default.FileTrackingFolder);
             Settings.Default.PropertyChanged += OnSettingsPropertyChanged;
             _allGames = new List<Game>();
+            _liveGames = new List<Game>();
         }
 
         private void OnSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -105,10 +109,85 @@ namespace MoneyMaker.UI.Light
 
         private void btnSimplePars_Click(object sender, EventArgs e)
         {
-            _allGames.Clear();
+            ParseAndVisualize();
+        }
+
+        private async void btnAllStat_Click(object sender, EventArgs e)
+        {
+            ParseAndVisualize();
+
+            List<Game> games = checkBoxLive.Checked ? _liveGames : _allGames;
+
+            comboBoxPlayers.DataSource = games.GetAllPlayerNames().ToList();
+            //Debug.WriteLine("Current thread ID - {0}",Thread.CurrentThread.ManagedThreadId);
+            await Task.Run(() =>
+            {
+                StatOperator statOperator = null;
+                if (cbAllStats.Checked)
+                        statOperator = new BaseStatOperator(checkBoxLive.Checked, Settings.Default.LiveGamesCount);
+                else statOperator = new ConditionalStatOperator(checkBoxLive.Checked);
+                    
+                //Thread.Sleep(5000);
+                var table = statOperator.GetPlayerStatsList(games).ToDataTable();
+                //Debug.WriteLine("Current thread ID - {0}", Thread.CurrentThread.ManagedThreadId);
+                Invoke((Action)delegate
+                {
+                    datGrViewAllStats.DataSource = table;
+                    MinimizeGridWidth();
+                });
+            });
+        }
+
+        private void MinimizeGridWidth()
+        {
+            if (datGrViewAllStats.Columns.Count == 0) return;
+            datGrViewAllStats.Columns[0].Width = 65;
+            for (int i = 1; i < datGrViewAllStats.Columns.Count; i++)
+            {
+                datGrViewAllStats.Columns[i].Width = 48;
+            }
+        }
+
+        //Оставлен для тестирования и отладки.
+        private void btnStatSyncron_Click(object sender, EventArgs e)
+        {
+            if(_allGames.Count==0)
+                ParseAndVisualize();
+            List<Game> games = checkBoxLive.Checked ? _liveGames : _allGames;
+
+            comboBoxPlayers.DataSource = games.GetAllPlayerNames().ToList();
+            
+            //start diagnostic --------------------------------------------------------------------------
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            StatOperator statOperator = null;
+            if (cbAllStats.Checked)
+                statOperator = new BaseStatOperator(checkBoxLive.Checked, Settings.Default.LiveGamesCount);
+            else statOperator = new ConditionalStatOperator(checkBoxLive.Checked);
+            var table = statOperator.GetPlayerStatsList(games).ToDataTable();
+            datGrViewAllStats.DataSource = table;
+            stopWatch.Stop();
+            // Get the elapsed time as a TimeSpan value.
+            TimeSpan ts = stopWatch.Elapsed;
+            // Format and display the TimeSpan value.
+            string elapsedTime = $"Time of statistics estimation - {ts.Milliseconds} ms";
+            
+            //end diagnostic ----------------------------------------------------------------------------
+            MinimizeGridWidth();
+            MessageBox.Show(elapsedTime);
+        }
+
+        private void ParseAndVisualize()
+        {
+            if (_allGames.Count != 0)
+            {
+                _allGames.Clear();
+                _liveGames.Clear();
+            }
+                
             textBoxSimpleParsing.Clear();
             progBarSimpleParsing.Value = 0;
-            lblGamesCount.Text = "0";
+            lblGamesCount.Text = string.Empty;
             var directory = Settings.Default.HandHistoryFolder;
             var files = Directory.GetFiles(directory, "*.txt").Where(s => !s.Contains("Summary")).ToArray();
             progBarSimpleParsing.Maximum = files.Length;
@@ -125,52 +204,7 @@ namespace MoneyMaker.UI.Light
             }
             lblGamesCount.Text = _allGames.Count.ToString();
             textBoxSimpleParsing.Text = builder.ToString();
-        }
-
-        private async void btnAllStat_Click(object sender, EventArgs e)
-        {
-            if (_allGames.Count == 0)
-                btnSimplePars_Click(null, null);
-            
-            List<Game> games = checkBoxLive.Checked ? _allGames.GetLive(Settings.Default.LiveGamesCount).ToList() : _allGames;
-
-            comboBoxPlayers.DataSource = games.GetAllPlayerNames().ToList();
-            //Debug.WriteLine("Current thread ID - {0}",Thread.CurrentThread.ManagedThreadId);
-            await Task.Run(() =>
-            {
-                var statOperator = new BaseStatOperator();
-                //Thread.Sleep(5000);
-                var table = statOperator.GetPlayerStatsList(games).ToDataTable();
-                //Debug.WriteLine("Current thread ID - {0}", Thread.CurrentThread.ManagedThreadId);
-                Invoke((Action)delegate
-                {
-                    datGrViewAllStats.DataSource = table;
-                    MinimizeGridWidth();
-                });
-            });
-        }
-
-        private void MinimizeGridWidth()
-        {
-            datGrViewAllStats.Columns[0].Width = 65;
-            for (int i = 1; i < datGrViewAllStats.Columns.Count; i++)
-            {
-                datGrViewAllStats.Columns[i].Width = 48;
-            }
-        }
-
-        private void btnStatSyncron_Click(object sender, EventArgs e)
-        {
-            if (_allGames.Count == 0)
-                btnSimplePars_Click(null, null);
-            List<Game> games = checkBoxLive.Checked
-                ? _allGames.GetLive(Settings.Default.LiveGamesCount).ToList()
-                : _allGames;
-            comboBoxPlayers.DataSource = games.GetAllPlayerNames().ToList();
-            var statOperator = new BaseStatOperator();
-            var table = statOperator.GetPlayerStatsList(games).ToDataTable();
-            datGrViewAllStats.DataSource = table;
-            MinimizeGridWidth();
+            _liveGames.AddRange(_allGames.GetLive(Settings.Default.LiveHours));
         }
     }
 }

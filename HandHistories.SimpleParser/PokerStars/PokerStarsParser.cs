@@ -40,6 +40,7 @@ namespace HandHistories.SimpleParser.PokerStars
         private static readonly Regex UncalledBetAmountRegex = new Regex(@"(?<=Uncalled\sbet\s+\(\s*).+(?=\s*\)\sreturned\sto)");
         private static readonly Regex UncalledBetPlayerRegex = new Regex(@"(?<=returned\sto\s).+(?=)");
         private static readonly Regex AnteAmountRegex = new Regex(@"(?<=the\sante\s).+(?=)");
+        private static readonly Regex WinPlayerRegex = new Regex(@"(?<=).+(?=\s+collected)");
         private static readonly Regex ErrorRegex = new Regex(@"");
         
         protected override byte StartPlayerRow => 2;
@@ -177,6 +178,7 @@ namespace HandHistories.SimpleParser.PokerStars
                             throw new ParserException( $"Cann't parse string with ':' and unnown word. Unnown line -> {multipleLines[i]}", DateTime.Now);
                     }
                 }
+                //end contains : 
                 if (lowerLine.Contains("uncalled bet"))
                 {
                     ha.HandActionType = HandActionType.UNCALLED_BET;
@@ -199,7 +201,7 @@ namespace HandHistories.SimpleParser.PokerStars
                     {
                         ha.HandActionType = HandActionType.WINS;
                     }
-                    
+                    ha.PlayerName = WinPlayerRegex.Match(multipleLines[i]).Value;
                     ha.Amount = DefineActionAmount(ha, multipleLines[i]);
                     handActions.Add(ha);
                     continue;

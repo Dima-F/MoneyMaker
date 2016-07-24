@@ -28,7 +28,7 @@ namespace MoneyMaker.UI.Light
 
         public void FillHud()
         {
-            IStatOperator sOperator = new ConditionalStatOperator();
+            StatOperator sOperator = new ConditionalStatOperator(true);
             var hudTable = new HudTable(sOperator, _keyPath);
             hudInfoTxtBx.Text = hudTable.GetHudInfo();
             DrawHeroCards(hudTable);

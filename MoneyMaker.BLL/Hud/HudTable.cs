@@ -20,13 +20,13 @@ namespace MoneyMaker.BLL.Hud
     { 
         private readonly List<Game> _games;
 
-        private readonly IStatOperator _statOperator;
+        private readonly StatOperator _statOperator;
 
         private readonly PokerParser _parser;
 
         private readonly string _shortPath;
 
-        public HudTable(IStatOperator statOperator, string path)
+        public HudTable(StatOperator statOperator, string path)
         {
             _shortPath = System.IO.Path.GetFileNameWithoutExtension(path);
             var text = PokerFileReader.ReadFileWithWaiting(path);

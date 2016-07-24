@@ -43,10 +43,25 @@ namespace MoneyMaker.BLL.Tools
             return actions.Where(a => a.Street == Street.Preflop);
         }
 
+        public static IEnumerable<HandAction> FlopHandActions(this IEnumerable<HandAction> actions)
+        {
+            return actions.Where(a => a.Street == Street.Flop);
+        }
+
+        public static IEnumerable<HandAction> TurnHandActions(this IEnumerable<HandAction> actions)
+        {
+            return actions.Where(a => a.Street == Street.Turn);
+        }
+
+        public static IEnumerable<HandAction> RiverHandActions(this IEnumerable<HandAction> actions)
+        {
+            return actions.Where(a => a.Street == Street.River);
+        }
 
         public static IEnumerable<HandAction> RealActions(this IEnumerable<HandAction> actions)
         {
-            return actions.Where(a=>a.HandActionType == HandActionType.BET
+            return actions.Where(
+           a=>a.HandActionType == HandActionType.BET
            || a.HandActionType == HandActionType.CALL
            || a.HandActionType == HandActionType.CHECK
            || a.HandActionType == HandActionType.FOLD
@@ -67,10 +82,17 @@ namespace MoneyMaker.BLL.Tools
             return action.HandActionType == HandActionType.RAISE ||
                    action.HandActionType == HandActionType.ALL_IN_RAISE;
         }
+
         public static bool IsCallAction(this HandAction action)
         {
             return action.HandActionType == HandActionType.CALL ||
                    action.HandActionType == HandActionType.ALL_IN_CALL;
+        }
+
+        public static bool IsBetAction(this HandAction action)
+        {
+            return action.HandActionType == HandActionType.BET ||
+                   action.HandActionType == HandActionType.ALL_IN_BET;
         }
 
         public static bool IsWinAction(this HandAction action)
